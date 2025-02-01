@@ -81,57 +81,9 @@
 			)
 		)
 		(symbol "DRV8301DCAR_0_1"
-			(polyline
-				(pts
-					(xy 7.62 -76.2) (xy 63.5 -76.2)
-				)
-				(stroke
-					(width 0.127)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy 7.62 5.08) (xy 7.62 -76.2)
-				)
-				(stroke
-					(width 0.127)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy 63.5 -76.2) (xy 63.5 5.08)
-				)
-				(stroke
-					(width 0.127)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy 63.5 5.08) (xy 7.62 5.08)
-				)
-				(stroke
-					(width 0.127)
-					(type default)
-				)
-				(fill
-					(type none)
-				)
-			)
 			(pin input line
-				(at 0 0 0)
-				(length 7.62)
+				(at -35.56 16.51 0)
+				(length 3.81)
 				(name "RT_CLK"
 					(effects
 						(font
@@ -148,8 +100,8 @@
 				)
 			)
 			(pin output line
-				(at -40.64 -10.16 0)
-				(length 7.62)
+				(at -34.29 -19.05 0)
+				(length 3.81)
 				(name "SDO"
 					(effects
 						(font
@@ -166,8 +118,8 @@
 				)
 			)
 			(pin input line
-				(at 0 -25.4 0)
-				(length 7.62)
+				(at -34.29 -13.97 0)
+				(length 3.81)
 				(name "SCLK"
 					(effects
 						(font
@@ -184,8 +136,8 @@
 				)
 			)
 			(pin input line
-				(at 0 -27.94 0)
-				(length 7.62)
+				(at 90.17 -62.23 0)
+				(length 3.81)
 				(name "DC_CAL"
 					(effects
 						(font
@@ -202,8 +154,8 @@
 				)
 			)
 			(pin power_in line
-				(at 0 -30.48 0)
-				(length 7.62)
+				(at 118.11 -8.89 180)
+				(length 3.81)
 				(name "GVDD"
 					(effects
 						(font
@@ -220,8 +172,8 @@
 				)
 			)
 			(pin power_in line
-				(at 0 -33.02 0)
-				(length 7.62)
+				(at 118.11 -12.7 180)
+				(length 3.81)
 				(name "CP1"
 					(effects
 						(font
@@ -238,8 +190,8 @@
 				)
 			)
 			(pin power_in line
-				(at 0 -35.56 0)
-				(length 7.62)
+				(at 118.11 -15.24 180)
+				(length 3.81)
 				(name "CP2"
 					(effects
 						(font
@@ -256,8 +208,8 @@
 				)
 			)
 			(pin input line
-				(at 0 -38.1 0)
-				(length 7.62)
+				(at -45.72 -31.75 0)
+				(length 3.81)
 				(name "EN_GATE"
 					(effects
 						(font
@@ -274,8 +226,8 @@
 				)
 			)
 			(pin input line
-				(at -45.72 -40.64 0)
-				(length 7.62)
+				(at -45.72 -35.56 0)
+				(length 3.81)
 				(name "INH_A"
 					(effects
 						(font
@@ -292,8 +244,8 @@
 				)
 			)
 			(pin input line
-				(at -45.72 -43.18 0)
-				(length 7.62)
+				(at -45.72 -38.1 0)
+				(length 3.81)
 				(name "INL_A"
 					(effects
 						(font
@@ -311,7 +263,7 @@
 			)
 			(pin input line
 				(at -45.72 -45.72 0)
-				(length 7.62)
+				(length 3.81)
 				(name "INH_B"
 					(effects
 						(font
@@ -328,8 +280,8 @@
 				)
 			)
 			(pin output line
-				(at 0 -2.54 0)
-				(length 7.62)
+				(at 24.13 25.4 0)
+				(length 3.81)
 				(name "COMP"
 					(effects
 						(font
@@ -347,7 +299,7 @@
 			)
 			(pin input line
 				(at -45.72 -48.26 0)
-				(length 7.62)
+				(length 3.81)
 				(name "INL_B"
 					(effects
 						(font
@@ -364,8 +316,8 @@
 				)
 			)
 			(pin input line
-				(at -45.72 -50.8 0)
-				(length 7.62)
+				(at -45.72 -54.61 0)
+				(length 3.81)
 				(name "INH_C"
 					(effects
 						(font
@@ -382,8 +334,8 @@
 				)
 			)
 			(pin input line
-				(at -45.72 -53.34 0)
-				(length 7.62)
+				(at -45.72 -57.15 0)
+				(length 3.81)
 				(name "INL_C"
 					(effects
 						(font
@@ -400,8 +352,8 @@
 				)
 			)
 			(pin power_in line
-				(at 0 -55.88 0)
-				(length 7.62)
+				(at -36.83 -68.58 0)
+				(length 3.81)
 				(name "DVDD"
 					(effects
 						(font
@@ -418,8 +370,8 @@
 				)
 			)
 			(pin input line
-				(at 0 -58.42 0)
-				(length 7.62)
+				(at -30.48 30.48 0)
+				(length 3.81)
 				(name "REF"
 					(effects
 						(font
@@ -436,8 +388,8 @@
 				)
 			)
 			(pin output line
-				(at 118.11 -19.05 0)
-				(length 7.62)
+				(at 92.71 -71.12 0)
+				(length 3.81)
 				(name "SO1"
 					(effects
 						(font
@@ -454,8 +406,8 @@
 				)
 			)
 			(pin output line
-				(at 118.11 -21.59 0)
-				(length 7.62)
+				(at 91.44 -52.07 0)
+				(length 3.81)
 				(name "SO2"
 					(effects
 						(font
@@ -472,8 +424,8 @@
 				)
 			)
 			(pin power_in line
-				(at 0 -66.04 0)
-				(length 7.62)
+				(at -36.83 -72.39 0)
+				(length 3.81)
 				(name "AVDD"
 					(effects
 						(font
@@ -490,8 +442,8 @@
 				)
 			)
 			(pin power_in line
-				(at 0 -68.58 0)
-				(length 7.62)
+				(at -36.83 -74.93 0)
+				(length 3.81)
 				(name "AGND"
 					(effects
 						(font
@@ -508,8 +460,8 @@
 				)
 			)
 			(pin power_in line
-				(at 71.12 -71.12 180)
-				(length 7.62)
+				(at 118.11 -21.59 180)
+				(length 3.81)
 				(name "PVDD1"
 					(effects
 						(font
@@ -526,8 +478,8 @@
 				)
 			)
 			(pin input line
-				(at 0 -5.08 0)
-				(length 7.62)
+				(at 71.12 45.72 180)
+				(length 3.81)
 				(name "VSENSE"
 					(effects
 						(font
@@ -544,8 +496,8 @@
 				)
 			)
 			(pin input line
-				(at 71.12 -68.58 180)
-				(length 7.62)
+				(at 134.62 -53.34 180)
+				(length 3.81)
 				(name "SP2"
 					(effects
 						(font
@@ -562,8 +514,8 @@
 				)
 			)
 			(pin input line
-				(at 71.12 -66.04 180)
-				(length 7.62)
+				(at 134.62 -50.8 180)
+				(length 3.81)
 				(name "SN2"
 					(effects
 						(font
@@ -580,8 +532,8 @@
 				)
 			)
 			(pin input line
-				(at 71.12 -63.5 180)
-				(length 7.62)
+				(at 134.62 -69.85 180)
+				(length 3.81)
 				(name "SP1"
 					(effects
 						(font
@@ -598,8 +550,8 @@
 				)
 			)
 			(pin input line
-				(at 71.12 -60.96 180)
-				(length 7.62)
+				(at 134.62 -67.31 180)
+				(length 3.81)
 				(name "SN1"
 					(effects
 						(font
@@ -616,8 +568,8 @@
 				)
 			)
 			(pin input line
-				(at 71.12 -58.42 180)
-				(length 7.62)
+				(at 118.11 -73.66 180)
+				(length 3.81)
 				(name "SL_C"
 					(effects
 						(font
@@ -634,8 +586,8 @@
 				)
 			)
 			(pin output line
-				(at 71.12 -55.88 180)
-				(length 7.62)
+				(at 118.11 -71.12 180)
+				(length 3.81)
 				(name "GL_C"
 					(effects
 						(font
@@ -652,8 +604,8 @@
 				)
 			)
 			(pin input line
-				(at 71.12 -53.34 180)
-				(length 7.62)
+				(at 118.11 -68.58 180)
+				(length 3.81)
 				(name "SH_C"
 					(effects
 						(font
@@ -670,8 +622,8 @@
 				)
 			)
 			(pin output line
-				(at 71.12 -50.8 180)
-				(length 7.62)
+				(at 118.11 -66.04 180)
+				(length 3.81)
 				(name "GH_C"
 					(effects
 						(font
@@ -688,8 +640,8 @@
 				)
 			)
 			(pin power_in line
-				(at 71.12 -48.26 180)
-				(length 7.62)
+				(at 118.11 -63.5 180)
+				(length 3.81)
 				(name "BST_C"
 					(effects
 						(font
@@ -706,8 +658,8 @@
 				)
 			)
 			(pin input line
-				(at 71.12 -45.72 180)
-				(length 7.62)
+				(at 118.11 -57.15 180)
+				(length 3.81)
 				(name "SL_B"
 					(effects
 						(font
@@ -724,8 +676,8 @@
 				)
 			)
 			(pin input line
-				(at 0 -7.62 0)
-				(length 7.62)
+				(at 24.13 30.48 0)
+				(length 3.81)
 				(name "PWRGD"
 					(effects
 						(font
@@ -742,8 +694,8 @@
 				)
 			)
 			(pin output line
-				(at 71.12 -43.18 180)
-				(length 7.62)
+				(at 118.11 -54.61 180)
+				(length 3.81)
 				(name "GL_B"
 					(effects
 						(font
@@ -760,8 +712,8 @@
 				)
 			)
 			(pin input line
-				(at 71.12 -40.64 180)
-				(length 7.62)
+				(at 118.11 -52.07 180)
+				(length 3.81)
 				(name "SH_B"
 					(effects
 						(font
@@ -778,8 +730,8 @@
 				)
 			)
 			(pin output line
-				(at 71.12 -38.1 180)
-				(length 7.62)
+				(at 118.11 -49.53 180)
+				(length 3.81)
 				(name "GH_B"
 					(effects
 						(font
@@ -796,8 +748,8 @@
 				)
 			)
 			(pin power_in line
-				(at 71.12 -35.56 180)
-				(length 7.62)
+				(at 118.11 -46.99 180)
+				(length 3.81)
 				(name "BST_B"
 					(effects
 						(font
@@ -814,8 +766,8 @@
 				)
 			)
 			(pin input line
-				(at 71.12 -33.02 180)
-				(length 7.62)
+				(at 118.11 -40.64 180)
+				(length 3.81)
 				(name "SL_A"
 					(effects
 						(font
@@ -832,8 +784,8 @@
 				)
 			)
 			(pin output line
-				(at 71.12 -30.48 180)
-				(length 7.62)
+				(at 118.11 -38.1 180)
+				(length 3.81)
 				(name "GL_A"
 					(effects
 						(font
@@ -850,8 +802,8 @@
 				)
 			)
 			(pin input line
-				(at 71.12 -27.94 180)
-				(length 7.62)
+				(at 118.11 -35.56 180)
+				(length 3.81)
 				(name "SH_A"
 					(effects
 						(font
@@ -868,8 +820,8 @@
 				)
 			)
 			(pin output line
-				(at 71.12 -25.4 180)
-				(length 7.62)
+				(at 118.11 -33.02 180)
+				(length 3.81)
 				(name "GH_A"
 					(effects
 						(font
@@ -886,8 +838,8 @@
 				)
 			)
 			(pin power_in line
-				(at 71.12 -22.86 180)
-				(length 7.62)
+				(at 118.11 -30.48 180)
+				(length 3.81)
 				(name "BST_A"
 					(effects
 						(font
@@ -904,8 +856,8 @@
 				)
 			)
 			(pin input line
-				(at 71.12 -20.32 180)
-				(length 7.62)
+				(at -34.29 -8.89 0)
+				(length 3.81)
 				(name "VDD_SPI"
 					(effects
 						(font
@@ -922,8 +874,8 @@
 				)
 			)
 			(pin output line
-				(at 0 -10.16 0)
-				(length 7.62)
+				(at -34.29 2.54 0)
+				(length 3.81)
 				(name "*OCTW"
 					(effects
 						(font
@@ -940,8 +892,8 @@
 				)
 			)
 			(pin output line
-				(at 71.12 -17.78 180)
-				(length 7.62)
+				(at 71.12 38.1 180)
+				(length 3.81)
 				(name "PH"
 					(effects
 						(font
@@ -958,8 +910,8 @@
 				)
 			)
 			(pin output line
-				(at 71.12 -15.24 180)
-				(length 7.62)
+				(at 71.12 40.64 180)
+				(length 3.81)
 				(name "PH"
 					(effects
 						(font
@@ -976,8 +928,8 @@
 				)
 			)
 			(pin power_in line
-				(at 71.12 -12.7 180)
-				(length 7.62)
+				(at 71.12 43.18 180)
+				(length 3.81)
 				(name "BST_BK"
 					(effects
 						(font
@@ -994,8 +946,8 @@
 				)
 			)
 			(pin power_in line
-				(at 71.12 -10.16 180)
-				(length 7.62)
+				(at 71.12 49.53 180)
+				(length 3.81)
 				(name "PVDD2"
 					(effects
 						(font
@@ -1012,8 +964,8 @@
 				)
 			)
 			(pin power_in line
-				(at 71.12 -7.62 180)
-				(length 7.62)
+				(at 71.12 52.07 180)
+				(length 3.81)
 				(name "PVDD2"
 					(effects
 						(font
@@ -1030,8 +982,8 @@
 				)
 			)
 			(pin input line
-				(at 71.12 -5.08 180)
-				(length 7.62)
+				(at 24.13 39.37 0)
+				(length 3.81)
 				(name "EN_BUCK"
 					(effects
 						(font
@@ -1048,8 +1000,8 @@
 				)
 			)
 			(pin input line
-				(at 71.12 -2.54 180)
-				(length 7.62)
+				(at 24.13 20.32 0)
+				(length 3.81)
 				(name "SS_TR"
 					(effects
 						(font
@@ -1067,7 +1019,7 @@
 			)
 			(pin unspecified line
 				(at 22.86 -83.82 90)
-				(length 7.62)
+				(length 3.81)
 				(name "EPAD"
 					(effects
 						(font
@@ -1084,8 +1036,8 @@
 				)
 			)
 			(pin output line
-				(at 0 -12.7 0)
-				(length 7.62)
+				(at -34.29 0 0)
+				(length 3.81)
 				(name "*FAULT"
 					(effects
 						(font
@@ -1103,7 +1055,7 @@
 			)
 			(pin input line
 				(at 0 -15.24 0)
-				(length 7.62)
+				(length 3.81)
 				(name "DTC"
 					(effects
 						(font
@@ -1120,8 +1072,8 @@
 				)
 			)
 			(pin input line
-				(at 0 -17.78 0)
-				(length 7.62)
+				(at -34.29 -11.43 0)
+				(length 3.81)
 				(name "*SCS"
 					(effects
 						(font
@@ -1138,8 +1090,8 @@
 				)
 			)
 			(pin input line
-				(at -40.64 -7.62 0)
-				(length 7.62)
+				(at -34.29 -16.51 0)
+				(length 3.81)
 				(name "SDI"
 					(effects
 						(font

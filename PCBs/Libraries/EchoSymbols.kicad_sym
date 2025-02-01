@@ -10,7 +10,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(property "Reference" "U"
-			(at 35.052 -35.814 0)
+			(at 0 1.524 0)
 			(effects
 				(font
 					(size 1.524 1.524)
@@ -18,7 +18,7 @@
 			)
 		)
 		(property "Value" "DRV8301DCAR"
-			(at 35.052 -38.354 0)
+			(at 0 -1.016 0)
 			(effects
 				(font
 					(size 1.524 1.524)
@@ -82,7 +82,7 @@
 		)
 		(symbol "DRV8301DCAR_0_1"
 			(pin input line
-				(at -35.56 16.51 0)
+				(at 30.48 39.37 180)
 				(length 3.81)
 				(name "RT_CLK"
 					(effects
@@ -100,7 +100,7 @@
 				)
 			)
 			(pin output line
-				(at -34.29 -19.05 0)
+				(at -30.48 29.21 0)
 				(length 3.81)
 				(name "SDO"
 					(effects
@@ -118,7 +118,7 @@
 				)
 			)
 			(pin input line
-				(at -34.29 -13.97 0)
+				(at -30.48 34.29 0)
 				(length 3.81)
 				(name "SCLK"
 					(effects
@@ -136,7 +136,7 @@
 				)
 			)
 			(pin input line
-				(at 0 -27.94 0)
+				(at -30.48 -17.78 0)
 				(length 3.81)
 				(name "DC_CAL"
 					(effects
@@ -154,7 +154,7 @@
 				)
 			)
 			(pin power_in line
-				(at 2.54 22.86 0)
+				(at -30.48 -25.4 0)
 				(length 3.81)
 				(name "GVDD"
 					(effects
@@ -172,7 +172,7 @@
 				)
 			)
 			(pin power_in line
-				(at 0 -33.02 0)
+				(at -30.48 -29.21 0)
 				(length 3.81)
 				(name "CP1"
 					(effects
@@ -190,7 +190,7 @@
 				)
 			)
 			(pin power_in line
-				(at 0 -35.56 0)
+				(at -30.48 -31.75 0)
 				(length 3.81)
 				(name "CP2"
 					(effects
@@ -208,7 +208,7 @@
 				)
 			)
 			(pin input line
-				(at 0 -38.1 0)
+				(at -30.48 19.05 0)
 				(length 3.81)
 				(name "EN_GATE"
 					(effects
@@ -226,7 +226,7 @@
 				)
 			)
 			(pin input line
-				(at -45.72 -40.64 0)
+				(at -30.48 15.24 0)
 				(length 3.81)
 				(name "INH_A"
 					(effects
@@ -244,7 +244,7 @@
 				)
 			)
 			(pin input line
-				(at -45.72 -43.18 0)
+				(at -30.48 12.7 0)
 				(length 3.81)
 				(name "INL_A"
 					(effects
@@ -262,7 +262,7 @@
 				)
 			)
 			(pin input line
-				(at -45.72 -45.72 0)
+				(at -30.48 8.89 0)
 				(length 3.81)
 				(name "INH_B"
 					(effects
@@ -280,7 +280,7 @@
 				)
 			)
 			(pin output line
-				(at 0 -2.54 0)
+				(at 30.48 31.75 180)
 				(length 3.81)
 				(name "COMP"
 					(effects
@@ -298,7 +298,7 @@
 				)
 			)
 			(pin input line
-				(at -45.72 -48.26 0)
+				(at -30.48 6.35 0)
 				(length 3.81)
 				(name "INL_B"
 					(effects
@@ -316,7 +316,7 @@
 				)
 			)
 			(pin input line
-				(at -45.72 -50.8 0)
+				(at -30.48 2.54 0)
 				(length 3.81)
 				(name "INH_C"
 					(effects
@@ -334,7 +334,7 @@
 				)
 			)
 			(pin input line
-				(at -45.72 -53.34 0)
+				(at -30.48 0 0)
 				(length 3.81)
 				(name "INL_C"
 					(effects
@@ -352,7 +352,7 @@
 				)
 			)
 			(pin power_in line
-				(at 0 -55.88 0)
+				(at -30.48 -36.83 0)
 				(length 3.81)
 				(name "DVDD"
 					(effects
@@ -370,7 +370,7 @@
 				)
 			)
 			(pin input line
-				(at 0 -58.42 0)
+				(at -30.48 -8.89 0)
 				(length 3.81)
 				(name "REF"
 					(effects
@@ -388,7 +388,7 @@
 				)
 			)
 			(pin output line
-				(at 118.11 -19.05 0)
+				(at -30.48 -11.43 0)
 				(length 3.81)
 				(name "SO1"
 					(effects
@@ -406,7 +406,7 @@
 				)
 			)
 			(pin output line
-				(at 118.11 -21.59 0)
+				(at -30.48 -13.97 0)
 				(length 3.81)
 				(name "SO2"
 					(effects
@@ -424,7 +424,7 @@
 				)
 			)
 			(pin power_in line
-				(at -36.83 -72.39 0)
+				(at -30.48 -39.37 0)
 				(length 3.81)
 				(name "AVDD"
 					(effects
@@ -442,7 +442,7 @@
 				)
 			)
 			(pin power_in line
-				(at -36.83 -74.93 0)
+				(at -30.48 -43.18 0)
 				(length 3.81)
 				(name "AGND"
 					(effects
@@ -460,7 +460,7 @@
 				)
 			)
 			(pin power_in line
-				(at 71.12 -71.12 180)
+				(at -30.48 -22.86 0)
 				(length 3.81)
 				(name "PVDD1"
 					(effects
@@ -478,7 +478,7 @@
 				)
 			)
 			(pin input line
-				(at 0 -5.08 0)
+				(at 30.48 19.05 180)
 				(length 3.81)
 				(name "VSENSE"
 					(effects
@@ -496,7 +496,7 @@
 				)
 			)
 			(pin input line
-				(at 71.12 -68.58 180)
+				(at 30.48 -22.86 180)
 				(length 3.81)
 				(name "SP2"
 					(effects
@@ -514,7 +514,7 @@
 				)
 			)
 			(pin input line
-				(at 71.12 -66.04 180)
+				(at 30.48 -20.32 180)
 				(length 3.81)
 				(name "SN2"
 					(effects
@@ -532,7 +532,7 @@
 				)
 			)
 			(pin input line
-				(at 71.12 -63.5 180)
+				(at 30.48 -43.18 180)
 				(length 3.81)
 				(name "SP1"
 					(effects
@@ -550,7 +550,7 @@
 				)
 			)
 			(pin input line
-				(at 71.12 -60.96 180)
+				(at 30.48 -40.64 180)
 				(length 3.81)
 				(name "SN1"
 					(effects
@@ -568,7 +568,7 @@
 				)
 			)
 			(pin input line
-				(at 71.12 -58.42 180)
+				(at 30.48 -36.83 180)
 				(length 3.81)
 				(name "SL_C"
 					(effects
@@ -586,7 +586,7 @@
 				)
 			)
 			(pin output line
-				(at 71.12 -55.88 180)
+				(at 30.48 -34.29 180)
 				(length 3.81)
 				(name "GL_C"
 					(effects
@@ -604,7 +604,7 @@
 				)
 			)
 			(pin input line
-				(at 71.12 -53.34 180)
+				(at 30.48 -31.75 180)
 				(length 3.81)
 				(name "SH_C"
 					(effects
@@ -622,7 +622,7 @@
 				)
 			)
 			(pin output line
-				(at 71.12 -50.8 180)
+				(at 30.48 -29.21 180)
 				(length 3.81)
 				(name "GH_C"
 					(effects
@@ -640,7 +640,7 @@
 				)
 			)
 			(pin power_in line
-				(at 71.12 -48.26 180)
+				(at 30.48 -26.67 180)
 				(length 3.81)
 				(name "BST_C"
 					(effects
@@ -658,7 +658,7 @@
 				)
 			)
 			(pin input line
-				(at 71.12 -45.72 180)
+				(at 30.48 -16.51 180)
 				(length 3.81)
 				(name "SL_B"
 					(effects
@@ -676,7 +676,7 @@
 				)
 			)
 			(pin input line
-				(at 0 -7.62 0)
+				(at 30.48 36.83 180)
 				(length 3.81)
 				(name "PWRGD"
 					(effects
@@ -694,7 +694,7 @@
 				)
 			)
 			(pin output line
-				(at 71.12 -43.18 180)
+				(at 30.48 -13.97 180)
 				(length 3.81)
 				(name "GL_B"
 					(effects
@@ -712,7 +712,7 @@
 				)
 			)
 			(pin input line
-				(at 71.12 -40.64 180)
+				(at 30.48 -11.43 180)
 				(length 3.81)
 				(name "SH_B"
 					(effects
@@ -730,7 +730,7 @@
 				)
 			)
 			(pin output line
-				(at 71.12 -38.1 180)
+				(at 30.48 -8.89 180)
 				(length 3.81)
 				(name "GH_B"
 					(effects
@@ -748,7 +748,7 @@
 				)
 			)
 			(pin power_in line
-				(at 71.12 -35.56 180)
+				(at 30.48 -6.35 180)
 				(length 3.81)
 				(name "BST_B"
 					(effects
@@ -766,7 +766,7 @@
 				)
 			)
 			(pin input line
-				(at 71.12 -33.02 180)
+				(at 30.48 -2.54 180)
 				(length 3.81)
 				(name "SL_A"
 					(effects
@@ -784,7 +784,7 @@
 				)
 			)
 			(pin output line
-				(at 71.12 -30.48 180)
+				(at 30.48 0 180)
 				(length 3.81)
 				(name "GL_A"
 					(effects
@@ -802,7 +802,7 @@
 				)
 			)
 			(pin input line
-				(at 71.12 -27.94 180)
+				(at 30.48 2.54 180)
 				(length 3.81)
 				(name "SH_A"
 					(effects
@@ -820,7 +820,7 @@
 				)
 			)
 			(pin output line
-				(at 71.12 -25.4 180)
+				(at 30.48 5.08 180)
 				(length 3.81)
 				(name "GH_A"
 					(effects
@@ -838,7 +838,7 @@
 				)
 			)
 			(pin power_in line
-				(at 71.12 -22.86 180)
+				(at 30.48 7.62 180)
 				(length 3.81)
 				(name "BST_A"
 					(effects
@@ -856,7 +856,7 @@
 				)
 			)
 			(pin input line
-				(at -34.29 -8.89 0)
+				(at -30.48 39.37 0)
 				(length 3.81)
 				(name "VDD_SPI"
 					(effects
@@ -874,7 +874,7 @@
 				)
 			)
 			(pin output line
-				(at 0 -10.16 0)
+				(at -30.48 25.4 0)
 				(length 3.81)
 				(name "*OCTW"
 					(effects
@@ -892,7 +892,7 @@
 				)
 			)
 			(pin output line
-				(at 109.22 16.51 180)
+				(at 30.48 11.43 180)
 				(length 3.81)
 				(name "PH"
 					(effects
@@ -910,7 +910,7 @@
 				)
 			)
 			(pin output line
-				(at 109.22 19.05 180)
+				(at 30.48 13.97 180)
 				(length 3.81)
 				(name "PH"
 					(effects
@@ -928,7 +928,7 @@
 				)
 			)
 			(pin power_in line
-				(at 71.12 -12.7 180)
+				(at 30.48 16.51 180)
 				(length 3.81)
 				(name "BST_BK"
 					(effects
@@ -946,7 +946,7 @@
 				)
 			)
 			(pin power_in line
-				(at 71.12 -10.16 180)
+				(at 30.48 22.86 180)
 				(length 3.81)
 				(name "PVDD2"
 					(effects
@@ -964,7 +964,7 @@
 				)
 			)
 			(pin power_in line
-				(at 71.12 -7.62 180)
+				(at 30.48 25.4 180)
 				(length 3.81)
 				(name "PVDD2"
 					(effects
@@ -982,7 +982,7 @@
 				)
 			)
 			(pin input line
-				(at 71.12 -5.08 180)
+				(at 30.48 29.21 180)
 				(length 3.81)
 				(name "EN_BUCK"
 					(effects
@@ -1000,7 +1000,7 @@
 				)
 			)
 			(pin input line
-				(at 71.12 -2.54 180)
+				(at 30.48 34.29 180)
 				(length 3.81)
 				(name "SS_TR"
 					(effects
@@ -1018,7 +1018,7 @@
 				)
 			)
 			(pin unspecified line
-				(at 22.86 -83.82 90)
+				(at 0 -49.53 90)
 				(length 3.81)
 				(name "EPAD"
 					(effects
@@ -1036,7 +1036,7 @@
 				)
 			)
 			(pin output line
-				(at 0 -12.7 0)
+				(at -30.48 22.86 0)
 				(length 3.81)
 				(name "*FAULT"
 					(effects
@@ -1054,7 +1054,7 @@
 				)
 			)
 			(pin input line
-				(at 0 -15.24 0)
+				(at -30.48 -3.81 0)
 				(length 3.81)
 				(name "DTC"
 					(effects
@@ -1072,7 +1072,7 @@
 				)
 			)
 			(pin input line
-				(at -34.29 -11.43 0)
+				(at -30.48 36.83 0)
 				(length 3.81)
 				(name "*SCS"
 					(effects
@@ -1090,7 +1090,7 @@
 				)
 			)
 			(pin input line
-				(at -34.29 -16.51 0)
+				(at -30.48 31.75 0)
 				(length 3.81)
 				(name "SDI"
 					(effects
@@ -1105,6 +1105,19 @@
 							(size 1.27 1.27)
 						)
 					)
+				)
+			)
+		)
+		(symbol "DRV8301DCAR_1_1"
+			(rectangle
+				(start -26.67 41.91)
+				(end 26.67 -45.72)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
 				)
 			)
 		)
