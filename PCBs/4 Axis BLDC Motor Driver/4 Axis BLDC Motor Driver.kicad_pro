@@ -382,6 +382,15 @@
     "subpart_first_id": 65,
     "subpart_id_separator": 0
   },
-  "sheets": [],
+  "sheets": [
+    [
+      "ab4a55b8-c3db-41f7-ab9b-833d96c51231",
+      "Root"
+    ],
+    [
+      "92386740-c9a5-4737-b98b-a158e43d9c9d",
+      "Motor Drivers"
+    ]
+  ],
   "text_variables": {}
 }

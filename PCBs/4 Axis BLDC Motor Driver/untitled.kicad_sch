@@ -1,0 +1,1148 @@
+(kicad_sch
+	(version 20231120)
+	(generator "eeschema")
+	(generator_version "8.0")
+	(uuid "da6532f1-0702-4e70-9cfd-ad5232ab9378")
+	(paper "A4")
+	(lib_symbols
+		(symbol "EchoSymbols:DRV8313"
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "U"
+				(at 10.668 22.098 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" ""
+				(at -6.35 2.54 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" "Package_SO:HTSSOP-28-1EP_4.4x9.7mm_P0.65mm_EP2.85x5.4mm_ThermalVias"
+				(at -6.35 2.54 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at -6.35 2.54 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" ""
+				(at -6.35 2.54 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "DRV8313_0_1"
+				(rectangle
+					(start -12.7 19.05)
+					(end 11.43 -19.05)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "DRV8313_1_0"
+				(pin power_in line
+					(at 13.97 13.97 180)
+					(length 2.54)
+					(name "CPL"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 13.97 -8.89 180)
+					(length 2.54)
+					(name "PGND3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "10"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at -6.35 21.59 270)
+					(length 2.54)
+					(name "VM"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "11"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -15.24 -16.51 0)
+					(length 2.54)
+					(name "COMPP"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "12"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -15.24 -13.97 0)
+					(length 2.54)
+					(name "COMPN"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "13"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_out line
+					(at 5.08 21.59 270)
+					(length 2.54)
+					(name "V3P3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "15"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -15.24 -3.81 0)
+					(length 2.54)
+					(name "nRESET"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "16"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -15.24 -6.35 0)
+					(length 2.54)
+					(name "nSLEEP"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "17"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin free line
+					(at 13.97 -16.51 180)
+					(length 2.54)
+					(name "nFAULT"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "18"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin free line
+					(at 13.97 -13.97 180)
+					(length 2.54)
+					(name "nCOMPO"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "19"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_out line
+					(at 13.97 11.43 180)
+					(length 2.54)
+					(name "CPH"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at -1.27 -21.59 90)
+					(length 2.54)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "20"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -15.24 11.43 0)
+					(length 2.54)
+					(name "EN3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "22"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -15.24 1.27 0)
+					(length 2.54)
+					(name "IN3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "23"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -15.24 13.97 0)
+					(length 2.54)
+					(name "EN2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "24"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -15.24 3.81 0)
+					(length 2.54)
+					(name "IN2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "25"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -15.24 16.51 0)
+					(length 2.54)
+					(name "EN1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "26"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -15.24 6.35 0)
+					(length 2.54)
+					(name "IN1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "27"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 1.27 -21.59 90)
+					(length 2.54)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "28"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 13.97 16.51 180)
+					(length 2.54)
+					(name "VCP"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at -3.81 21.59 270)
+					(length 2.54)
+					(name "VM"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 13.97 6.35 180)
+					(length 2.54)
+					(name "OUT1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 13.97 -3.81 180)
+					(length 2.54)
+					(name "PGND1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 13.97 -6.35 180)
+					(length 2.54)
+					(name "PGND2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "7"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 13.97 3.81 180)
+					(length 2.54)
+					(name "OUT2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "8"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 13.97 1.27 180)
+					(length 2.54)
+					(name "OUT3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "9"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(symbol "DRV8313_1_1"
+				(text "DRV8313PRP"
+					(at 0 0 0)
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(pin power_in line
+					(at -3.81 -21.59 90)
+					(length 2.54)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "14"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "EchoSymbols:DRV8313")
+		(at 83.82 115.57 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "70be648b-78aa-4ebd-b798-32f490d7d2fb")
+		(property "Reference" "U3"
+			(at 91.0941 92.71 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "~"
+			(at 91.0941 95.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Package_SO:HTSSOP-28-1EP_4.4x9.7mm_P0.65mm_EP2.85x5.4mm_ThermalVias"
+			(at 77.47 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 77.47 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 77.47 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "d71b0e23-db64-400b-8862-98b944c118ad")
+		)
+		(pin "11"
+			(uuid "1c80e7fa-a9fd-43b8-ab30-4ae89b513758")
+		)
+		(pin "28"
+			(uuid "d55026e9-c7b7-4df4-9d0f-1d9e80db8eb9")
+		)
+		(pin "17"
+			(uuid "18cc964a-5321-4566-ad08-7209962bed11")
+		)
+		(pin "20"
+			(uuid "badd632d-ece9-495b-a325-d44f559acc83")
+		)
+		(pin "6"
+			(uuid "45089112-5d12-45fb-845e-ba7ea9ac87a8")
+		)
+		(pin "7"
+			(uuid "c9fc4cf2-715e-4033-b001-9d647c6c0c44")
+		)
+		(pin "9"
+			(uuid "32c55c49-9b33-4ffd-86de-a8b67645d8a3")
+		)
+		(pin "26"
+			(uuid "ae77b7f2-83d7-4fb2-adeb-6ff34fb530fc")
+		)
+		(pin "1"
+			(uuid "3da240fc-aec7-455c-a92a-982d1d7077de")
+		)
+		(pin "13"
+			(uuid "0fa45f5e-2429-4ffd-8c9e-bf5f73afefa9")
+		)
+		(pin "25"
+			(uuid "f1a0fb03-c826-4e15-8c61-c88dfb1aa180")
+		)
+		(pin "18"
+			(uuid "1a1ae3ac-9113-4b2f-9fca-12a9ba8ea406")
+		)
+		(pin "12"
+			(uuid "f5fcdfd8-9b1e-4845-8fa2-3d088798c8b8")
+		)
+		(pin "10"
+			(uuid "277e7265-a9a1-45aa-b86a-39e9df803d3d")
+		)
+		(pin "24"
+			(uuid "3007291f-a5b6-4716-91b5-ebf913418b86")
+		)
+		(pin "27"
+			(uuid "a17d2fa8-1716-4085-890e-803884b59a4e")
+		)
+		(pin "15"
+			(uuid "6cc5f675-528e-40ee-ac31-2d5451bce396")
+		)
+		(pin "22"
+			(uuid "d9ed6f7b-6125-4a06-8416-23cbd1c94cf0")
+		)
+		(pin "23"
+			(uuid "20853d96-7a7a-4ece-b6f6-98c01167039f")
+		)
+		(pin "19"
+			(uuid "2e4c888b-ff41-4733-9ac2-b777b893d801")
+		)
+		(pin "16"
+			(uuid "b2bfa3df-fe5c-434e-9d14-5e6779e0851e")
+		)
+		(pin "8"
+			(uuid "f7103728-80bb-4c63-888f-45c93ec9c92e")
+		)
+		(pin "4"
+			(uuid "8d87f70c-e7e2-49d0-8923-4b60feded515")
+		)
+		(pin "14"
+			(uuid "0b771ba6-8d67-4539-8b8e-467ec3c3b5fe")
+		)
+		(pin "5"
+			(uuid "585752bb-2720-4ee0-b4d7-afd214e989d5")
+		)
+		(pin "3"
+			(uuid "f903f007-e312-444a-a123-8b67c4a90d3b")
+		)
+		(instances
+			(project "4 Axis BLDC Motor Driver"
+				(path "/ab4a55b8-c3db-41f7-ab9b-833d96c51231/92386740-c9a5-4737-b98b-a158e43d9c9d"
+					(reference "U3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "EchoSymbols:DRV8313")
+		(at 170.18 114.3 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "77f858a7-ee61-4d92-803f-0d10e40ea939")
+		(property "Reference" "U5"
+			(at 177.4541 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "~"
+			(at 177.4541 93.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Package_SO:HTSSOP-28-1EP_4.4x9.7mm_P0.65mm_EP2.85x5.4mm_ThermalVias"
+			(at 163.83 111.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 163.83 111.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 163.83 111.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "97c9dd59-29ca-44e9-9f61-60a09941736b")
+		)
+		(pin "11"
+			(uuid "64c0e831-c216-427a-8824-c97827ddfaf9")
+		)
+		(pin "28"
+			(uuid "397e0101-59bd-4444-97d6-f4179ce4be95")
+		)
+		(pin "17"
+			(uuid "210b37f6-f306-4873-9e62-316f63877cda")
+		)
+		(pin "20"
+			(uuid "c76db2ae-ef00-4f76-b62c-8b24fefdc004")
+		)
+		(pin "6"
+			(uuid "5dc05f13-3277-4114-80b5-6a27ecb09d49")
+		)
+		(pin "7"
+			(uuid "c7a733a3-35ef-49a8-a129-fc560f9b7d38")
+		)
+		(pin "9"
+			(uuid "1d5452f2-137c-49f1-98ac-40db0efccd8d")
+		)
+		(pin "26"
+			(uuid "8c9a1e32-1fba-45bc-96be-9e08ba7adb14")
+		)
+		(pin "1"
+			(uuid "dcf59503-27d3-42b6-b1b2-78100caa2619")
+		)
+		(pin "13"
+			(uuid "b783996f-70c6-487e-b177-00dc4f8efd4c")
+		)
+		(pin "25"
+			(uuid "a47576f7-aa43-4134-9362-75d53bd28088")
+		)
+		(pin "18"
+			(uuid "974ad2b0-6cbd-4258-86ba-99d0477947ff")
+		)
+		(pin "12"
+			(uuid "1ba415cb-1e86-4bd1-b12b-03b150a4008c")
+		)
+		(pin "10"
+			(uuid "00e45f3f-beb4-4ca0-a4d6-92dc629ca003")
+		)
+		(pin "24"
+			(uuid "e46d8bdb-ed10-4b75-83ad-b78c8fab7ec3")
+		)
+		(pin "27"
+			(uuid "72dc10b4-a9c9-4bee-9de4-29986e3e716a")
+		)
+		(pin "15"
+			(uuid "41a0a301-e123-4691-9bcc-5951700417d5")
+		)
+		(pin "22"
+			(uuid "eeb46f02-33b9-4d69-8ade-c4a865035655")
+		)
+		(pin "23"
+			(uuid "0baff45a-8065-423b-a7b3-6f68b0b7f8aa")
+		)
+		(pin "19"
+			(uuid "b2d8b2c0-950b-4c5b-b458-15144e093aa1")
+		)
+		(pin "16"
+			(uuid "42f365f6-bc3c-4ec0-8820-bad7e2e34905")
+		)
+		(pin "8"
+			(uuid "c85024a2-8e49-46c6-bae7-86b061c42dc3")
+		)
+		(pin "4"
+			(uuid "a61d0f10-1e02-4712-9666-9a2ca37114cc")
+		)
+		(pin "14"
+			(uuid "4a42cc95-90ba-452a-b91c-8963f44037f7")
+		)
+		(pin "5"
+			(uuid "5761c264-ae4e-4ac9-9abc-ebcf4e0a177b")
+		)
+		(pin "3"
+			(uuid "6034e21f-2d10-4009-9d60-3b6c8f5f333f")
+		)
+		(instances
+			(project "4 Axis BLDC Motor Driver"
+				(path "/ab4a55b8-c3db-41f7-ab9b-833d96c51231/92386740-c9a5-4737-b98b-a158e43d9c9d"
+					(reference "U5")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "EchoSymbols:DRV8313")
+		(at 168.91 49.53 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "a7984e80-87cd-4637-b600-4aad4cfe06a6")
+		(property "Reference" "U4"
+			(at 176.1841 26.67 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "~"
+			(at 176.1841 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Package_SO:HTSSOP-28-1EP_4.4x9.7mm_P0.65mm_EP2.85x5.4mm_ThermalVias"
+			(at 162.56 46.99 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 162.56 46.99 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 162.56 46.99 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "9c785267-d786-4025-86ea-df9127163829")
+		)
+		(pin "11"
+			(uuid "99a3da42-6216-4d8c-a891-c7b289196aa4")
+		)
+		(pin "28"
+			(uuid "4403a80d-ebdd-4414-81ac-7e7e52909685")
+		)
+		(pin "17"
+			(uuid "b1029f0f-bdd6-4f2d-8f0a-f8795f3c815b")
+		)
+		(pin "20"
+			(uuid "531690d0-15d2-4d91-8753-1af4c2d29ae0")
+		)
+		(pin "6"
+			(uuid "b250719d-3f74-4595-8f91-6e2c8fdc036d")
+		)
+		(pin "7"
+			(uuid "3ce801f9-8e00-429a-b5fa-76b77f5f41d7")
+		)
+		(pin "9"
+			(uuid "42bdb777-587a-427f-a5c7-ac2c141a1c9c")
+		)
+		(pin "26"
+			(uuid "18027dc2-7b27-47da-9840-03a4f3465abc")
+		)
+		(pin "1"
+			(uuid "cd6958a1-8d62-4bc1-bed1-f9ac7359e06b")
+		)
+		(pin "13"
+			(uuid "e86aac37-3861-463e-802e-eb136736411c")
+		)
+		(pin "25"
+			(uuid "313b2dd5-67c4-484d-9246-e1ae309e7246")
+		)
+		(pin "18"
+			(uuid "d7c8217f-f385-4b1c-8612-eb8c5c880434")
+		)
+		(pin "12"
+			(uuid "c196a671-1297-45d3-b623-3c7570c85a0e")
+		)
+		(pin "10"
+			(uuid "b665bb4e-596e-4566-83ab-3b6c3439e720")
+		)
+		(pin "24"
+			(uuid "a1139691-00a5-4247-8342-02e5f714a4c1")
+		)
+		(pin "27"
+			(uuid "72d80e12-ccc5-4478-848c-7a2ee1efd073")
+		)
+		(pin "15"
+			(uuid "07c80c00-ac56-471e-b65c-49774c19f349")
+		)
+		(pin "22"
+			(uuid "634098d8-6733-48ac-bf14-b6e23c734de5")
+		)
+		(pin "23"
+			(uuid "bd604e00-5bb3-4d1a-a0c8-4c920d292f02")
+		)
+		(pin "19"
+			(uuid "d356f891-dc5b-4668-ae8a-804c2a400489")
+		)
+		(pin "16"
+			(uuid "0c91d5d2-c7f6-420c-8871-3b4f0301c9df")
+		)
+		(pin "8"
+			(uuid "30a99bc3-9698-40de-b33a-54761250d5ff")
+		)
+		(pin "4"
+			(uuid "8e4436ce-e221-4970-a3fe-186cb6200077")
+		)
+		(pin "14"
+			(uuid "4216fe63-1b7c-4f46-b26c-ebfef9b6f678")
+		)
+		(pin "5"
+			(uuid "c3c43867-ae4a-4f4f-89bf-c35bb4503070")
+		)
+		(pin "3"
+			(uuid "3b446362-d1a3-4c67-ab89-f25282887d82")
+		)
+		(instances
+			(project "4 Axis BLDC Motor Driver"
+				(path "/ab4a55b8-c3db-41f7-ab9b-833d96c51231/92386740-c9a5-4737-b98b-a158e43d9c9d"
+					(reference "U4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "EchoSymbols:DRV8313")
+		(at 83.82 50.8 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "e1e2c970-bd30-4098-a577-9bca3aa1fda9")
+		(property "Reference" "U2"
+			(at 91.0941 27.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "~"
+			(at 91.0941 30.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Package_SO:HTSSOP-28-1EP_4.4x9.7mm_P0.65mm_EP2.85x5.4mm_ThermalVias"
+			(at 77.47 48.26 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 77.47 48.26 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 77.47 48.26 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "aac37f05-0997-45af-9300-7bc25da9e189")
+		)
+		(pin "11"
+			(uuid "86a9e5bf-a7d1-42cd-a5ff-c83924dbe906")
+		)
+		(pin "28"
+			(uuid "34a02909-3c6c-4ef4-823c-a378df0a73d9")
+		)
+		(pin "17"
+			(uuid "9242e02d-b482-48e3-91be-8ef51c7aa1ed")
+		)
+		(pin "20"
+			(uuid "2d65e9f9-b559-442f-99e6-4caf97c69b9c")
+		)
+		(pin "6"
+			(uuid "17ceb258-06a2-48a8-9efc-3f7eeba3d21c")
+		)
+		(pin "7"
+			(uuid "dce479ca-23d4-4265-8080-abba6a88342e")
+		)
+		(pin "9"
+			(uuid "7b5159a3-968c-4891-81d6-a21e6b4a4c3b")
+		)
+		(pin "26"
+			(uuid "a34d8d9c-fa91-4e3c-b139-f588073f2cb1")
+		)
+		(pin "1"
+			(uuid "bfe3ae82-f19a-4c3d-9287-6dc887e08000")
+		)
+		(pin "13"
+			(uuid "0980e9eb-c983-424b-aae5-834cca8da7a3")
+		)
+		(pin "25"
+			(uuid "6cc7227e-45cf-47bf-85d4-31b0a17929ea")
+		)
+		(pin "18"
+			(uuid "174d522d-83d8-4743-a304-15035036fdd2")
+		)
+		(pin "12"
+			(uuid "883e4d4d-2ac3-4860-ac50-5168c69415f5")
+		)
+		(pin "10"
+			(uuid "6a982585-3719-4f93-a1c4-dfbd68265b0a")
+		)
+		(pin "24"
+			(uuid "932c92b5-0afa-42bc-a603-78edc1acbc41")
+		)
+		(pin "27"
+			(uuid "3320c60f-cb35-48cc-8e0c-821467faa862")
+		)
+		(pin "15"
+			(uuid "ee736fab-71b7-49df-82ec-a5c9b183ef4a")
+		)
+		(pin "22"
+			(uuid "d9b51271-a373-4950-beac-9571da02facf")
+		)
+		(pin "23"
+			(uuid "6f5b9111-851a-4e86-b580-ef420f3d04da")
+		)
+		(pin "19"
+			(uuid "82913e13-ecda-4414-8adf-e0dff98a8fa9")
+		)
+		(pin "16"
+			(uuid "9774f894-0bc9-45fc-9030-bb77e8679f73")
+		)
+		(pin "8"
+			(uuid "bc48ad4a-15b4-43ce-b944-217566f48939")
+		)
+		(pin "4"
+			(uuid "9af12226-79d9-4a1c-baba-521e6c848b14")
+		)
+		(pin "14"
+			(uuid "867666ca-6a18-452a-996a-6d35186bf8dc")
+		)
+		(pin "5"
+			(uuid "2f3e520f-1d35-49a7-8ebb-f87f545480f1")
+		)
+		(pin "3"
+			(uuid "a0fc9a71-5b4a-433c-9caf-fc99fb45c9b3")
+		)
+		(instances
+			(project "4 Axis BLDC Motor Driver"
+				(path "/ab4a55b8-c3db-41f7-ab9b-833d96c51231/92386740-c9a5-4737-b98b-a158e43d9c9d"
+					(reference "U2")
+					(unit 1)
+				)
+			)
+		)
+	)
+)
