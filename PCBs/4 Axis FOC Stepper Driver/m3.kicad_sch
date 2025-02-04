@@ -1,0 +1,712 @@
+(kicad_sch
+	(version 20231120)
+	(generator "eeschema")
+	(generator_version "8.0")
+	(uuid "22c54e61-288f-4a7b-97a0-b0983de54e3c")
+	(paper "A4")
+	(lib_symbols
+		(symbol "Amplifier_Operational:TSV994"
+			(pin_names
+				(offset 0.127)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "U"
+				(at 0 5.08 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "TSV994"
+				(at 0 -5.08 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" ""
+				(at -1.27 2.54 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "https://www.st.com/resource/en/datasheet/tsv994.pdf"
+				(at 1.27 5.08 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Quad Rail-to-rail, 20 MHz GBP, operational amplifiers, SOIC-14/TSSOP-14"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_locked" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "quad opamp"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "SOIC*3.9x8.7mm*P1.27mm* DIP*W7.62mm* TSSOP*4.4x5mm*P0.65mm* SSOP*5.3x6.2mm*P0.65mm* MSOP*3x3mm*P0.5mm*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "TSV994_1_1"
+				(polyline
+					(pts
+						(xy -5.08 5.08) (xy 5.08 0) (xy -5.08 -5.08) (xy -5.08 5.08)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+				(pin output line
+					(at 7.62 0 180)
+					(length 2.54)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -7.62 -2.54 0)
+					(length 2.54)
+					(name "-"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -7.62 2.54 0)
+					(length 2.54)
+					(name "+"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(symbol "TSV994_2_1"
+				(polyline
+					(pts
+						(xy -5.08 5.08) (xy 5.08 0) (xy -5.08 -5.08) (xy -5.08 5.08)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+				(pin input line
+					(at -7.62 2.54 0)
+					(length 2.54)
+					(name "+"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -7.62 -2.54 0)
+					(length 2.54)
+					(name "-"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 7.62 0 180)
+					(length 2.54)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "7"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(symbol "TSV994_3_1"
+				(polyline
+					(pts
+						(xy -5.08 5.08) (xy 5.08 0) (xy -5.08 -5.08) (xy -5.08 5.08)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+				(pin input line
+					(at -7.62 2.54 0)
+					(length 2.54)
+					(name "+"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "10"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 7.62 0 180)
+					(length 2.54)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "8"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -7.62 -2.54 0)
+					(length 2.54)
+					(name "-"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "9"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(symbol "TSV994_4_1"
+				(polyline
+					(pts
+						(xy -5.08 5.08) (xy 5.08 0) (xy -5.08 -5.08) (xy -5.08 5.08)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+				(pin input line
+					(at -7.62 2.54 0)
+					(length 2.54)
+					(name "+"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "12"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -7.62 -2.54 0)
+					(length 2.54)
+					(name "-"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "13"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 7.62 0 180)
+					(length 2.54)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "14"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(symbol "TSV994_5_1"
+				(pin power_in line
+					(at -2.54 -7.62 90)
+					(length 3.81)
+					(name "V-"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "11"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at -2.54 7.62 270)
+					(length 3.81)
+					(name "V+"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Amplifier_Operational:TSV994")
+		(at 194.31 58.42 0)
+		(unit 5)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "07be35be-b17b-4d06-857a-bb9e706d9721")
+		(property "Reference" "U4"
+			(at 193.04 57.1499 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "TSV994"
+			(at 193.04 59.6899 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 193.04 55.88 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://www.st.com/resource/en/datasheet/tsv994.pdf"
+			(at 195.58 53.34 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Quad Rail-to-rail, 20 MHz GBP, operational amplifiers, SOIC-14/TSSOP-14"
+			(at 194.31 58.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "5"
+			(uuid "b8862194-1a23-4b5d-996b-11693ec46af5")
+		)
+		(pin "7"
+			(uuid "87946af6-fbf2-4456-80a6-c73fc3c388e1")
+		)
+		(pin "11"
+			(uuid "16d5b275-dad9-4090-a71d-f66608607842")
+		)
+		(pin "2"
+			(uuid "3e1d864f-5050-40c2-8a13-728f8f550e3b")
+		)
+		(pin "3"
+			(uuid "7588ac8f-b23a-4ccd-8892-d5a9d3cb6252")
+		)
+		(pin "6"
+			(uuid "6815e482-ec34-436a-ac00-f502b94a24e9")
+		)
+		(pin "8"
+			(uuid "772f1b40-76b3-48c2-85ce-b71ccd3ba78a")
+		)
+		(pin "9"
+			(uuid "1e573c9c-7571-4b34-9770-bc4eb1bcec7a")
+		)
+		(pin "1"
+			(uuid "627ed4b7-be32-45c2-baf9-788dce3a9ee6")
+		)
+		(pin "10"
+			(uuid "eff18453-562f-4d51-b8cc-c23691a871e0")
+		)
+		(pin "12"
+			(uuid "17a04234-8ae9-41f9-9193-43fb4a416038")
+		)
+		(pin "13"
+			(uuid "76bc4722-d89b-4e4b-bb1b-01104fe64d89")
+		)
+		(pin "14"
+			(uuid "1b6ecc6a-c61c-49db-8ce2-51650d9e9f0c")
+		)
+		(pin "4"
+			(uuid "b966623b-732b-4bbc-9ce7-691d5a5f0d9a")
+		)
+		(instances
+			(project "4 Axis FOC Stepper Driver"
+				(path "/e91d8688-a49f-47f5-b4fd-09a07252fdc2/c5077f9a-d78a-42f1-900d-f95435d40cb7"
+					(reference "U4")
+					(unit 5)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Amplifier_Operational:TSV994")
+		(at 105.41 59.69 0)
+		(unit 2)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "27633911-ad20-4433-9724-92f4c1d1cbfe")
+		(property "Reference" "U4"
+			(at 105.41 49.53 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "TSV994"
+			(at 105.41 52.07 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 104.14 57.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://www.st.com/resource/en/datasheet/tsv994.pdf"
+			(at 106.68 54.61 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Quad Rail-to-rail, 20 MHz GBP, operational amplifiers, SOIC-14/TSSOP-14"
+			(at 105.41 59.69 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "5"
+			(uuid "04c1c414-7767-44fa-80ac-8a22ffb3bb48")
+		)
+		(pin "7"
+			(uuid "8d91abdb-78fc-493e-833b-5b98b39055c2")
+		)
+		(pin "11"
+			(uuid "8d36964c-59a5-4fb9-abce-cf7c7697a01a")
+		)
+		(pin "2"
+			(uuid "3e1d864f-5050-40c2-8a13-728f8f550e39")
+		)
+		(pin "3"
+			(uuid "7588ac8f-b23a-4ccd-8892-d5a9d3cb6250")
+		)
+		(pin "6"
+			(uuid "f4b8dd8d-d99a-4936-922e-fb70439b742f")
+		)
+		(pin "8"
+			(uuid "772f1b40-76b3-48c2-85ce-b71ccd3ba788")
+		)
+		(pin "9"
+			(uuid "1e573c9c-7571-4b34-9770-bc4eb1bcec78")
+		)
+		(pin "1"
+			(uuid "627ed4b7-be32-45c2-baf9-788dce3a9ee4")
+		)
+		(pin "10"
+			(uuid "eff18453-562f-4d51-b8cc-c23691a871de")
+		)
+		(pin "12"
+			(uuid "17a04234-8ae9-41f9-9193-43fb4a416036")
+		)
+		(pin "13"
+			(uuid "76bc4722-d89b-4e4b-bb1b-01104fe64d87")
+		)
+		(pin "14"
+			(uuid "1b6ecc6a-c61c-49db-8ce2-51650d9e9f0a")
+		)
+		(pin "4"
+			(uuid "8b26eb56-fa2c-4c82-90ae-e8b1ce488a2d")
+		)
+		(instances
+			(project "4 Axis FOC Stepper Driver"
+				(path "/e91d8688-a49f-47f5-b4fd-09a07252fdc2/c5077f9a-d78a-42f1-900d-f95435d40cb7"
+					(reference "U4")
+					(unit 2)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Amplifier_Operational:TSV994")
+		(at 80.01 59.69 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "fcbb6059-a5c2-4a50-ac09-488fa8fc08d0")
+		(property "Reference" "U4"
+			(at 80.01 49.53 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "TSV994"
+			(at 80.01 52.07 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 78.74 57.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://www.st.com/resource/en/datasheet/tsv994.pdf"
+			(at 81.28 54.61 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Quad Rail-to-rail, 20 MHz GBP, operational amplifiers, SOIC-14/TSSOP-14"
+			(at 80.01 59.69 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "5"
+			(uuid "b8862194-1a23-4b5d-996b-11693ec46af7")
+		)
+		(pin "7"
+			(uuid "87946af6-fbf2-4456-80a6-c73fc3c388e3")
+		)
+		(pin "11"
+			(uuid "8d36964c-59a5-4fb9-abce-cf7c7697a01e")
+		)
+		(pin "2"
+			(uuid "a60d7d15-3ee9-49a7-bf34-f88b408f53dd")
+		)
+		(pin "3"
+			(uuid "22bed55a-0989-4174-91de-9325f862116b")
+		)
+		(pin "6"
+			(uuid "6815e482-ec34-436a-ac00-f502b94a24eb")
+		)
+		(pin "8"
+			(uuid "772f1b40-76b3-48c2-85ce-b71ccd3ba78c")
+		)
+		(pin "9"
+			(uuid "1e573c9c-7571-4b34-9770-bc4eb1bcec7c")
+		)
+		(pin "1"
+			(uuid "f44f0508-4634-4581-8c3b-fc58746f5866")
+		)
+		(pin "10"
+			(uuid "eff18453-562f-4d51-b8cc-c23691a871e2")
+		)
+		(pin "12"
+			(uuid "17a04234-8ae9-41f9-9193-43fb4a41603a")
+		)
+		(pin "13"
+			(uuid "76bc4722-d89b-4e4b-bb1b-01104fe64d8b")
+		)
+		(pin "14"
+			(uuid "1b6ecc6a-c61c-49db-8ce2-51650d9e9f0e")
+		)
+		(pin "4"
+			(uuid "8b26eb56-fa2c-4c82-90ae-e8b1ce488a31")
+		)
+		(instances
+			(project "4 Axis FOC Stepper Driver"
+				(path "/e91d8688-a49f-47f5-b4fd-09a07252fdc2/c5077f9a-d78a-42f1-900d-f95435d40cb7"
+					(reference "U4")
+					(unit 1)
+				)
+			)
+		)
+	)
+)
