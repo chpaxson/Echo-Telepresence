@@ -69,7 +69,7 @@
 				)
 			)
 			(pin unspecified line
-				(at -13.97 1.27 0)
+				(at -13.97 -1.27 0)
 				(length 2.54)
 				(name "IN2"
 					(effects
@@ -87,7 +87,7 @@
 				)
 			)
 			(pin unspecified line
-				(at -13.97 -1.27 0)
+				(at -13.97 1.27 0)
 				(length 2.54)
 				(name "IN1"
 					(effects
@@ -159,7 +159,7 @@
 				)
 			)
 			(pin unspecified line
-				(at -1.27 -15.24 90)
+				(at -1.27 -12.7 90)
 				(length 2.54)
 				(name "GND"
 					(effects
@@ -195,7 +195,7 @@
 				)
 			)
 			(pin unspecified line
-				(at 1.27 -15.24 90)
+				(at 1.27 -12.7 90)
 				(length 2.54)
 				(name "GND"
 					(effects
@@ -216,7 +216,7 @@
 		(symbol "DRV8251A_1_1"
 			(rectangle
 				(start -11.43 10.16)
-				(end 11.43 -12.7)
+				(end 11.43 -10.16)
 				(stroke
 					(width 0)
 					(type default)

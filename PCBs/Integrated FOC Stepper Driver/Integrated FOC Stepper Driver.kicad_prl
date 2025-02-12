@@ -74,7 +74,7 @@
     "ssh_key": ""
   },
   "meta": {
-    "filename": "4 Axis BLDC Motor Driver.kicad_prl",
+    "filename": "Integrated FOC Stepper Driver.kicad_prl",
     "version": 3
   },
   "project": {

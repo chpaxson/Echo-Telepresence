@@ -239,7 +239,7 @@
     "pinned_symbol_libs": []
   },
   "meta": {
-    "filename": "Encoder Module.kicad_pro",
+    "filename": "Integrated FOC Stepper Driver.kicad_pro",
     "version": 1
   },
   "net_settings": {
@@ -384,8 +384,12 @@
   },
   "sheets": [
     [
-      "bcb662a6-049c-4134-b133-1d5b2c5a2dcf",
+      "d423f88b-f91b-436a-af28-14e717307787",
       "Root"
+    ],
+    [
+      "6a52ef1b-1fac-40de-8a96-abd543194548",
+      "Motor Driver"
     ]
   ],
   "text_variables": {}
