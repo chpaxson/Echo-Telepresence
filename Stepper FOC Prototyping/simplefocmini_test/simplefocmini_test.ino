@@ -1,8 +1,8 @@
 #include <SimpleFOC.h>
 
 
-BLDCMotor motor = BLDCMotor(14, 10.4, 260);
-BLDCDriver3PWM driver = BLDCDriver3PWM(14, 32, 15, 33);
+StepperMotor motor = StepperMotor(50, 1.7);
+StepperDriver4PWM driver = StepperDriver4PWM(14, 15, 27, 13, 33, 33);
 MagneticSensorI2C sensor = MagneticSensorI2C(AS5600_I2C);
 
 Commander command = Commander(Serial);
@@ -27,9 +27,8 @@ void setup() {
   motor.linkSensor(&sensor);
   motor.linkDriver(&driver);
 
-  motor.foc_modulation = FOCModulationType::SpaceVectorPWM;
-  motor.controller = MotionControlType::angle;
-  motor.velocity_limit = 4;
+  motor.controller = MotionControlType::torque;
+  motor.velocity_limit = 50;
 
   motor.PID_velocity.P = 0.2;
   motor.PID_velocity.I = 20;
