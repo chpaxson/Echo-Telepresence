@@ -1287,6 +1287,151 @@
 				)
 			)
 		)
+		(symbol "Device:D_Schottky"
+			(pin_numbers hide)
+			(pin_names
+				(offset 1.016) hide)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "D"
+				(at 0 2.54 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "D_Schottky"
+				(at 0 -2.54 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Schottky diode"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "diode Schottky"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "TO-???* *_Diode_* *SingleDiode* D_*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "D_Schottky_0_1"
+				(polyline
+					(pts
+						(xy 1.27 0) (xy -1.27 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 1.27) (xy 1.27 -1.27) (xy -1.27 0) (xy 1.27 1.27)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -1.905 0.635) (xy -1.905 1.27) (xy -1.27 1.27) (xy -1.27 -1.27) (xy -0.635 -1.27) (xy -0.635 -0.635)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "D_Schottky_1_1"
+				(pin passive line
+					(at -3.81 0 0)
+					(length 2.54)
+					(name "K"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 3.81 0 180)
+					(length 2.54)
+					(name "A"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+		)
 		(symbol "Device:D_TVS"
 			(pin_numbers hide)
 			(pin_names
@@ -3850,6 +3995,142 @@
 				)
 			)
 		)
+		(symbol "Regulator_Linear:AMS1117"
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "U"
+				(at -3.81 3.175 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "AMS1117"
+				(at 0 3.175 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" "Package_TO_SOT_SMD:SOT-223-3_TabPin2"
+				(at 0 5.08 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "http://www.advanced-monolithic.com/pdf/ds1117.pdf"
+				(at 2.54 -6.35 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "1A Low Dropout regulator, positive, adjustable output, SOT-223"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "linear regulator ldo adjustable positive"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "SOT?223*TabPin2*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "AMS1117_0_1"
+				(rectangle
+					(start -5.08 -5.08)
+					(end 5.08 1.905)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+			)
+			(symbol "AMS1117_1_1"
+				(pin input line
+					(at 0 -7.62 90)
+					(length 2.54)
+					(name "ADJ"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_out line
+					(at 7.62 0 180)
+					(length 2.54)
+					(name "VO"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at -7.62 0 0)
+					(length 2.54)
+					(name "VI"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+		)
 		(symbol "Sensor_Magnetic:MT6701CT"
 			(exclude_from_sim no)
 			(in_bom yes)
@@ -5001,6 +5282,18 @@
 		(uuid "05259e1d-af8f-42b0-93b7-37e6400c6e2a")
 	)
 	(junction
+		(at 39.37 124.46)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "0571bcf5-6164-49dd-846f-48ae2e7010ff")
+	)
+	(junction
+		(at 39.37 105.41)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "071c25eb-2025-4661-b58f-5a6928beb1f2")
+	)
+	(junction
 		(at 21.59 90.17)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -5109,10 +5402,16 @@
 		(uuid "587f4d97-178f-4dd7-86c6-73508e0fb0f9")
 	)
 	(junction
-		(at 48.26 52.07)
+		(at 15.24 105.41)
 		(diameter 0)
 		(color 0 0 0 0)
-		(uuid "634fb408-055c-4e92-b179-5d5b08a399c6")
+		(uuid "63a3f54b-b845-4019-bb1d-a20ad86ecf09")
+	)
+	(junction
+		(at 15.24 124.46)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "6a2eb43b-0d74-49af-a92f-4236392dae2a")
 	)
 	(junction
 		(at 83.82 161.29)
@@ -5145,6 +5444,12 @@
 		(uuid "81258f63-cf02-4c01-afd2-8fcb23bf6848")
 	)
 	(junction
+		(at 39.37 113.03)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "818f7da9-e1a1-476f-8746-efd9b23a61e8")
+	)
+	(junction
 		(at 96.52 115.57)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -5155,6 +5460,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "909b0bd6-7a8d-490c-b797-b98dc8b99f75")
+	)
+	(junction
+		(at 45.72 52.07)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "94cdf1ff-ab1d-4a50-b2fb-f7c6ea07fecf")
 	)
 	(junction
 		(at 130.81 196.85)
@@ -5229,10 +5540,28 @@
 		(uuid "ebf75939-17ef-4b2a-84dd-007159f476db")
 	)
 	(junction
+		(at 29.21 113.03)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "ed7cd82b-bfd4-4de5-9935-1cc1ac06cbd6")
+	)
+	(junction
 		(at 200.66 156.21)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "f6987225-70f6-43b5-9315-6e27e59eb0ca")
+	)
+	(junction
+		(at 29.21 132.08)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "f80eafba-86ed-4410-b9f9-a104635cac8e")
+	)
+	(junction
+		(at 39.37 132.08)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "fb8ba863-99e5-4217-b73e-54be908a7e85")
 	)
 	(junction
 		(at 153.67 167.64)
@@ -5319,6 +5648,16 @@
 	(no_connect
 		(at 49.53 186.69)
 		(uuid "efe51ade-ad7a-4022-8b2f-aa1e602d8da8")
+	)
+	(wire
+		(pts
+			(xy 15.24 105.41) (xy 21.59 105.41)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "035a32d6-8f02-4544-8fcc-014ad7a105f1")
 	)
 	(wire
 		(pts
@@ -5412,6 +5751,16 @@
 	)
 	(wire
 		(pts
+			(xy 29.21 132.08) (xy 39.37 132.08)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "15582868-cd05-4606-87fc-afad3cb448d6")
+	)
+	(wire
+		(pts
 			(xy 152.4 35.56) (xy 149.86 35.56)
 		)
 		(stroke
@@ -5492,6 +5841,16 @@
 	)
 	(wire
 		(pts
+			(xy 39.37 105.41) (xy 41.91 105.41)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "22c7a5db-bbf7-4719-8cc6-f32245359b5a")
+	)
+	(wire
+		(pts
 			(xy 236.22 120.65) (xy 236.22 123.19)
 		)
 		(stroke
@@ -5499,6 +5858,16 @@
 			(type default)
 		)
 		(uuid "248636b7-68a4-48a7-9048-4cb9d31760a9")
+	)
+	(wire
+		(pts
+			(xy 15.24 113.03) (xy 29.21 113.03)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "26a23011-e549-4b58-9cf6-efd73f8ed53c")
 	)
 	(wire
 		(pts
@@ -5512,7 +5881,7 @@
 	)
 	(wire
 		(pts
-			(xy 57.15 52.07) (xy 57.15 50.8)
+			(xy 45.72 52.07) (xy 45.72 50.8)
 		)
 		(stroke
 			(width 0)
@@ -5812,7 +6181,7 @@
 	)
 	(wire
 		(pts
-			(xy 44.45 52.07) (xy 48.26 52.07)
+			(xy 44.45 52.07) (xy 45.72 52.07)
 		)
 		(stroke
 			(width 0)
@@ -5992,6 +6361,16 @@
 	)
 	(wire
 		(pts
+			(xy 15.24 132.08) (xy 29.21 132.08)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7eba008c-ecad-40e5-973d-2577ab8cab9a")
+	)
+	(wire
+		(pts
 			(xy 236.22 166.37) (xy 238.76 166.37)
 		)
 		(stroke
@@ -6132,6 +6511,26 @@
 	)
 	(wire
 		(pts
+			(xy 60.96 52.07) (xy 58.42 52.07)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9ce3f9fe-21c2-4d45-a313-669a3a89e3bd")
+	)
+	(wire
+		(pts
+			(xy 45.72 52.07) (xy 50.8 52.07)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9e0391e6-fea0-4697-9aac-1da580f36303")
+	)
+	(wire
+		(pts
 			(xy 109.22 154.94) (xy 113.03 154.94)
 		)
 		(stroke
@@ -6149,6 +6548,16 @@
 			(type default)
 		)
 		(uuid "9f7ad491-f156-4268-bd2f-4609dd477cab")
+	)
+	(wire
+		(pts
+			(xy 36.83 124.46) (xy 39.37 124.46)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a054de33-5639-4be9-884f-4b3e041bea88")
 	)
 	(wire
 		(pts
@@ -6219,6 +6628,16 @@
 			(type default)
 		)
 		(uuid "aabd2b45-094c-4bdd-b287-d58a6cfacb8c")
+	)
+	(wire
+		(pts
+			(xy 29.21 113.03) (xy 39.37 113.03)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "adda2ce4-0bcb-4a58-a435-5b62b7ffd4cf")
 	)
 	(wire
 		(pts
@@ -6302,13 +6721,13 @@
 	)
 	(wire
 		(pts
-			(xy 48.26 50.8) (xy 48.26 52.07)
+			(xy 36.83 105.41) (xy 39.37 105.41)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "c10ffa15-f0e6-4138-b621-6010d04cf55f")
+		(uuid "c0b7a526-e2ec-4bf2-aedd-2229b723db0f")
 	)
 	(wire
 		(pts
@@ -6329,16 +6748,6 @@
 			(type default)
 		)
 		(uuid "c2d31211-38e9-42a1-b7b3-0b83f86903e3")
-	)
-	(wire
-		(pts
-			(xy 48.26 52.07) (xy 57.15 52.07)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "c33fe0e7-5331-4482-b2cb-5ec7f72ba455")
 	)
 	(wire
 		(pts
@@ -6442,6 +6851,16 @@
 	)
 	(wire
 		(pts
+			(xy 15.24 124.46) (xy 21.59 124.46)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "cffd7574-6682-430d-805f-1d7aa51c71e6")
+	)
+	(wire
+		(pts
 			(xy 27.94 31.75) (xy 35.56 31.75)
 		)
 		(stroke
@@ -6499,6 +6918,16 @@
 			(type default)
 		)
 		(uuid "e1826d5f-2987-488c-ba5b-4a09c9e6d934")
+	)
+	(wire
+		(pts
+			(xy 39.37 124.46) (xy 41.91 124.46)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e208402a-02a3-4c48-822b-a62c051c6add")
 	)
 	(wire
 		(pts
@@ -6675,6 +7104,7 @@
 	)
 	(label "RUN"
 		(at 33.02 139.7 270)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6685,6 +7115,7 @@
 	)
 	(label "A2_PWM"
 		(at 149.86 45.72 0)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6695,6 +7126,7 @@
 	)
 	(label "QSPI_SCK"
 		(at 99.06 63.5 180)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6705,6 +7137,7 @@
 	)
 	(label "B2"
 		(at 59.69 35.56 180)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6715,6 +7148,7 @@
 	)
 	(label "MT6701_ANALOG"
 		(at 149.86 104.14 0)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6725,6 +7159,7 @@
 	)
 	(label "B1_PWM"
 		(at 220.98 149.86 180)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6735,6 +7170,7 @@
 	)
 	(label "SCL"
 		(at 152.4 38.1 0)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6745,6 +7181,7 @@
 	)
 	(label "MT6701_ANALOG"
 		(at 242.57 71.12 0)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6755,6 +7192,7 @@
 	)
 	(label "QSPI_SD1"
 		(at 99.06 55.88 180)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6765,6 +7203,7 @@
 	)
 	(label "B1"
 		(at 250.19 149.86 0)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6775,6 +7214,7 @@
 	)
 	(label "MT6701_PUSH"
 		(at 149.86 60.96 0)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6785,6 +7225,7 @@
 	)
 	(label "QSPI_SD2"
 		(at 99.06 58.42 180)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6795,6 +7236,7 @@
 	)
 	(label "QSPI_SD2"
 		(at 88.9 171.45 0)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6805,6 +7247,7 @@
 	)
 	(label "SCL"
 		(at 242.57 53.34 0)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6815,6 +7258,7 @@
 	)
 	(label "CAN_L"
 		(at 27.94 31.75 0)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6825,6 +7269,7 @@
 	)
 	(label "XIN"
 		(at 167.64 120.65 0)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6836,6 +7281,7 @@
 	)
 	(label "A1_PWM"
 		(at 149.86 43.18 0)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6846,6 +7292,7 @@
 	)
 	(label "A_CURRENT"
 		(at 149.86 99.06 0)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6856,6 +7303,7 @@
 	)
 	(label "B1"
 		(at 59.69 33.02 180)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6866,6 +7314,7 @@
 	)
 	(label "QSPI_SCK"
 		(at 88.9 163.83 0)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6876,6 +7325,7 @@
 	)
 	(label "QSPI_SS"
 		(at 97.79 48.26 180)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6886,6 +7336,7 @@
 	)
 	(label "B2_PWM"
 		(at 220.98 152.4 180)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6896,6 +7347,7 @@
 	)
 	(label "A1_PWM"
 		(at 220.98 106.68 180)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6906,6 +7358,7 @@
 	)
 	(label "QSPI_SD3"
 		(at 99.06 60.96 180)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6916,6 +7369,7 @@
 	)
 	(label "XOUT"
 		(at 167.64 130.81 0)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6927,6 +7381,7 @@
 	)
 	(label "A1"
 		(at 250.19 106.68 0)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6937,6 +7392,7 @@
 	)
 	(label "A2"
 		(at 250.19 109.22 0)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6947,6 +7403,7 @@
 	)
 	(label "NEOPIXEL"
 		(at 26.67 186.69 180)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6957,6 +7414,7 @@
 	)
 	(label "XOUT"
 		(at 99.06 86.36 180)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6968,6 +7426,7 @@
 	)
 	(label "A1"
 		(at 59.69 27.94 180)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6978,6 +7437,7 @@
 	)
 	(label "~{USB_BOOT}"
 		(at 44.45 139.7 270)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6988,6 +7448,7 @@
 	)
 	(label "XIN"
 		(at 99.06 76.2 180)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6999,6 +7460,7 @@
 	)
 	(label "NEOPIXEL"
 		(at 149.86 66.04 0)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7009,6 +7471,7 @@
 	)
 	(label "QSPI_SD3"
 		(at 88.9 173.99 0)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7019,6 +7482,7 @@
 	)
 	(label "B2_PWM"
 		(at 149.86 50.8 0)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7029,6 +7493,7 @@
 	)
 	(label "A_CURRENT"
 		(at 254 114.3 0)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7039,6 +7504,7 @@
 	)
 	(label "USB_D-"
 		(at 44.45 64.77 0)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7049,6 +7515,7 @@
 	)
 	(label "QSPI_SS"
 		(at 88.9 161.29 0)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7059,6 +7526,7 @@
 	)
 	(label "QSPI_SD0"
 		(at 88.9 166.37 0)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7069,6 +7537,7 @@
 	)
 	(label "RUN"
 		(at 95.25 30.48 0)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7079,6 +7548,7 @@
 	)
 	(label "B_CURRENT"
 		(at 149.86 101.6 0)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7089,6 +7559,7 @@
 	)
 	(label "B2"
 		(at 250.19 152.4 0)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7099,6 +7570,7 @@
 	)
 	(label "SDA"
 		(at 152.4 35.56 0)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7109,6 +7581,7 @@
 	)
 	(label "LED"
 		(at 22.86 139.7 270)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7119,6 +7592,7 @@
 	)
 	(label "~{USB_BOOT}"
 		(at 64.77 161.29 0)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7129,6 +7603,7 @@
 	)
 	(label "USB_D+"
 		(at 44.45 69.85 0)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7139,6 +7614,7 @@
 	)
 	(label "A2_PWM"
 		(at 220.98 109.22 180)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7149,6 +7625,7 @@
 	)
 	(label "A2"
 		(at 59.69 30.48 180)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7159,6 +7636,7 @@
 	)
 	(label "QSPI_SD0"
 		(at 99.06 53.34 180)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7169,6 +7647,7 @@
 	)
 	(label "USB_D+"
 		(at 80.01 38.1 0)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7179,6 +7658,7 @@
 	)
 	(label "B1_PWM"
 		(at 149.86 48.26 0)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7189,6 +7669,7 @@
 	)
 	(label "B_CURRENT"
 		(at 254 157.48 0)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7199,6 +7680,7 @@
 	)
 	(label "QSPI_SD1"
 		(at 88.9 168.91 0)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7209,6 +7691,7 @@
 	)
 	(label "LED"
 		(at 149.86 63.5 0)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7219,6 +7702,7 @@
 	)
 	(label "USB_D-"
 		(at 80.01 40.64 0)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7229,6 +7713,7 @@
 	)
 	(label "CAN_H"
 		(at 27.94 29.21 0)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7239,6 +7724,7 @@
 	)
 	(label "SDA"
 		(at 242.57 50.8 0)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7249,6 +7735,7 @@
 	)
 	(label "MT6701_PUSH"
 		(at 242.57 76.2 0)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7260,7 +7747,7 @@
 	(netclass_flag ""
 		(length 2.54)
 		(shape round)
-		(at -13.97 109.22 180)
+		(at 2.54 20.32 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -7270,7 +7757,7 @@
 		)
 		(uuid "302b79fc-c0f5-4bc7-ba82-f412ac46385b")
 		(property "Netclass" "Low Voltage"
-			(at -13.2715 111.76 0)
+			(at 3.2385 22.86 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7329,7 +7816,30 @@
 	(netclass_flag ""
 		(length 2.54)
 		(shape round)
-		(at -27.94 109.22 180)
+		(at 39.37 105.41 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "6a739ee3-1fb2-4689-8095-826f38c91e8b")
+		(property "Netclass" "Low Voltage"
+			(at 40.386 103.124 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+					(italic yes)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+	)
+	(netclass_flag ""
+		(length 2.54)
+		(shape round)
+		(at -11.43 20.32 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -7339,7 +7849,7 @@
 		)
 		(uuid "74531187-117d-49e4-9fa8-eb5e7e98b4ca")
 		(property "Netclass" "Low Voltage"
-			(at -27.2415 111.76 0)
+			(at -10.7315 22.86 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7352,7 +7862,7 @@
 	(netclass_flag ""
 		(length 2.54)
 		(shape round)
-		(at -27.94 120.65 0)
+		(at -11.43 31.75 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -7362,7 +7872,7 @@
 		)
 		(uuid "7a2dc63b-6852-4c98-9962-40a040192005")
 		(property "Netclass" "High Voltage"
-			(at -27.2415 118.11 0)
+			(at -10.7315 29.21 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7375,7 +7885,7 @@
 	(netclass_flag ""
 		(length 2.54)
 		(shape round)
-		(at -12.7 120.65 180)
+		(at 3.81 31.75 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -7385,7 +7895,7 @@
 		)
 		(uuid "7a575382-235b-45e4-b74e-f33a646abe9d")
 		(property "Netclass" "High Voltage"
-			(at -13.3985 123.19 0)
+			(at 3.1115 34.29 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7539,8 +8049,75 @@
 		)
 	)
 	(symbol
+		(lib_id "power:+5V")
+		(at 49.53 105.41 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "023b6c88-f0ab-4048-8ece-f671fd27a255")
+		(property "Reference" "#PWR06"
+			(at 45.72 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+5V"
+			(at 53.34 105.4099 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 49.53 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 49.53 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+5V\""
+			(at 49.53 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "818f2ba0-d335-4870-b7a7-8dabcd672813")
+		)
+		(instances
+			(project "Integrated FOC Stepper Driver"
+				(path "/d423f88b-f91b-436a-af28-14e717307787"
+					(reference "#PWR06")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:VBUS")
-		(at -12.7 120.65 0)
+		(at 3.81 31.75 0)
 		(mirror y)
 		(unit 1)
 		(exclude_from_sim no)
@@ -7550,7 +8127,7 @@
 		(fields_autoplaced yes)
 		(uuid "031da7eb-ad73-4e13-a94d-6537c68e0053")
 		(property "Reference" "#PWR046"
-			(at -12.7 124.46 0)
+			(at 3.81 35.56 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7559,7 +8136,7 @@
 			)
 		)
 		(property "Value" "VBUS"
-			(at -12.7 115.57 0)
+			(at 3.81 26.67 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7567,7 +8144,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at -12.7 120.65 0)
+			(at 3.81 31.75 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7576,7 +8153,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at -12.7 120.65 0)
+			(at 3.81 31.75 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7585,7 +8162,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"VBUS\""
-			(at -12.7 120.65 0)
+			(at 3.81 31.75 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9718,7 +10295,7 @@
 			(uuid "e3f3f1e0-dc69-4d83-8eb3-75dbb31f3b67")
 		)
 		(instances
-			(project ""
+			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
 					(reference "C20")
 					(unit 1)
@@ -10147,6 +10724,86 @@
 		)
 	)
 	(symbol
+		(lib_id "Regulator_Linear:AMS1117")
+		(at 29.21 105.41 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "5df10164-857b-453e-bf06-f2aa76af6278")
+		(property "Reference" "U7"
+			(at 29.21 99.06 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "SE8650X2-HF"
+			(at 29.21 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23_Handsoldering"
+			(at 29.21 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "http://www.advanced-monolithic.com/pdf/ds1117.pdf"
+			(at 31.75 111.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "1A Low Dropout regulator, positive, adjustable output, SOT-223"
+			(at 29.21 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C23376658"
+			(at 29.21 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "3"
+			(uuid "536f0992-4570-4e7b-a55e-3a5b49c645de")
+		)
+		(pin "1"
+			(uuid "99e72d24-4bfc-4854-8009-ae3c7c6f2d1a")
+		)
+		(pin "2"
+			(uuid "deb18630-b9dd-4026-8c56-f8af25c0a20f")
+		)
+		(instances
+			(project "Integrated FOC Stepper Driver"
+				(path "/d423f88b-f91b-436a-af28-14e717307787"
+					(reference "U7")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:GND")
 		(at 254 165.1 0)
 		(unit 1)
@@ -10489,9 +11146,79 @@
 			(uuid "ba5df184-f6f1-458a-b10f-813f373ae59e")
 		)
 		(instances
-			(project ""
+			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
 					(reference "D2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 15.24 128.27 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "6f0f4920-da30-4885-a1b7-87eff0fc2b95")
+		(property "Reference" "C24"
+			(at 19.05 126.9999 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1uF"
+			(at 19.05 129.5399 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 16.2052 132.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 15.24 128.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 15.24 128.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "cb53fd49-a987-49a9-b969-f1250eb157fb")
+		)
+		(pin "1"
+			(uuid "e573e62d-601b-4663-89eb-f19e2459be28")
+		)
+		(instances
+			(project "Integrated FOC Stepper Driver"
+				(path "/d423f88b-f91b-436a-af28-14e717307787"
+					(reference "C24")
 					(unit 1)
 				)
 			)
@@ -10591,6 +11318,73 @@
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
 					(reference "U3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+3.3V")
+		(at 41.91 124.46 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "70809444-d4d0-49f2-b46a-d3b012357642")
+		(property "Reference" "#PWR051"
+			(at 38.1 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+3.3V"
+			(at 45.72 124.4599 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 41.91 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 41.91 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+3.3V\""
+			(at 41.91 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "c349abff-d423-4c4b-be9d-1834d93ce754")
+		)
+		(instances
+			(project "Integrated FOC Stepper Driver"
+				(path "/d423f88b-f91b-436a-af28-14e717307787"
+					(reference "#PWR051")
 					(unit 1)
 				)
 			)
@@ -11409,6 +12203,73 @@
 		)
 	)
 	(symbol
+		(lib_id "power:GND")
+		(at 39.37 132.08 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "83e029f0-85f9-4ed3-ad1b-9777a44536df")
+		(property "Reference" "#PWR055"
+			(at 45.72 132.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 43.18 132.0799 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" ""
+			(at 39.37 132.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 39.37 132.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 39.37 132.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "709a6d1d-5c5c-4c50-a718-f5768f255cbe")
+		)
+		(instances
+			(project "Integrated FOC Stepper Driver"
+				(path "/d423f88b-f91b-436a-af28-14e717307787"
+					(reference "#PWR055")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:LED")
 		(at 22.86 157.48 270)
 		(mirror x)
@@ -11552,17 +12413,17 @@
 		)
 	)
 	(symbol
-		(lib_id "power:+5V")
-		(at -13.97 109.22 0)
+		(lib_id "power:GND")
+		(at 39.37 113.03 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "8d2a0d16-140f-4614-b5d4-5167b3011c8d")
-		(property "Reference" "#PWR044"
-			(at -13.97 113.03 0)
+		(uuid "8c1cd56c-563b-4014-9d43-3cdef8525f63")
+		(property "Reference" "#PWR052"
+			(at 45.72 113.03 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11570,16 +12431,17 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "+5V"
-			(at -13.97 104.14 0)
+		(property "Value" "GND"
+			(at 43.18 113.0299 90)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify right)
 			)
 		)
 		(property "Footprint" ""
-			(at -13.97 109.22 0)
+			(at 39.37 113.03 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11588,7 +12450,73 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at -13.97 109.22 0)
+			(at 39.37 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 39.37 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "e6abf130-f7b4-40e5-a6fa-5133361fc93a")
+		)
+		(instances
+			(project "Integrated FOC Stepper Driver"
+				(path "/d423f88b-f91b-436a-af28-14e717307787"
+					(reference "#PWR052")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+5V")
+		(at 2.54 20.32 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "8d2a0d16-140f-4614-b5d4-5167b3011c8d")
+		(property "Reference" "#PWR044"
+			(at 2.54 24.13 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+5V"
+			(at 2.54 15.24 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 2.54 20.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 2.54 20.32 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11597,7 +12525,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+5V\""
-			(at -13.97 109.22 0)
+			(at 2.54 20.32 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11612,6 +12540,76 @@
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
 					(reference "#PWR044")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 39.37 128.27 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "8fb31e57-fe14-4053-a250-024b3be83b77")
+		(property "Reference" "C23"
+			(at 43.18 126.9999 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1uF"
+			(at 43.18 129.5399 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 40.3352 132.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 39.37 128.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 39.37 128.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "e9aaac22-b51b-4ecd-8548-2e7883356cd6")
+		)
+		(pin "1"
+			(uuid "be2762a5-5af0-4c6d-9433-67623fd158cb")
+		)
+		(instances
+			(project "Integrated FOC Stepper Driver"
+				(path "/d423f88b-f91b-436a-af28-14e717307787"
+					(reference "C23")
 					(unit 1)
 				)
 			)
@@ -11753,6 +12751,72 @@
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
 					(reference "#PWR026")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+5V")
+		(at 15.24 124.46 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "98238c0c-0008-497b-947c-8c21a2dbbee2")
+		(property "Reference" "#PWR054"
+			(at 15.24 128.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+5V"
+			(at 15.24 119.38 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 15.24 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 15.24 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+5V\""
+			(at 15.24 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "3a8f9f46-07a3-48c3-8154-d92123340f21")
+		)
+		(instances
+			(project "Integrated FOC Stepper Driver"
+				(path "/d423f88b-f91b-436a-af28-14e717307787"
+					(reference "#PWR054")
 					(unit 1)
 				)
 			)
@@ -11972,7 +13036,7 @@
 	)
 	(symbol
 		(lib_id "power:+3.3V")
-		(at -27.94 109.22 0)
+		(at -11.43 20.32 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -11981,7 +13045,7 @@
 		(fields_autoplaced yes)
 		(uuid "9e55bf6e-3a09-4c4f-b26e-1b7adc7504cd")
 		(property "Reference" "#PWR043"
-			(at -27.94 113.03 0)
+			(at -11.43 24.13 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11990,7 +13054,7 @@
 			)
 		)
 		(property "Value" "+3.3V"
-			(at -27.94 104.14 0)
+			(at -11.43 15.24 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11998,7 +13062,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at -27.94 109.22 0)
+			(at -11.43 20.32 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12007,7 +13071,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at -27.94 109.22 0)
+			(at -11.43 20.32 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12016,7 +13080,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+3.3V\""
-			(at -27.94 109.22 0)
+			(at -11.43 20.32 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12644,6 +13708,215 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:C")
+		(at 39.37 109.22 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "b4224207-d39b-4bed-87fa-1f77f9e5d7a5")
+		(property "Reference" "C22"
+			(at 43.18 107.9499 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1uF"
+			(at 43.18 110.4899 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 40.3352 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 39.37 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 39.37 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "e8d6ae51-029f-49f1-9d92-31ca2966ebb9")
+		)
+		(pin "1"
+			(uuid "b613eeb4-b380-4c16-a968-eca466910bb5")
+		)
+		(instances
+			(project "Integrated FOC Stepper Driver"
+				(path "/d423f88b-f91b-436a-af28-14e717307787"
+					(reference "C22")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:D_Schottky")
+		(at 54.61 52.07 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "b52f7a33-5cc7-45a4-99d5-6e7424645bd3")
+		(property "Reference" "D5"
+			(at 54.9275 45.72 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "D_Schottky"
+			(at 54.9275 48.26 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 54.61 52.07 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 54.61 52.07 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Schottky diode"
+			(at 54.61 52.07 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "3d3918ca-e524-4651-936d-d04374c22755")
+		)
+		(pin "1"
+			(uuid "f70e0164-3198-4ab6-8045-3438eeab53f7")
+		)
+		(instances
+			(project "Integrated FOC Stepper Driver"
+				(path "/d423f88b-f91b-436a-af28-14e717307787"
+					(reference "D5")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Regulator_Linear:AMS1117")
+		(at 29.21 124.46 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "b548c031-6ed6-486f-95e0-3ff7a73d9983")
+		(property "Reference" "U8"
+			(at 29.21 118.11 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "SE8650X2-HF"
+			(at 29.21 120.65 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23_Handsoldering"
+			(at 29.21 119.38 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "http://www.advanced-monolithic.com/pdf/ds1117.pdf"
+			(at 31.75 130.81 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "1A Low Dropout regulator, positive, adjustable output, SOT-223"
+			(at 29.21 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "3"
+			(uuid "18cbd1fe-50ed-4fdb-b7f5-163032695b11")
+		)
+		(pin "1"
+			(uuid "815a551a-b1d6-4237-a3fc-3ddb6b0a7fec")
+		)
+		(pin "2"
+			(uuid "aec78647-2101-4bac-bac7-76a4305c950f")
+		)
+		(instances
+			(project "Integrated FOC Stepper Driver"
+				(path "/d423f88b-f91b-436a-af28-14e717307787"
+					(reference "U8")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:R")
 		(at 91.44 30.48 90)
 		(unit 1)
@@ -13040,7 +14313,7 @@
 			(uuid "387ef089-4a60-4bd4-b0fa-ca1659788ec9")
 		)
 		(instances
-			(project ""
+			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
 					(reference "U6")
 					(unit 1)
@@ -13320,7 +14593,7 @@
 	)
 	(symbol
 		(lib_id "power:PWR_FLAG")
-		(at 57.15 50.8 0)
+		(at 45.72 50.8 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -13329,7 +14602,7 @@
 		(fields_autoplaced yes)
 		(uuid "c43c4fd1-b342-471f-9197-0707a98811f2")
 		(property "Reference" "#FLG01"
-			(at 57.15 48.895 0)
+			(at 45.72 48.895 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13338,7 +14611,7 @@
 			)
 		)
 		(property "Value" "PWR_FLAG"
-			(at 57.15 45.72 0)
+			(at 45.72 45.72 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13346,7 +14619,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 57.15 50.8 0)
+			(at 45.72 50.8 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13355,7 +14628,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 57.15 50.8 0)
+			(at 45.72 50.8 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13364,7 +14637,7 @@
 			)
 		)
 		(property "Description" "Special symbol for telling ERC where power comes from"
-			(at 57.15 50.8 0)
+			(at 45.72 50.8 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13518,6 +14791,76 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:C")
+		(at 15.24 109.22 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "cb848be8-ab2b-46d7-94f1-aa621cd2089b")
+		(property "Reference" "C21"
+			(at 19.05 107.9499 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1uF"
+			(at 19.05 110.4899 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 16.2052 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 15.24 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 15.24 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "318ab3f5-d31e-4c52-a3b7-bc792fcbddd3")
+		)
+		(pin "1"
+			(uuid "1595c485-60f3-405f-9c34-0f196808b440")
+		)
+		(instances
+			(project "Integrated FOC Stepper Driver"
+				(path "/d423f88b-f91b-436a-af28-14e717307787"
+					(reference "C21")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:+3.3V")
 		(at 26.67 194.31 90)
 		(unit 1)
@@ -13579,6 +14922,73 @@
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
 					(reference "#PWR049")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+5V")
+		(at 60.96 52.07 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "cf51c925-aaa6-43b8-8f46-48d54e32af0e")
+		(property "Reference" "#PWR053"
+			(at 57.15 52.07 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+5V"
+			(at 64.77 52.0699 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 60.96 52.07 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 60.96 52.07 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+5V\""
+			(at 60.96 52.07 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "471a474e-6e21-45cf-96f3-19cf35974f03")
+		)
+		(instances
+			(project "Integrated FOC Stepper Driver"
+				(path "/d423f88b-f91b-436a-af28-14e717307787"
+					(reference "#PWR053")
 					(unit 1)
 				)
 			)
@@ -13647,7 +15057,7 @@
 			(uuid "9fe4daf9-7b7b-4cc7-b18e-ac345356d613")
 		)
 		(instances
-			(project ""
+			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
 					(reference "D3")
 					(unit 1)
@@ -13784,7 +15194,7 @@
 			(uuid "13fd7967-02bb-45fa-b014-06cd7a19d7f1")
 		)
 		(instances
-			(project ""
+			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
 					(reference "R10")
 					(unit 1)
@@ -13986,6 +15396,72 @@
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
 					(reference "#PWR019")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:VBUS")
+		(at 15.24 105.41 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "e66cdcbc-7ec6-418f-ae86-19ade39c0e07")
+		(property "Reference" "#PWR050"
+			(at 15.24 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "VBUS"
+			(at 15.24 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 15.24 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 15.24 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"VBUS\""
+			(at 15.24 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "08b09351-f055-4f79-9904-4261cafad596")
+		)
+		(instances
+			(project "Integrated FOC Stepper Driver"
+				(path "/d423f88b-f91b-436a-af28-14e717307787"
+					(reference "#PWR050")
 					(unit 1)
 				)
 			)
@@ -14477,72 +15953,6 @@
 		)
 	)
 	(symbol
-		(lib_id "power:+5V")
-		(at 48.26 50.8 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "f7bf588b-d262-4940-b71e-550d03863f1a")
-		(property "Reference" "#PWR06"
-			(at 48.26 54.61 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+5V"
-			(at 48.26 45.72 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 48.26 50.8 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 48.26 50.8 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+5V\""
-			(at 48.26 50.8 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "f1807af3-9a44-4183-96f1-b31c24f592a9")
-		)
-		(instances
-			(project "Integrated FOC Stepper Driver"
-				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR06")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:R")
 		(at 83.82 154.94 180)
 		(unit 1)
@@ -14622,6 +16032,74 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:D_Schottky")
+		(at 45.72 105.41 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "fa6d60b3-a095-43df-b901-a326ac1b2a26")
+		(property "Reference" "D4"
+			(at 46.0375 99.06 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "D_Schottky"
+			(at 46.0375 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 45.72 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 45.72 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Schottky diode"
+			(at 45.72 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "29c4d972-adad-450c-b599-e8864192befe")
+		)
+		(pin "1"
+			(uuid "9fd479b9-7263-4b00-9ee9-64702e96b427")
+		)
+		(instances
+			(project "Integrated FOC Stepper Driver"
+				(path "/d423f88b-f91b-436a-af28-14e717307787"
+					(reference "D4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:R")
 		(at 252.73 53.34 90)
 		(unit 1)
@@ -14691,7 +16169,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at -27.94 120.65 0)
+		(at -11.43 31.75 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -14700,7 +16178,7 @@
 		(fields_autoplaced yes)
 		(uuid "fabe6c15-2423-4f94-ac69-829e1592dead")
 		(property "Reference" "#PWR045"
-			(at -27.94 127 0)
+			(at -11.43 38.1 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14709,7 +16187,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at -27.94 125.73 0)
+			(at -11.43 36.83 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14717,7 +16195,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at -27.94 120.65 0)
+			(at -11.43 31.75 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14726,7 +16204,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at -27.94 120.65 0)
+			(at -11.43 31.75 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14735,7 +16213,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at -27.94 120.65 0)
+			(at -11.43 31.75 0)
 			(effects
 				(font
 					(size 1.27 1.27)
