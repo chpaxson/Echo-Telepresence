@@ -73,6 +73,7 @@
         "footprint_type_mismatch": "ignore",
         "hole_clearance": "error",
         "hole_near_hole": "error",
+        "holes_co_located": "warning",
         "invalid_outline": "error",
         "isolated_copper": "warning",
         "item_on_disabled_layer": "error",
@@ -516,6 +517,7 @@
       "/B1": "Motor Phases",
       "/B2": "Motor Phases",
       "GND": "High Voltage",
+      "Net-(D3-A)": "Low Voltage",
       "VBUS": "High Voltage"
     },
     "netclass_patterns": []

@@ -701,6 +701,145 @@
 				)
 			)
 		)
+		(symbol "Connector_Generic:Conn_01x02"
+			(pin_names
+				(offset 1.016) hide)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "J"
+				(at 0 2.54 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "Conn_01x02"
+				(at 0 -5.08 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "connector"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "Connector*:*_1x??_*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "Conn_01x02_1_1"
+				(rectangle
+					(start -1.27 -2.413)
+					(end 0 -2.667)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start -1.27 0.127)
+					(end 0 -0.127)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start -1.27 1.27)
+					(end 1.27 -3.81)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+				(pin passive line
+					(at -5.08 0 0)
+					(length 3.81)
+					(name "Pin_1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -5.08 -2.54 0)
+					(length 3.81)
+					(name "Pin_2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+		)
 		(symbol "Connector_Generic:Conn_01x04"
 			(pin_names
 				(offset 1.016) hide)
@@ -5590,6 +5729,10 @@
 		(uuid "2030e3e2-af46-42cf-a863-423bd3754e6a")
 	)
 	(no_connect
+		(at 215.9 30.48)
+		(uuid "3dbb6ffd-cdd0-43a5-b6d4-8ef6cfd9432c")
+	)
+	(no_connect
 		(at 149.86 73.66)
 		(uuid "3f76f5f2-a37f-4719-ab4f-f9688ddec50c")
 	)
@@ -5606,16 +5749,12 @@
 		(uuid "556e569e-dd1d-42fe-9173-de305fee74c7")
 	)
 	(no_connect
-		(at 149.86 71.12)
-		(uuid "5aa76172-c5c9-401d-8918-b8fe5719bfc4")
-	)
-	(no_connect
 		(at 149.86 81.28)
 		(uuid "5bc0972d-9c55-4fc6-924c-c578e4269c6d")
 	)
 	(no_connect
-		(at 149.86 53.34)
-		(uuid "5e6e6a3c-5992-4db2-ba1e-0e8cb6d80539")
+		(at 149.86 43.18)
+		(uuid "6d8e530a-f25f-41ab-86a3-3c12542b096a")
 	)
 	(no_connect
 		(at 149.86 55.88)
@@ -5640,6 +5779,10 @@
 	(no_connect
 		(at 44.45 80.01)
 		(uuid "dc587d5c-2774-445d-a785-5718b9179169")
+	)
+	(no_connect
+		(at 149.86 40.64)
+		(uuid "e4c2d742-4404-4537-9b79-3834a674b425")
 	)
 	(no_connect
 		(at 149.86 58.42)
@@ -5708,6 +5851,16 @@
 			(type default)
 		)
 		(uuid "0c6f9a87-0538-408b-ad6e-1dd3549b559c")
+	)
+	(wire
+		(pts
+			(xy 245.11 19.05) (xy 237.49 19.05)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0d57c80f-b2ed-46dc-9042-c1869d84501f")
 	)
 	(wire
 		(pts
@@ -7104,7 +7257,6 @@
 	)
 	(label "RUN"
 		(at 33.02 139.7 270)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7113,20 +7265,28 @@
 		)
 		(uuid "0182e36f-c76a-4ab6-8e79-6fbd44493ec6")
 	)
-	(label "A2_PWM"
-		(at 149.86 45.72 0)
-		(fields_autoplaced yes)
+	(label "CAN_S"
+		(at 190.5 35.56 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "01e1624a-b00d-4972-b8c0-8145ef42c4ee")
+	)
+	(label "CAN_H"
+		(at 215.9 27.94 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "0258e233-587e-4346-b412-9e2d29d0f89b")
+		(uuid "020383e6-2a7e-4d2d-882b-ed6e1cf0d27f")
 	)
 	(label "QSPI_SCK"
 		(at 99.06 63.5 180)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7137,7 +7297,6 @@
 	)
 	(label "B2"
 		(at 59.69 35.56 180)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7148,7 +7307,6 @@
 	)
 	(label "MT6701_ANALOG"
 		(at 149.86 104.14 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7157,9 +7315,18 @@
 		)
 		(uuid "13cf1272-b732-42dd-a640-f727b1b8c195")
 	)
+	(label "CAN_RX"
+		(at 149.86 33.02 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "1657fff3-9c6c-41b5-9836-119cce7518c5")
+	)
 	(label "B1_PWM"
 		(at 220.98 149.86 180)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7170,7 +7337,6 @@
 	)
 	(label "SCL"
 		(at 152.4 38.1 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7181,7 +7347,6 @@
 	)
 	(label "MT6701_ANALOG"
 		(at 242.57 71.12 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7192,7 +7357,6 @@
 	)
 	(label "QSPI_SD1"
 		(at 99.06 55.88 180)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7203,7 +7367,6 @@
 	)
 	(label "B1"
 		(at 250.19 149.86 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7214,7 +7377,6 @@
 	)
 	(label "MT6701_PUSH"
 		(at 149.86 60.96 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7225,7 +7387,6 @@
 	)
 	(label "QSPI_SD2"
 		(at 99.06 58.42 180)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7236,7 +7397,6 @@
 	)
 	(label "QSPI_SD2"
 		(at 88.9 171.45 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7247,7 +7407,6 @@
 	)
 	(label "SCL"
 		(at 242.57 53.34 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7258,7 +7417,6 @@
 	)
 	(label "CAN_L"
 		(at 27.94 31.75 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7269,7 +7427,6 @@
 	)
 	(label "XIN"
 		(at 167.64 120.65 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7279,20 +7436,8 @@
 		)
 		(uuid "417dd783-700c-4e64-bf02-ebb54b35cb69")
 	)
-	(label "A1_PWM"
-		(at 149.86 43.18 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "4703fadc-8331-4485-973c-6375b82b81ad")
-	)
 	(label "A_CURRENT"
 		(at 149.86 99.06 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7301,9 +7446,18 @@
 		)
 		(uuid "49b8e7cb-6071-4a6a-87c2-62db81d37c52")
 	)
+	(label "CAN_S"
+		(at 149.86 71.12 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "4c9ab17c-af4f-4794-90fd-43f675ba6ea8")
+	)
 	(label "B1"
 		(at 59.69 33.02 180)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7314,7 +7468,6 @@
 	)
 	(label "QSPI_SCK"
 		(at 88.9 163.83 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7323,9 +7476,18 @@
 		)
 		(uuid "51786d12-cf83-4a82-ad15-e205bb577c43")
 	)
+	(label "CAN_H"
+		(at 237.49 19.05 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "519344cb-7086-4e04-8f23-4d6f507c2d6b")
+	)
 	(label "QSPI_SS"
 		(at 97.79 48.26 180)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7336,7 +7498,6 @@
 	)
 	(label "B2_PWM"
 		(at 220.98 152.4 180)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7347,7 +7508,6 @@
 	)
 	(label "A1_PWM"
 		(at 220.98 106.68 180)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7358,7 +7518,6 @@
 	)
 	(label "QSPI_SD3"
 		(at 99.06 60.96 180)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7369,7 +7528,6 @@
 	)
 	(label "XOUT"
 		(at 167.64 130.81 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7379,9 +7537,18 @@
 		)
 		(uuid "610667b5-2512-441f-b8ed-ec77eaece7a6")
 	)
+	(label "B1_PWM"
+		(at 149.86 50.8 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "623c7947-08d8-456d-a80d-cd21e6f26137")
+	)
 	(label "A1"
 		(at 250.19 106.68 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7392,7 +7559,6 @@
 	)
 	(label "A2"
 		(at 250.19 109.22 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7403,7 +7569,6 @@
 	)
 	(label "NEOPIXEL"
 		(at 26.67 186.69 180)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7414,7 +7579,6 @@
 	)
 	(label "XOUT"
 		(at 99.06 86.36 180)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7424,9 +7588,18 @@
 		)
 		(uuid "70779913-49bf-4417-ad32-e9ff25e60074")
 	)
+	(label "CAN_TX"
+		(at 190.5 25.4 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "776ab23f-f5cd-4211-b5ed-b7b5dd8cf732")
+	)
 	(label "A1"
 		(at 59.69 27.94 180)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7435,9 +7608,18 @@
 		)
 		(uuid "7a86b50f-fbc2-4b67-a731-e04d31a6bcde")
 	)
+	(label "A1_PWM"
+		(at 149.86 45.72 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "8385074c-4592-4505-9f6a-db38e0af22c2")
+	)
 	(label "~{USB_BOOT}"
 		(at 44.45 139.7 270)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7448,7 +7630,6 @@
 	)
 	(label "XIN"
 		(at 99.06 76.2 180)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7458,9 +7639,28 @@
 		)
 		(uuid "8cb8f0f7-14b1-4a92-a468-e5d1e410288b")
 	)
+	(label "B2_PWM"
+		(at 149.86 53.34 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "8d4eb4ca-79f5-4851-b4d4-a502645d89e8")
+	)
+	(label "CAN_L"
+		(at 215.9 33.02 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "927da62d-021c-4b3f-8db7-7a38ab48bd9f")
+	)
 	(label "NEOPIXEL"
 		(at 149.86 66.04 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7471,7 +7671,6 @@
 	)
 	(label "QSPI_SD3"
 		(at 88.9 173.99 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7480,20 +7679,8 @@
 		)
 		(uuid "9d1cc298-2c30-4593-b5af-ed7738d6ceaf")
 	)
-	(label "B2_PWM"
-		(at 149.86 50.8 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "9d5bdd7e-cadc-41fc-81e7-2e991449a4a7")
-	)
 	(label "A_CURRENT"
 		(at 254 114.3 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7502,9 +7689,18 @@
 		)
 		(uuid "9f48d172-868b-4e7a-bee7-b7b739d455f7")
 	)
+	(label "CAN_TX"
+		(at 149.86 30.48 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "a439eb5f-abb0-4d5f-bc77-de82f3ea635a")
+	)
 	(label "USB_D-"
 		(at 44.45 64.77 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7515,7 +7711,6 @@
 	)
 	(label "QSPI_SS"
 		(at 88.9 161.29 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7526,7 +7721,6 @@
 	)
 	(label "QSPI_SD0"
 		(at 88.9 166.37 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7537,7 +7731,6 @@
 	)
 	(label "RUN"
 		(at 95.25 30.48 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7548,7 +7741,6 @@
 	)
 	(label "B_CURRENT"
 		(at 149.86 101.6 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7559,7 +7751,6 @@
 	)
 	(label "B2"
 		(at 250.19 152.4 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7570,7 +7761,6 @@
 	)
 	(label "SDA"
 		(at 152.4 35.56 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7581,7 +7771,6 @@
 	)
 	(label "LED"
 		(at 22.86 139.7 270)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7592,7 +7781,6 @@
 	)
 	(label "~{USB_BOOT}"
 		(at 64.77 161.29 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7603,7 +7791,6 @@
 	)
 	(label "USB_D+"
 		(at 44.45 69.85 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7612,9 +7799,18 @@
 		)
 		(uuid "b2df47ff-1d79-473e-bedb-6386c1a4d4b6")
 	)
+	(label "CAN_L"
+		(at 237.49 21.59 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "ba7096ec-dfda-409b-a2c9-3d9ba19b6d57")
+	)
 	(label "A2_PWM"
 		(at 220.98 109.22 180)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7625,7 +7821,6 @@
 	)
 	(label "A2"
 		(at 59.69 30.48 180)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7636,7 +7831,6 @@
 	)
 	(label "QSPI_SD0"
 		(at 99.06 53.34 180)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7645,9 +7839,18 @@
 		)
 		(uuid "c749bba7-5f0a-4131-a438-eee39b5fa462")
 	)
+	(label "CAN_RX"
+		(at 190.5 27.94 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "c997db93-b4b7-4e0e-a4b2-3cd523510542")
+	)
 	(label "USB_D+"
 		(at 80.01 38.1 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7656,20 +7859,8 @@
 		)
 		(uuid "cc4185ee-f941-42dc-855d-554ae5738b89")
 	)
-	(label "B1_PWM"
-		(at 149.86 48.26 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "e29cfc63-0832-4f74-a1c5-2341e3b03f20")
-	)
 	(label "B_CURRENT"
 		(at 254 157.48 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7680,7 +7871,6 @@
 	)
 	(label "QSPI_SD1"
 		(at 88.9 168.91 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7689,9 +7879,18 @@
 		)
 		(uuid "eff0d046-c24a-4acb-92b4-e921da609c44")
 	)
+	(label "A2_PWM"
+		(at 149.86 48.26 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "f4483759-e890-42ac-b3d7-1b44facd7e82")
+	)
 	(label "LED"
 		(at 149.86 63.5 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7702,7 +7901,6 @@
 	)
 	(label "USB_D-"
 		(at 80.01 40.64 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7713,7 +7911,6 @@
 	)
 	(label "CAN_H"
 		(at 27.94 29.21 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7724,7 +7921,6 @@
 	)
 	(label "SDA"
 		(at 242.57 50.8 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7735,7 +7931,6 @@
 	)
 	(label "MT6701_PUSH"
 		(at 242.57 76.2 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7743,29 +7938,6 @@
 			(justify left bottom)
 		)
 		(uuid "fb2f5dc7-f7ba-4fcd-a3a9-5cdf9869ad00")
-	)
-	(netclass_flag ""
-		(length 2.54)
-		(shape round)
-		(at 2.54 20.32 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "302b79fc-c0f5-4bc7-ba82-f412ac46385b")
-		(property "Netclass" "Low Voltage"
-			(at 3.2385 22.86 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-					(italic yes)
-				)
-				(justify left)
-			)
-		)
 	)
 	(netclass_flag ""
 		(length 2.54)
@@ -7839,7 +8011,7 @@
 	(netclass_flag ""
 		(length 2.54)
 		(shape round)
-		(at -11.43 20.32 180)
+		(at 49.53 105.41 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -7847,9 +8019,9 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "74531187-117d-49e4-9fa8-eb5e7e98b4ca")
+		(uuid "9de03f53-3b40-49a3-8678-38047bc03822")
 		(property "Netclass" "Low Voltage"
-			(at -10.7315 22.86 0)
+			(at 50.2285 107.95 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7862,7 +8034,7 @@
 	(netclass_flag ""
 		(length 2.54)
 		(shape round)
-		(at -11.43 31.75 0)
+		(at 35.56 26.67 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -7870,9 +8042,9 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "7a2dc63b-6852-4c98-9962-40a040192005")
+		(uuid "aae04311-e87b-4727-bdd8-f6f502476f7e")
 		(property "Netclass" "High Voltage"
-			(at -10.7315 29.21 0)
+			(at 36.2585 24.13 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7885,23 +8057,23 @@
 	(netclass_flag ""
 		(length 2.54)
 		(shape round)
-		(at 3.81 31.75 180)
+		(at 39.37 124.46 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "7a575382-235b-45e4-b74e-f33a646abe9d")
-		(property "Netclass" "High Voltage"
-			(at 3.1115 34.29 0)
+		(uuid "b470933f-779b-48ae-acc9-3b7fecc39c53")
+		(property "Netclass" "Low Voltage"
+			(at 40.0685 121.92 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 					(italic yes)
 				)
-				(justify right)
+				(justify left)
 			)
 		)
 	)
@@ -7951,6 +8123,29 @@
 			)
 		)
 	)
+	(netclass_flag ""
+		(length 2.54)
+		(shape round)
+		(at 35.56 34.29 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "ec5fcca0-0a0c-4ddc-a37c-f57659b5557a")
+		(property "Netclass" "High Voltage"
+			(at 36.2585 36.83 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+					(italic yes)
+				)
+				(justify left)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Memory_Flash:W25Q128JVS")
 		(at 109.22 168.91 0)
@@ -7961,7 +8156,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "0080ac5c-85d3-4e19-87c1-ae991b80f626")
-		(property "Reference" "U5"
+		(property "Reference" "U3"
 			(at 118.11 167.64 0)
 			(effects
 				(font
@@ -8042,7 +8237,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "U5")
+					(reference "U3")
 					(unit 1)
 				)
 			)
@@ -8058,7 +8253,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "023b6c88-f0ab-4048-8ece-f671fd27a255")
-		(property "Reference" "#PWR06"
+		(property "Reference" "#PWR015"
 			(at 45.72 105.41 0)
 			(effects
 				(font
@@ -8109,74 +8304,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR06")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:VBUS")
-		(at 3.81 31.75 0)
-		(mirror y)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "031da7eb-ad73-4e13-a94d-6537c68e0053")
-		(property "Reference" "#PWR046"
-			(at 3.81 35.56 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "VBUS"
-			(at 3.81 26.67 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 3.81 31.75 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 3.81 31.75 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"VBUS\""
-			(at 3.81 31.75 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "ec74239e-f9b3-4f3d-a4c5-ab1a9cf407fa")
-		)
-		(instances
-			(project "Integrated FOC Stepper Driver"
-				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR046")
+					(reference "#PWR015")
 					(unit 1)
 				)
 			)
@@ -8192,7 +8320,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "05ffeb9e-2074-44b4-b120-f2a84cf580ff")
-		(property "Reference" "#PWR017"
+		(property "Reference" "#PWR033"
 			(at 153.67 203.2 0)
 			(effects
 				(font
@@ -8242,7 +8370,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR017")
+					(reference "#PWR033")
 					(unit 1)
 				)
 			)
@@ -8258,7 +8386,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "072726a3-d70b-48f5-997e-806e99a1396e")
-		(property "Reference" "#PWR022"
+		(property "Reference" "#PWR018"
 			(at 83.82 154.94 0)
 			(effects
 				(font
@@ -8309,7 +8437,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR022")
+					(reference "#PWR018")
 					(unit 1)
 				)
 			)
@@ -8325,7 +8453,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "0845df7a-e7ef-4a3f-a2bf-816999f0d51e")
-		(property "Reference" "#PWR014"
+		(property "Reference" "#PWR019"
 			(at 91.44 30.48 0)
 			(effects
 				(font
@@ -8376,7 +8504,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR014")
+					(reference "#PWR019")
 					(unit 1)
 				)
 			)
@@ -8392,7 +8520,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "09d12d0c-a397-447b-b346-f6bf120999bf")
-		(property "Reference" "#PWR033"
+		(property "Reference" "#PWR036"
 			(at 200.66 127 0)
 			(effects
 				(font
@@ -8442,7 +8570,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR033")
+					(reference "#PWR036")
 					(unit 1)
 				)
 			)
@@ -8458,7 +8586,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "0d4ea50b-a4f7-4285-b00a-8cfc9befaee4")
-		(property "Reference" "#PWR035"
+		(property "Reference" "#PWR038"
 			(at 200.66 170.18 0)
 			(effects
 				(font
@@ -8508,7 +8636,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR035")
+					(reference "#PWR038")
 					(unit 1)
 				)
 			)
@@ -8524,7 +8652,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "113c14b2-5738-4dbb-a39c-2de9ad137eb1")
-		(property "Reference" "#PWR038"
+		(property "Reference" "#PWR042"
 			(at 229.87 87.63 0)
 			(effects
 				(font
@@ -8574,7 +8702,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR038")
+					(reference "#PWR042")
 					(unit 1)
 				)
 			)
@@ -8672,7 +8800,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "12197da8-a923-4476-abb1-e0f1ee308712")
-		(property "Reference" "#PWR024"
+		(property "Reference" "#PWR043"
 			(at 229.87 99.06 0)
 			(effects
 				(font
@@ -8722,7 +8850,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR024")
+					(reference "#PWR043")
 					(unit 1)
 				)
 			)
@@ -8738,7 +8866,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "13566120-5985-4c9f-a241-da19f7bbc727")
-		(property "Reference" "#PWR040"
+		(property "Reference" "#PWR039"
 			(at 201.93 77.47 0)
 			(effects
 				(font
@@ -8788,7 +8916,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR040")
+					(reference "#PWR039")
 					(unit 1)
 				)
 			)
@@ -8804,7 +8932,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "145480e4-f980-45ae-a663-542845547654")
-		(property "Reference" "#PWR048"
+		(property "Reference" "#PWR012"
 			(at 41.91 182.88 0)
 			(effects
 				(font
@@ -8854,7 +8982,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR048")
+					(reference "#PWR012")
 					(unit 1)
 				)
 			)
@@ -8870,7 +8998,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "16f07e18-98db-4ca2-8667-f3ad7d5a3e05")
-		(property "Reference" "C19"
+		(property "Reference" "C22"
 			(at 198.12 76.1999 0)
 			(effects
 				(font
@@ -8888,7 +9016,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 			(at 200.9648 81.28 0)
 			(effects
 				(font
@@ -8924,7 +9052,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "C19")
+					(reference "C22")
 					(unit 1)
 				)
 			)
@@ -8939,7 +9067,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "1ac03c47-d305-4775-9c90-54ca207df060")
-		(property "Reference" "C12"
+		(property "Reference" "C9"
 			(at 113.03 13.97 90)
 			(effects
 				(font
@@ -8991,7 +9119,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "C12")
+					(reference "C9")
 					(unit 1)
 				)
 			)
@@ -9083,7 +9211,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "1c4137ea-79c7-4933-900a-d40b7ed80779")
-		(property "Reference" "C5"
+		(property "Reference" "C8"
 			(at 102.87 191.77 0)
 			(effects
 				(font
@@ -9135,7 +9263,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "C5")
+					(reference "C8")
 					(unit 1)
 				)
 			)
@@ -9151,7 +9279,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "2049b479-994e-4e2b-abd7-b3fe5cb818e7")
-		(property "Reference" "#PWR02"
+		(property "Reference" "#PWR06"
 			(at 31.75 29.21 0)
 			(effects
 				(font
@@ -9201,7 +9329,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR02")
+					(reference "#PWR06")
 					(unit 1)
 				)
 			)
@@ -9217,7 +9345,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "2096eaf0-43e1-4a21-991a-1c6b38772543")
-		(property "Reference" "#PWR029"
+		(property "Reference" "#PWR025"
 			(at 124.46 162.56 0)
 			(effects
 				(font
@@ -9267,7 +9395,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR029")
+					(reference "#PWR025")
 					(unit 1)
 				)
 			)
@@ -9282,7 +9410,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "20a1b81c-7085-4324-8960-16f808fcf126")
-		(property "Reference" "C13"
+		(property "Reference" "C15"
 			(at 140.97 13.97 90)
 			(effects
 				(font
@@ -9334,7 +9462,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "C13")
+					(reference "C15")
 					(unit 1)
 				)
 			)
@@ -9351,7 +9479,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "2119ca36-48f9-4495-9454-fa03b43468f2")
-		(property "Reference" "#PWR07"
+		(property "Reference" "#PWR014"
 			(at 44.45 170.18 0)
 			(effects
 				(font
@@ -9402,7 +9530,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR07")
+					(reference "#PWR014")
 					(unit 1)
 				)
 			)
@@ -9418,7 +9546,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "216540f7-0dac-407a-849d-026c4b490bbb")
-		(property "Reference" "R8"
+		(property "Reference" "R5"
 			(at 78.74 154.94 90)
 			(effects
 				(font
@@ -9479,7 +9607,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "R8")
+					(reference "R5")
 					(unit 1)
 				)
 			)
@@ -9563,7 +9691,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "2415c355-2616-4164-84b8-4d08b51c8896")
-		(property "Reference" "#PWR016"
+		(property "Reference" "#PWR032"
 			(at 153.67 193.04 0)
 			(effects
 				(font
@@ -9613,7 +9741,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR016")
+					(reference "#PWR032")
 					(unit 1)
 				)
 			)
@@ -9628,7 +9756,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "28088abb-3ab6-4ff2-94bc-16d24b983923")
-		(property "Reference" "C4"
+		(property "Reference" "C7"
 			(at 91.44 191.77 0)
 			(effects
 				(font
@@ -9680,7 +9808,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "C4")
+					(reference "C7")
 					(unit 1)
 				)
 			)
@@ -9695,7 +9823,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "296bbc98-adfb-45bf-a4aa-cdd377031390")
-		(property "Reference" "C9"
+		(property "Reference" "C12"
 			(at 125.73 191.77 0)
 			(effects
 				(font
@@ -9747,7 +9875,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "C9")
+					(reference "C12")
 					(unit 1)
 				)
 			)
@@ -9885,7 +10013,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "395cf1f0-9a50-45a3-8b8e-8cccd3d5f44c")
-		(property "Reference" "#PWR018"
+		(property "Reference" "#PWR021"
 			(at 109.22 26.67 0)
 			(effects
 				(font
@@ -9935,7 +10063,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR018")
+					(reference "#PWR021")
 					(unit 1)
 				)
 			)
@@ -9951,7 +10079,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "3977141c-2421-4dba-a4bb-94716096b2bc")
-		(property "Reference" "R7"
+		(property "Reference" "R10"
 			(at 163.83 124.46 90)
 			(effects
 				(font
@@ -10012,7 +10140,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "R7")
+					(reference "R10")
 					(unit 1)
 				)
 			)
@@ -10028,7 +10156,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "3cba7b3d-c2ff-46fb-8dfd-dfb80e1b13c9")
-		(property "Reference" "R11"
+		(property "Reference" "R15"
 			(at 256.54 160.0199 0)
 			(effects
 				(font
@@ -10082,7 +10210,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "R11")
+					(reference "R15")
 					(unit 1)
 				)
 			)
@@ -10098,7 +10226,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "3ddfddf1-aa71-4362-818a-e5f785515bb4")
-		(property "Reference" "C18"
+		(property "Reference" "C24"
 			(at 215.9 158.7499 0)
 			(effects
 				(font
@@ -10116,7 +10244,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 			(at 213.0552 163.83 0)
 			(effects
 				(font
@@ -10152,7 +10280,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "C18")
+					(reference "C24")
 					(unit 1)
 				)
 			)
@@ -10168,7 +10296,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "427331b4-24a1-4e34-b5fe-cff30120feab")
-		(property "Reference" "C14"
+		(property "Reference" "C10"
 			(at 116.84 147.32 90)
 			(effects
 				(font
@@ -10229,7 +10357,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "C14")
+					(reference "C10")
 					(unit 1)
 				)
 			)
@@ -10245,7 +10373,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "452f6acd-6ffe-4d8b-8dca-848d0a290235")
-		(property "Reference" "C20"
+		(property "Reference" "C3"
 			(at 30.48 199.39 90)
 			(effects
 				(font
@@ -10261,7 +10389,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 			(at 34.29 193.3448 0)
 			(effects
 				(font
@@ -10297,7 +10425,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "C20")
+					(reference "C3")
 					(unit 1)
 				)
 			)
@@ -10313,7 +10441,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "48119d4a-6f9d-4dda-a0f7-c12e4a4beeab")
-		(property "Reference" "R14"
+		(property "Reference" "R2"
 			(at 30.48 180.34 90)
 			(effects
 				(font
@@ -10365,7 +10493,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "R14")
+					(reference "R2")
 					(unit 1)
 				)
 			)
@@ -10380,7 +10508,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "4d809dcd-1834-44b0-b159-f0502aeec534")
-		(property "Reference" "C2"
+		(property "Reference" "C18"
 			(at 148.59 162.56 0)
 			(effects
 				(font
@@ -10432,7 +10560,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "C2")
+					(reference "C18")
 					(unit 1)
 				)
 			)
@@ -10448,7 +10576,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "51caf144-1b27-4312-9129-79ce2047b70f")
-		(property "Reference" "#PWR036"
+		(property "Reference" "#PWR049"
 			(at 254 128.27 0)
 			(effects
 				(font
@@ -10498,7 +10626,73 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR036")
+					(reference "#PWR049")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+5V")
+		(at 203.2 20.32 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "55ef03c3-5030-4a66-a0d4-f37e7a8cb16e")
+		(property "Reference" "#PWR052"
+			(at 203.2 24.13 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+5V"
+			(at 203.2 15.24 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 203.2 20.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 203.2 20.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+5V\""
+			(at 203.2 20.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "d13b51fb-78ce-424f-aa5a-c84eb34737d6")
+		)
+		(instances
+			(project "Integrated FOC Stepper Driver"
+				(path "/d423f88b-f91b-436a-af28-14e717307787"
+					(reference "#PWR052")
 					(unit 1)
 				)
 			)
@@ -10514,7 +10708,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "58ad68d5-2e6e-45fa-ac45-3ba9e25b62c8")
-		(property "Reference" "R3"
+		(property "Reference" "R4"
 			(at 67.31 66.04 0)
 			(effects
 				(font
@@ -10577,7 +10771,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "R3")
+					(reference "R4")
 					(unit 1)
 				)
 			)
@@ -10591,24 +10785,27 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
+		(fields_autoplaced yes)
 		(uuid "5990bee7-a6d6-444a-9653-8a24e6c895ef")
-		(property "Reference" "J4"
-			(at 40.64 40.64 0)
+		(property "Reference" "J3"
+			(at 43.18 29.2099 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Value" "OUTPUT"
-			(at 40.64 38.1 0)
+			(at 43.18 31.7499 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_JST:JST_XH_S4B-XH-SM4-TB_1x04-1MP_P2.50mm_Horizontal"
+		(property "Footprint" "Connector_JST:JST_PH_S4B-PH-SM4-TB_1x04-1MP_P2.00mm_Horizontal"
 			(at 40.64 29.21 0)
 			(effects
 				(font
@@ -10650,7 +10847,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "J4")
+					(reference "J3")
 					(unit 1)
 				)
 			)
@@ -10665,7 +10862,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "5cd78bb6-55a8-4f3e-87fe-99a00436372e")
-		(property "Reference" "C3"
+		(property "Reference" "C6"
 			(at 80.01 191.77 0)
 			(effects
 				(font
@@ -10717,7 +10914,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "C3")
+					(reference "C6")
 					(unit 1)
 				)
 			)
@@ -10733,7 +10930,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "5df10164-857b-453e-bf06-f2aa76af6278")
-		(property "Reference" "U7"
+		(property "Reference" "U1"
 			(at 29.21 99.06 0)
 			(effects
 				(font
@@ -10797,7 +10994,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "U7")
+					(reference "U1")
 					(unit 1)
 				)
 			)
@@ -10813,7 +11010,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "60a2d55c-4356-4fbc-a0b9-ab3cda39e65a")
-		(property "Reference" "#PWR037"
+		(property "Reference" "#PWR050"
 			(at 254 171.45 0)
 			(effects
 				(font
@@ -10863,7 +11060,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR037")
+					(reference "#PWR050")
 					(unit 1)
 				)
 			)
@@ -10879,7 +11076,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "67678590-94c0-4c41-b7a2-e35481f7551c")
-		(property "Reference" "#PWR011"
+		(property "Reference" "#PWR026"
 			(at 133.35 139.7 0)
 			(effects
 				(font
@@ -10929,7 +11126,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR011")
+					(reference "#PWR026")
 					(unit 1)
 				)
 			)
@@ -10944,7 +11141,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "681113db-6d80-42b8-af76-d670e99f8211")
-		(property "Reference" "C10"
+		(property "Reference" "C17"
 			(at 137.16 191.77 0)
 			(effects
 				(font
@@ -10996,7 +11193,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "C10")
+					(reference "C17")
 					(unit 1)
 				)
 			)
@@ -11011,7 +11208,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "6c23c852-3776-41da-86bf-179be4348238")
-		(property "Reference" "C6"
+		(property "Reference" "C13"
 			(at 139.7 114.3 90)
 			(effects
 				(font
@@ -11072,7 +11269,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "C6")
+					(reference "C13")
 					(unit 1)
 				)
 			)
@@ -11164,7 +11361,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "6f0f4920-da30-4885-a1b7-87eff0fc2b95")
-		(property "Reference" "C24"
+		(property "Reference" "C2"
 			(at 19.05 126.9999 0)
 			(effects
 				(font
@@ -11182,7 +11379,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 			(at 16.2052 132.08 0)
 			(effects
 				(font
@@ -11218,7 +11415,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "C24")
+					(reference "C2")
 					(unit 1)
 				)
 			)
@@ -11233,7 +11430,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "7000c66a-897c-46ac-9666-0a81d9a9615e")
-		(property "Reference" "U3"
+		(property "Reference" "U8"
 			(at 238.4141 137.16 0)
 			(effects
 				(font
@@ -11317,7 +11514,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "U3")
+					(reference "U8")
 					(unit 1)
 				)
 			)
@@ -11333,7 +11530,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "70809444-d4d0-49f2-b46a-d3b012357642")
-		(property "Reference" "#PWR051"
+		(property "Reference" "#PWR011"
 			(at 38.1 124.46 0)
 			(effects
 				(font
@@ -11384,7 +11581,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR051")
+					(reference "#PWR011")
 					(unit 1)
 				)
 			)
@@ -11400,7 +11597,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "70942cf4-9d6f-4ffc-94ad-fd746ea405cb")
-		(property "Reference" "C7"
+		(property "Reference" "C14"
 			(at 139.7 137.16 90)
 			(effects
 				(font
@@ -11461,7 +11658,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "C7")
+					(reference "C14")
 					(unit 1)
 				)
 			)
@@ -11476,9 +11673,10 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
+		(fields_autoplaced yes)
 		(uuid "7220bbe1-87b0-4979-a4be-9273d773b0fc")
 		(property "Reference" "J1"
-			(at 22.86 40.64 0)
+			(at 22.86 20.32 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11486,14 +11684,14 @@
 			)
 		)
 		(property "Value" "INPUT"
-			(at 22.86 38.1 0)
+			(at 22.86 22.86 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 			)
 		)
-		(property "Footprint" "Connector_JST:JST_XH_S4B-XH-SM4-TB_1x04-1MP_P2.50mm_Horizontal"
+		(property "Footprint" "Connector_JST:JST_PH_S4B-PH-SM4-TB_1x04-1MP_P2.00mm_Horizontal"
 			(at 22.86 29.21 0)
 			(effects
 				(font
@@ -11551,7 +11749,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "73db765d-4090-44e2-8964-caaf014bcd9d")
-		(property "Reference" "#PWR025"
+		(property "Reference" "#PWR022"
 			(at 109.22 154.94 0)
 			(effects
 				(font
@@ -11601,7 +11799,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR025")
+					(reference "#PWR022")
 					(unit 1)
 				)
 			)
@@ -11617,7 +11815,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "77d97465-9e68-4e0b-b292-2da85e953bdb")
-		(property "Reference" "#PWR013"
+		(property "Reference" "#PWR034"
 			(at 158.75 140.97 0)
 			(effects
 				(font
@@ -11667,7 +11865,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR013")
+					(reference "#PWR034")
 					(unit 1)
 				)
 			)
@@ -11683,7 +11881,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "79f409cc-ffca-4982-8930-9a4b0bc0cb87")
-		(property "Reference" "H1"
+		(property "Reference" "H4"
 			(at 166.37 166.37 0)
 			(effects
 				(font
@@ -11731,7 +11929,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "H1")
+					(reference "H4")
 					(unit 1)
 				)
 			)
@@ -11746,7 +11944,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "7f6a4150-63ab-40a1-8ebc-4a49c04e98e3")
-		(property "Reference" "R6"
+		(property "Reference" "R9"
 			(at 87.63 43.18 90)
 			(effects
 				(font
@@ -11798,7 +11996,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "R6")
+					(reference "R9")
 					(unit 1)
 				)
 			)
@@ -11814,7 +12012,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "7ff44e27-dccb-4a7c-8ff1-22f465457b54")
-		(property "Reference" "U2"
+		(property "Reference" "U6"
 			(at 232.0641 43.18 0)
 			(effects
 				(font
@@ -11895,7 +12093,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "U2")
+					(reference "U6")
 					(unit 1)
 				)
 			)
@@ -11910,7 +12108,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "80087fad-0f4a-477c-a372-e64987ff0f53")
-		(property "Reference" "U1"
+		(property "Reference" "U4"
 			(at 126.6541 113.03 0)
 			(effects
 				(font
@@ -12129,7 +12327,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "U1")
+					(reference "U4")
 					(unit 1)
 				)
 			)
@@ -12145,7 +12343,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "81c4ea50-bfe3-4432-97f4-00c31f4d80ba")
-		(property "Reference" "#PWR041"
+		(property "Reference" "#PWR051"
 			(at 252.73 50.8 0)
 			(effects
 				(font
@@ -12196,7 +12394,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR041")
+					(reference "#PWR051")
 					(unit 1)
 				)
 			)
@@ -12212,7 +12410,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "83e029f0-85f9-4ed3-ad1b-9777a44536df")
-		(property "Reference" "#PWR055"
+		(property "Reference" "#PWR010"
 			(at 45.72 132.08 0)
 			(effects
 				(font
@@ -12263,7 +12461,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR055")
+					(reference "#PWR010")
 					(unit 1)
 				)
 			)
@@ -12356,7 +12554,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "8b593252-5be0-4172-80bc-07b681896830")
-		(property "Reference" "#PWR020"
+		(property "Reference" "#PWR027"
 			(at 134.62 22.86 0)
 			(effects
 				(font
@@ -12406,7 +12604,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR020")
+					(reference "#PWR027")
 					(unit 1)
 				)
 			)
@@ -12422,7 +12620,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "8c1cd56c-563b-4014-9d43-3cdef8525f63")
-		(property "Reference" "#PWR052"
+		(property "Reference" "#PWR09"
 			(at 45.72 113.03 0)
 			(effects
 				(font
@@ -12473,73 +12671,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR052")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:+5V")
-		(at 2.54 20.32 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "8d2a0d16-140f-4614-b5d4-5167b3011c8d")
-		(property "Reference" "#PWR044"
-			(at 2.54 24.13 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+5V"
-			(at 2.54 15.24 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 2.54 20.32 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 2.54 20.32 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+5V\""
-			(at 2.54 20.32 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "53c5d0f1-690f-47a3-a187-e51d714f60df")
-		)
-		(instances
-			(project "Integrated FOC Stepper Driver"
-				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR044")
+					(reference "#PWR09")
 					(unit 1)
 				)
 			)
@@ -12555,7 +12687,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "8fb31e57-fe14-4053-a250-024b3be83b77")
-		(property "Reference" "C23"
+		(property "Reference" "C5"
 			(at 43.18 126.9999 0)
 			(effects
 				(font
@@ -12573,7 +12705,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 			(at 40.3352 132.08 0)
 			(effects
 				(font
@@ -12609,7 +12741,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "C23")
+					(reference "C5")
 					(unit 1)
 				)
 			)
@@ -12624,7 +12756,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "908d152f-da65-42a2-b5d5-10e1730b8a26")
-		(property "Reference" "J3"
+		(property "Reference" "J4"
 			(at 67.31 30.4799 0)
 			(effects
 				(font
@@ -12642,7 +12774,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_JST:JST_XH_S4B-XH-SM4-TB_1x04-1MP_P2.50mm_Horizontal"
+		(property "Footprint" "Connector_JST:JST_PH_S4B-PH-SM4-TB_1x04-1MP_P2.00mm_Horizontal"
 			(at 64.77 30.48 0)
 			(effects
 				(font
@@ -12684,7 +12816,77 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "J3")
+					(reference "J4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector_Generic:Conn_01x02")
+		(at 250.19 19.05 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "91ec31ee-26c5-4a87-8435-d46d5663b8df")
+		(property "Reference" "J5"
+			(at 252.73 19.0499 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "Conn_01x02"
+			(at 252.73 21.5899 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical"
+			(at 250.19 19.05 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 250.19 19.05 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"
+			(at 250.19 19.05 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "3f1a98aa-0909-472c-baa8-1e1b6a566e65")
+		)
+		(pin "2"
+			(uuid "511a2cc2-eb5a-4d8e-8356-be6aa5171cbe")
+		)
+		(instances
+			(project ""
+				(path "/d423f88b-f91b-436a-af28-14e717307787"
+					(reference "J5")
 					(unit 1)
 				)
 			)
@@ -12700,7 +12902,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "93947f39-c5d5-42b7-8a1d-3143dca08086")
-		(property "Reference" "#PWR026"
+		(property "Reference" "#PWR023"
 			(at 109.22 187.96 0)
 			(effects
 				(font
@@ -12750,7 +12952,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR026")
+					(reference "#PWR023")
 					(unit 1)
 				)
 			)
@@ -12766,7 +12968,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "98238c0c-0008-497b-947c-8c21a2dbbee2")
-		(property "Reference" "#PWR054"
+		(property "Reference" "#PWR02"
 			(at 15.24 128.27 0)
 			(effects
 				(font
@@ -12816,7 +13018,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR054")
+					(reference "#PWR02")
 					(unit 1)
 				)
 			)
@@ -12832,7 +13034,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "9ad6351f-0343-4ff7-ad91-86e625107d7a")
-		(property "Reference" "#PWR031"
+		(property "Reference" "#PWR047"
 			(at 245.11 123.19 0)
 			(effects
 				(font
@@ -12883,7 +13085,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR031")
+					(reference "#PWR047")
 					(unit 1)
 				)
 			)
@@ -12899,7 +13101,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "9b32e079-7188-423a-b33e-9bd370fb0be2")
-		(property "Reference" "#PWR021"
+		(property "Reference" "#PWR028"
 			(at 151.13 20.32 0)
 			(effects
 				(font
@@ -12950,7 +13152,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR021")
+					(reference "#PWR028")
 					(unit 1)
 				)
 			)
@@ -12967,7 +13169,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "9b46ec4c-979b-45d0-b522-8703476aa838")
-		(property "Reference" "SW1"
+		(property "Reference" "SW2"
 			(at 52.07 154.94 0)
 			(effects
 				(font
@@ -13028,73 +13230,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "SW1")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:+3.3V")
-		(at -11.43 20.32 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "9e55bf6e-3a09-4c4f-b26e-1b7adc7504cd")
-		(property "Reference" "#PWR043"
-			(at -11.43 24.13 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+3.3V"
-			(at -11.43 15.24 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at -11.43 20.32 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at -11.43 20.32 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+3.3V\""
-			(at -11.43 20.32 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "5ee07bce-0d19-4e35-9fde-9598207e6078")
-		)
-		(instances
-			(project "Integrated FOC Stepper Driver"
-				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR043")
+					(reference "SW2")
 					(unit 1)
 				)
 			)
@@ -13110,7 +13246,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "a17b8d1f-2e54-46e2-a574-e087d4f9e879")
-		(property "Reference" "#PWR03"
+		(property "Reference" "#PWR07"
 			(at 31.75 41.91 0)
 			(effects
 				(font
@@ -13160,7 +13296,71 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR03")
+					(reference "#PWR07")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Mechanical:MountingHole")
+		(at 163.83 152.4 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "a45ea470-1cb9-49ce-90f4-bfc6d95bf946")
+		(property "Reference" "H1"
+			(at 166.37 151.13 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "MountingHole"
+			(at 166.37 153.67 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "MountingHole:MountingHole_3.2mm_M3_DIN965_Pad"
+			(at 163.83 152.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 163.83 152.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Mounting Hole without connection"
+			(at 163.83 152.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "Integrated FOC Stepper Driver"
+				(path "/d423f88b-f91b-436a-af28-14e717307787"
+					(reference "H1")
 					(unit 1)
 				)
 			)
@@ -13176,7 +13376,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "a608f889-1f25-4a02-8753-8508c912b82d")
-		(property "Reference" "#PWR032"
+		(property "Reference" "#PWR035"
 			(at 200.66 116.84 0)
 			(effects
 				(font
@@ -13226,7 +13426,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR032")
+					(reference "#PWR035")
 					(unit 1)
 				)
 			)
@@ -13242,7 +13442,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "a67d97cd-47c9-494b-810e-8511e269fcae")
-		(property "Reference" "#PWR01"
+		(property "Reference" "#PWR03"
 			(at 21.59 96.52 0)
 			(effects
 				(font
@@ -13292,7 +13492,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR01")
+					(reference "#PWR03")
 					(unit 1)
 				)
 			)
@@ -13308,7 +13508,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "a72a98f6-75ed-406a-b748-530e1f350b37")
-		(property "Reference" "#PWR010"
+		(property "Reference" "#PWR017"
 			(at 60.96 81.28 0)
 			(effects
 				(font
@@ -13358,7 +13558,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR010")
+					(reference "#PWR017")
 					(unit 1)
 				)
 			)
@@ -13375,7 +13575,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "a93c402c-16ff-4e20-aad7-eb2a25fd6e2b")
-		(property "Reference" "#PWR09"
+		(property "Reference" "#PWR04"
 			(at 22.86 170.18 0)
 			(effects
 				(font
@@ -13426,7 +13626,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR09")
+					(reference "#PWR04")
 					(unit 1)
 				)
 			)
@@ -13442,7 +13642,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "ac6f02db-8978-470c-9829-35ac9c7b03ba")
-		(property "Reference" "#PWR034"
+		(property "Reference" "#PWR037"
 			(at 200.66 160.02 0)
 			(effects
 				(font
@@ -13492,7 +13692,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR034")
+					(reference "#PWR037")
 					(unit 1)
 				)
 			)
@@ -13508,7 +13708,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "ad7ddd12-bf88-48a7-b5ff-463f237d210e")
-		(property "Reference" "R2"
+		(property "Reference" "R3"
 			(at 58.42 66.04 0)
 			(effects
 				(font
@@ -13571,7 +13771,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "R2")
+					(reference "R3")
 					(unit 1)
 				)
 			)
@@ -13586,7 +13786,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "af0256c8-60e6-49a5-9555-b5b7f7c7c79b")
-		(property "Reference" "#PWR015"
+		(property "Reference" "#PWR020"
 			(at 96.52 121.92 0)
 			(effects
 				(font
@@ -13637,7 +13837,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR015")
+					(reference "#PWR020")
 					(unit 1)
 				)
 			)
@@ -13653,7 +13853,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "b201b0e0-2ef2-49b8-8824-e4f37865f271")
-		(property "Reference" "H2"
+		(property "Reference" "H3"
 			(at 166.37 161.29 0)
 			(effects
 				(font
@@ -13701,7 +13901,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "H2")
+					(reference "H3")
 					(unit 1)
 				)
 			)
@@ -13717,7 +13917,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "b4224207-d39b-4bed-87fa-1f77f9e5d7a5")
-		(property "Reference" "C22"
+		(property "Reference" "C4"
 			(at 43.18 107.9499 0)
 			(effects
 				(font
@@ -13735,7 +13935,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 			(at 40.3352 113.03 0)
 			(effects
 				(font
@@ -13771,7 +13971,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "C22")
+					(reference "C4")
 					(unit 1)
 				)
 			)
@@ -13787,7 +13987,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "b52f7a33-5cc7-45a4-99d5-6e7424645bd3")
-		(property "Reference" "D5"
+		(property "Reference" "D4"
 			(at 54.9275 45.72 0)
 			(effects
 				(font
@@ -13803,7 +14003,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Diode_SMD:D_SMA_Handsoldering"
 			(at 54.61 52.07 0)
 			(effects
 				(font
@@ -13830,6 +14030,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C8678"
+			(at 54.61 52.07 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "3d3918ca-e524-4651-936d-d04374c22755")
 		)
@@ -13839,7 +14048,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "D5")
+					(reference "D4")
 					(unit 1)
 				)
 			)
@@ -13855,7 +14064,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "b548c031-6ed6-486f-95e0-3ff7a73d9983")
-		(property "Reference" "U8"
+		(property "Reference" "U2"
 			(at 29.21 118.11 0)
 			(effects
 				(font
@@ -13910,7 +14119,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "U8")
+					(reference "U2")
 					(unit 1)
 				)
 			)
@@ -13926,7 +14135,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "b704a844-0f2c-491f-9ea6-41cb10f41e82")
-		(property "Reference" "R4"
+		(property "Reference" "R7"
 			(at 91.44 24.13 90)
 			(effects
 				(font
@@ -13987,7 +14196,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "R4")
+					(reference "R7")
 					(unit 1)
 				)
 			)
@@ -14002,7 +14211,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "b7b63131-d930-4821-a174-42ec4ce89446")
-		(property "Reference" "U4"
+		(property "Reference" "U7"
 			(at 238.4141 93.98 0)
 			(effects
 				(font
@@ -14086,7 +14295,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "U4")
+					(reference "U7")
 					(unit 1)
 				)
 			)
@@ -14102,7 +14311,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "b837d70d-2d38-482e-a5dd-3b990c34f10d")
-		(property "Reference" "#PWR028"
+		(property "Reference" "#PWR045"
 			(at 236.22 99.06 0)
 			(effects
 				(font
@@ -14152,7 +14361,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR028")
+					(reference "#PWR045")
 					(unit 1)
 				)
 			)
@@ -14168,7 +14377,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "b97b8f52-e124-4a22-a616-f9ca316d8e82")
-		(property "Reference" "#PWR047"
+		(property "Reference" "#PWR013"
 			(at 41.91 200.66 0)
 			(effects
 				(font
@@ -14218,7 +14427,73 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR047")
+					(reference "#PWR013")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 203.2 40.64 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "bbc5541f-c31d-46f5-983a-5269704217c4")
+		(property "Reference" "#PWR053"
+			(at 203.2 46.99 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 203.2 45.72 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 203.2 40.64 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 203.2 40.64 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 203.2 40.64 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "ed05f3cb-bd59-4290-a315-13553a7866ec")
+		)
+		(instances
+			(project "Integrated FOC Stepper Driver"
+				(path "/d423f88b-f91b-436a-af28-14e717307787"
+					(reference "#PWR053")
 					(unit 1)
 				)
 			)
@@ -14226,7 +14501,7 @@
 	)
 	(symbol
 		(lib_id "Interface_CAN_LIN:SN65HVD1050D")
-		(at 190.5 30.48 0)
+		(at 203.2 30.48 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -14234,8 +14509,8 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "be272245-0966-4080-87ac-7262051840e9")
-		(property "Reference" "U6"
-			(at 192.6941 19.05 0)
+		(property "Reference" "U5"
+			(at 205.3941 19.05 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14244,7 +14519,7 @@
 			)
 		)
 		(property "Value" "SN65HVD1050D"
-			(at 192.6941 21.59 0)
+			(at 205.3941 21.59 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14253,7 +14528,7 @@
 			)
 		)
 		(property "Footprint" "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
-			(at 190.5 43.18 0)
+			(at 203.2 43.18 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14262,7 +14537,7 @@
 			)
 		)
 		(property "Datasheet" "http://www.ti.com/lit/ds/symlink/sn65hvd1050.pdf"
-			(at 187.96 20.32 0)
+			(at 200.66 20.32 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14271,7 +14546,7 @@
 			)
 		)
 		(property "Description" "CAN Bus Transceiver, EMC optimised, 5.0V, 1Mbps, SOIC-8"
-			(at 190.5 30.48 0)
+			(at 203.2 30.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14280,7 +14555,7 @@
 			)
 		)
 		(property "LCSC" "C14019"
-			(at 190.5 30.48 0)
+			(at 203.2 30.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14315,7 +14590,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "U6")
+					(reference "U5")
 					(unit 1)
 				)
 			)
@@ -14331,7 +14606,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "c057ad73-43dd-4dc2-9e50-fd1b5c13934c")
-		(property "Reference" "C16"
+		(property "Reference" "C21"
 			(at 204.47 158.7499 0)
 			(effects
 				(font
@@ -14349,7 +14624,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 			(at 201.6252 163.83 0)
 			(effects
 				(font
@@ -14385,7 +14660,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "C16")
+					(reference "C21")
 					(unit 1)
 				)
 			)
@@ -14401,7 +14676,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "c2f58944-8464-4b00-9c17-a00f05e6ac52")
-		(property "Reference" "#PWR042"
+		(property "Reference" "#PWR040"
 			(at 210.82 63.5 0)
 			(effects
 				(font
@@ -14452,7 +14727,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR042")
+					(reference "#PWR040")
 					(unit 1)
 				)
 			)
@@ -14468,7 +14743,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "c3bc9ac5-72f5-41ef-8b82-9536462cb63b")
-		(property "Reference" "#PWR05"
+		(property "Reference" "#PWR031"
 			(at 153.67 173.99 0)
 			(effects
 				(font
@@ -14518,7 +14793,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR05")
+					(reference "#PWR031")
 					(unit 1)
 				)
 			)
@@ -14533,7 +14808,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "c411f1ca-a004-4938-9a5c-6c9b95225e98")
-		(property "Reference" "C11"
+		(property "Reference" "C19"
 			(at 148.59 191.77 0)
 			(effects
 				(font
@@ -14585,7 +14860,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "C11")
+					(reference "C19")
 					(unit 1)
 				)
 			)
@@ -14658,6 +14933,70 @@
 		)
 	)
 	(symbol
+		(lib_id "Mechanical:MountingHole")
+		(at 163.83 157.48 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "c5d0721f-48e4-4210-aeb1-a6c159496918")
+		(property "Reference" "H2"
+			(at 166.37 156.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "MountingHole"
+			(at 166.37 158.75 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "MountingHole:MountingHole_3.2mm_M3_DIN965_Pad"
+			(at 163.83 157.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 163.83 157.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Mounting Hole without connection"
+			(at 163.83 157.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "Integrated FOC Stepper Driver"
+				(path "/d423f88b-f91b-436a-af28-14e717307787"
+					(reference "H2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:+3.3V")
 		(at 229.87 45.72 0)
 		(unit 1)
@@ -14667,7 +15006,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "c78711bd-8115-487f-8e07-0d46e817c82a")
-		(property "Reference" "#PWR039"
+		(property "Reference" "#PWR041"
 			(at 229.87 49.53 0)
 			(effects
 				(font
@@ -14717,7 +15056,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR039")
+					(reference "#PWR041")
 					(unit 1)
 				)
 			)
@@ -14733,7 +15072,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "c9a2b326-abbc-4677-a2af-cc3671d862c9")
-		(property "Reference" "#PWR030"
+		(property "Reference" "#PWR048"
 			(at 245.11 166.37 0)
 			(effects
 				(font
@@ -14784,7 +15123,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR030")
+					(reference "#PWR048")
 					(unit 1)
 				)
 			)
@@ -14800,7 +15139,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "cb848be8-ab2b-46d7-94f1-aa621cd2089b")
-		(property "Reference" "C21"
+		(property "Reference" "C1"
 			(at 19.05 107.9499 0)
 			(effects
 				(font
@@ -14818,7 +15157,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 			(at 16.2052 113.03 0)
 			(effects
 				(font
@@ -14854,7 +15193,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "C21")
+					(reference "C1")
 					(unit 1)
 				)
 			)
@@ -14870,7 +15209,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "cc5eebca-7321-4db5-8413-4c48bbb9495c")
-		(property "Reference" "#PWR049"
+		(property "Reference" "#PWR05"
 			(at 30.48 194.31 0)
 			(effects
 				(font
@@ -14921,7 +15260,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR049")
+					(reference "#PWR05")
 					(unit 1)
 				)
 			)
@@ -14937,7 +15276,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "cf51c925-aaa6-43b8-8f46-48d54e32af0e")
-		(property "Reference" "#PWR053"
+		(property "Reference" "#PWR016"
 			(at 57.15 52.07 0)
 			(effects
 				(font
@@ -14988,7 +15327,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR053")
+					(reference "#PWR016")
 					(unit 1)
 				)
 			)
@@ -15005,7 +15344,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "d0a2fc8b-f905-4782-b8e7-626e3083834f")
-		(property "Reference" "D3"
+		(property "Reference" "D5"
 			(at 209.55 76.1999 90)
 			(effects
 				(font
@@ -15059,7 +15398,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "D3")
+					(reference "D5")
 					(unit 1)
 				)
 			)
@@ -15074,7 +15413,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "d54e3fcc-c3cd-46af-a996-a1050d695521")
-		(property "Reference" "C1"
+		(property "Reference" "C16"
 			(at 137.16 162.56 0)
 			(effects
 				(font
@@ -15126,7 +15465,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "C1")
+					(reference "C16")
 					(unit 1)
 				)
 			)
@@ -15142,7 +15481,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "d81384af-076c-4567-8dfc-7c63efcffa9a")
-		(property "Reference" "R10"
+		(property "Reference" "R14"
 			(at 256.54 116.8399 0)
 			(effects
 				(font
@@ -15196,7 +15535,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "R10")
+					(reference "R14")
 					(unit 1)
 				)
 			)
@@ -15212,7 +15551,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "d821ffb4-8351-49d9-80bc-3f0e73448619")
-		(property "Reference" "#PWR04"
+		(property "Reference" "#PWR030"
 			(at 153.67 163.83 0)
 			(effects
 				(font
@@ -15262,7 +15601,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR04")
+					(reference "#PWR030")
 					(unit 1)
 				)
 			)
@@ -15277,7 +15616,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "d848058d-8a77-47f0-8311-ea867088995d")
-		(property "Reference" "C8"
+		(property "Reference" "C11"
 			(at 114.3 191.77 0)
 			(effects
 				(font
@@ -15329,7 +15668,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "C8")
+					(reference "C11")
 					(unit 1)
 				)
 			)
@@ -15345,7 +15684,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "dc2dc633-6b4f-447d-9f62-cb92def5e363")
-		(property "Reference" "#PWR019"
+		(property "Reference" "#PWR024"
 			(at 119.38 22.86 0)
 			(effects
 				(font
@@ -15395,7 +15734,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR019")
+					(reference "#PWR024")
 					(unit 1)
 				)
 			)
@@ -15411,7 +15750,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "e66cdcbc-7ec6-418f-ae86-19ade39c0e07")
-		(property "Reference" "#PWR050"
+		(property "Reference" "#PWR01"
 			(at 15.24 109.22 0)
 			(effects
 				(font
@@ -15461,7 +15800,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR050")
+					(reference "#PWR01")
 					(unit 1)
 				)
 			)
@@ -15477,7 +15816,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "e937a99d-8d5e-42d3-8ab4-62af1eb9e39d")
-		(property "Reference" "R13"
+		(property "Reference" "R12"
 			(at 252.73 44.45 90)
 			(effects
 				(font
@@ -15493,7 +15832,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 252.73 52.578 90)
 			(effects
 				(font
@@ -15529,7 +15868,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "R13")
+					(reference "R12")
 					(unit 1)
 				)
 			)
@@ -15545,7 +15884,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "ee15fe27-8078-4aad-8316-d939721d8daf")
-		(property "Reference" "#PWR012"
+		(property "Reference" "#PWR029"
 			(at 146.05 140.97 0)
 			(effects
 				(font
@@ -15595,7 +15934,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR012")
+					(reference "#PWR029")
 					(unit 1)
 				)
 			)
@@ -15610,7 +15949,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "eea3a443-096d-413f-acd0-012b8a48355b")
-		(property "Reference" "R5"
+		(property "Reference" "R8"
 			(at 87.63 35.56 90)
 			(effects
 				(font
@@ -15662,7 +16001,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "R5")
+					(reference "R8")
 					(unit 1)
 				)
 			)
@@ -15678,7 +16017,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "efa0d6bb-4fa2-44e3-a62b-9f19a3f257be")
-		(property "Reference" "#PWR027"
+		(property "Reference" "#PWR046"
 			(at 236.22 142.24 0)
 			(effects
 				(font
@@ -15728,7 +16067,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR027")
+					(reference "#PWR046")
 					(unit 1)
 				)
 			)
@@ -15745,7 +16084,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "f2146b5f-6e54-492c-b829-c8241a81dfa4")
-		(property "Reference" "SW2"
+		(property "Reference" "SW1"
 			(at 40.64 154.94 0)
 			(effects
 				(font
@@ -15806,7 +16145,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "SW2")
+					(reference "SW1")
 					(unit 1)
 				)
 			)
@@ -15822,7 +16161,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "f57e009f-9d05-41bb-952a-a637ceb92ded")
-		(property "Reference" "C17"
+		(property "Reference" "C23"
 			(at 215.9 115.5699 0)
 			(effects
 				(font
@@ -15840,7 +16179,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 			(at 213.0552 120.65 0)
 			(effects
 				(font
@@ -15876,7 +16215,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "C17")
+					(reference "C23")
 					(unit 1)
 				)
 			)
@@ -15892,7 +16231,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "f7906e07-c966-484a-9c45-d5926ee613df")
-		(property "Reference" "C15"
+		(property "Reference" "C20"
 			(at 204.47 115.5699 0)
 			(effects
 				(font
@@ -15910,7 +16249,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 			(at 201.6252 120.65 0)
 			(effects
 				(font
@@ -15946,7 +16285,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "C15")
+					(reference "C20")
 					(unit 1)
 				)
 			)
@@ -15962,7 +16301,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "f82e8a80-18a4-4221-b62f-159d3ecf428f")
-		(property "Reference" "R9"
+		(property "Reference" "R6"
 			(at 86.36 153.67 0)
 			(effects
 				(font
@@ -16025,7 +16364,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "R9")
+					(reference "R6")
 					(unit 1)
 				)
 			)
@@ -16041,7 +16380,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "fa6d60b3-a095-43df-b901-a326ac1b2a26")
-		(property "Reference" "D4"
+		(property "Reference" "D3"
 			(at 46.0375 99.06 0)
 			(effects
 				(font
@@ -16057,7 +16396,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Diode_SMD:D_SMA_Handsoldering"
 			(at 45.72 105.41 0)
 			(effects
 				(font
@@ -16084,6 +16423,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C8678"
+			(at 45.72 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "29c4d972-adad-450c-b599-e8864192befe")
 		)
@@ -16093,7 +16441,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "D4")
+					(reference "D3")
 					(unit 1)
 				)
 			)
@@ -16109,7 +16457,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "fa81f51e-0bd9-40c3-a2d9-3b7acbdd41b4")
-		(property "Reference" "R12"
+		(property "Reference" "R13"
 			(at 252.73 57.15 90)
 			(effects
 				(font
@@ -16125,7 +16473,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 252.73 55.118 90)
 			(effects
 				(font
@@ -16161,73 +16509,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "R12")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at -11.43 31.75 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "fabe6c15-2423-4f94-ac69-829e1592dead")
-		(property "Reference" "#PWR045"
-			(at -11.43 38.1 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at -11.43 36.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at -11.43 31.75 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at -11.43 31.75 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at -11.43 31.75 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "c36153f5-6122-4927-9a9b-78057b7ff3f1")
-		)
-		(instances
-			(project "Integrated FOC Stepper Driver"
-				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR045")
+					(reference "R13")
 					(unit 1)
 				)
 			)
@@ -16243,7 +16525,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "fada1469-082b-41eb-953f-f825cfc1675b")
-		(property "Reference" "#PWR023"
+		(property "Reference" "#PWR044"
 			(at 229.87 142.24 0)
 			(effects
 				(font
@@ -16293,7 +16575,75 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR023")
+					(reference "#PWR044")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 241.3 21.59 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "fc889147-f450-4b53-84de-16d7d98c1429")
+		(property "Reference" "R11"
+			(at 241.3 25.4 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "120"
+			(at 241.3 27.94 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+			(at 241.3 23.368 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 241.3 21.59 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 241.3 21.59 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "b47d9699-fff8-49e9-a5fb-8802d19ba8be")
+		)
+		(pin "2"
+			(uuid "0f5c7ab8-4a4b-4bdd-9b17-bf946d26aba9")
+		)
+		(instances
+			(project ""
+				(path "/d423f88b-f91b-436a-af28-14e717307787"
+					(reference "R11")
 					(unit 1)
 				)
 			)
