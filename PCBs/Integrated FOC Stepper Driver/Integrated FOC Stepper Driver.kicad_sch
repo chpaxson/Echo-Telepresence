@@ -6,6 +6,7 @@
 	(paper "USLetter")
 	(title_block
 		(title "Echo FOC Stepper Driver")
+		(rev "A")
 		(company "UC Berkeley MECENG 135/235")
 	)
 	(lib_symbols
