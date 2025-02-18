@@ -5531,6 +5531,12 @@
 		(uuid "a0b39645-f9bd-4a1b-9f93-9f165324b1de")
 	)
 	(junction
+		(at 162.56 135.89)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "a309d2e4-eedd-4a86-8338-89e04595b3a6")
+	)
+	(junction
 		(at 39.37 104.14)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -5699,10 +5705,6 @@
 		(uuid "cee1531d-de29-4b0e-9b45-75ec6cb49396")
 	)
 	(no_connect
-		(at 149.86 106.68)
-		(uuid "db33747b-d5b6-40ce-9d19-8130de4d1217")
-	)
-	(no_connect
 		(at 48.26 80.01)
 		(uuid "dc587d5c-2774-445d-a785-5718b9179169")
 	)
@@ -5796,7 +5798,7 @@
 	)
 	(polyline
 		(pts
-			(xy 264.922 63.5) (xy 213.614 63.5)
+			(xy 267.462 63.5) (xy 213.614 63.5)
 		)
 		(stroke
 			(width 0)
@@ -5966,7 +5968,7 @@
 	)
 	(polyline
 		(pts
-			(xy 159.512 149.86) (xy 179.324 149.86)
+			(xy 159.512 149.86) (xy 178.816 149.86)
 		)
 		(stroke
 			(width 0)
@@ -6033,6 +6035,16 @@
 			(type default)
 		)
 		(uuid "32bd9b53-1c5d-45e1-a975-766d6030cff1")
+	)
+	(wire
+		(pts
+			(xy 171.45 128.27) (xy 175.26 128.27)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "33b40923-a381-4124-85b1-d79600a3589c")
 	)
 	(wire
 		(pts
@@ -6246,6 +6258,16 @@
 	)
 	(wire
 		(pts
+			(xy 171.45 128.27) (xy 171.45 135.89)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5925ca4e-d344-4c92-bb89-4c21cafbe0e4")
+	)
+	(wire
+		(pts
 			(xy 27.94 29.21) (xy 35.56 29.21)
 		)
 		(stroke
@@ -6343,6 +6365,16 @@
 			(type default)
 		)
 		(uuid "64a5de8c-9f8b-42bb-9d90-73ef17518d5a")
+	)
+	(wire
+		(pts
+			(xy 171.45 135.89) (xy 162.56 135.89)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "65116b0a-4a42-44b4-94f7-5cef61473128")
 	)
 	(wire
 		(pts
@@ -6834,6 +6866,16 @@
 		)
 		(uuid "b61c534e-dd73-49e1-aa0c-9792da2e4f0a")
 	)
+	(polyline
+		(pts
+			(xy 178.816 121.158) (xy 178.816 149.86)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b669e911-33d6-4203-ac58-e26b76f32624")
+	)
 	(wire
 		(pts
 			(xy 76.2 38.1) (xy 83.82 38.1)
@@ -7003,6 +7045,16 @@
 			(type default)
 		)
 		(uuid "d1046b95-ad7b-45b0-8732-6f7121ff943a")
+	)
+	(polyline
+		(pts
+			(xy 166.878 121.158) (xy 178.816 121.158)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d14c7924-01bd-4651-8a19-32352e74f13f")
 	)
 	(wire
 		(pts
@@ -7226,7 +7278,7 @@
 	)
 	(polyline
 		(pts
-			(xy 179.324 149.86) (xy 179.324 171.958)
+			(xy 178.816 149.86) (xy 178.816 171.958)
 		)
 		(stroke
 			(width 0)
@@ -7846,6 +7898,16 @@
 		)
 		(uuid "94212f0d-6e1b-4d84-94c9-1b4d278bed06")
 	)
+	(label "VBUS_MEASURE"
+		(at 175.26 128.27 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "99ec3628-9619-485a-a681-288b94061dca")
+	)
 	(label "NEOPIXEL"
 		(at 149.86 66.04 0)
 		(effects
@@ -7865,6 +7927,16 @@
 			(justify left bottom)
 		)
 		(uuid "9f48d172-868b-4e7a-bee7-b7b739d455f7")
+	)
+	(label "VBUS_MEASURE"
+		(at 149.86 106.68 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "a26b44d1-2082-48fd-9fb6-8d1233e26144")
 	)
 	(label "CAN_TX"
 		(at 149.86 30.48 0)
@@ -8589,72 +8661,6 @@
 		)
 	)
 	(symbol
-		(lib_id "power:+3.3V")
-		(at 25.4 166.37 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "145480e4-f980-45ae-a663-542845547654")
-		(property "Reference" "#PWR04"
-			(at 25.4 170.18 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+3.3V"
-			(at 25.4 161.29 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 25.4 166.37 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 25.4 166.37 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+3.3V\""
-			(at 25.4 166.37 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "dfc3a87f-18c9-447d-be94-f9aa7d0b9868")
-		)
-		(instances
-			(project "Integrated FOC Stepper Driver"
-				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR04")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Mechanical:MountingHole")
 		(at 162.56 168.91 0)
 		(unit 1)
@@ -8755,7 +8761,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 223.8248 55.88 0)
 			(effects
 				(font
@@ -8831,7 +8837,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 116.84 19.3548 0)
 			(effects
 				(font
@@ -8981,7 +8987,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 67.31 176.2252 0)
 			(effects
 				(font
@@ -9123,7 +9129,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 144.78 19.3548 0)
 			(effects
 				(font
@@ -9488,7 +9494,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 181.61 20.6248 0)
 			(effects
 				(font
@@ -9565,7 +9571,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 67.31 187.6552 0)
 			(effects
 				(font
@@ -9642,7 +9648,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 67.31 153.3652 0)
 			(effects
 				(font
@@ -9721,7 +9727,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
 			(at 108.458 166.37 90)
 			(effects
 				(font
@@ -10188,7 +10194,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
 			(at 247.142 148.59 90)
 			(effects
 				(font
@@ -10267,7 +10273,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 196.5452 140.97 0)
 			(effects
 				(font
@@ -10343,7 +10349,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 102.87 133.6548 0)
 			(effects
 				(font
@@ -10461,6 +10467,72 @@
 		)
 	)
 	(symbol
+		(lib_id "power:+5V")
+		(at 25.4 189.23 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "45865114-3297-4c77-93ce-821e86abe0b8")
+		(property "Reference" "#PWR05"
+			(at 25.4 193.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+5V"
+			(at 25.4 184.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 25.4 189.23 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 25.4 189.23 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+5V\""
+			(at 25.4 189.23 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "fba3fbd3-e9a9-4caf-aaad-4bd9124dac6a")
+		)
+		(instances
+			(project "Integrated FOC Stepper Driver"
+				(path "/d423f88b-f91b-436a-af28-14e717307787"
+					(reference "#PWR05")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:R")
 		(at 19.05 170.18 180)
 		(unit 1)
@@ -10488,7 +10560,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
 			(at 20.828 170.18 90)
 			(effects
 				(font
@@ -10567,7 +10639,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 100.6348 187.96 0)
 			(effects
 				(font
@@ -10613,6 +10685,72 @@
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
 					(reference "C15")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:VBUS")
+		(at 162.56 128.27 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "4db9cf1f-473c-49d4-84b3-202a14bf38c3")
+		(property "Reference" "#PWR053"
+			(at 162.56 132.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "VBUS"
+			(at 162.56 123.19 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 162.56 128.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 162.56 128.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"VBUS\""
+			(at 162.56 128.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "0cbf2a61-c06b-40e8-afce-2e3546ff7558")
+		)
+		(instances
+			(project "Integrated FOC Stepper Driver"
+				(path "/d423f88b-f91b-436a-af28-14e717307787"
+					(reference "#PWR053")
 					(unit 1)
 				)
 			)
@@ -10679,72 +10817,6 @@
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
 					(reference "#PWR031")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:+3.3V")
-		(at 25.4 189.23 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "50c03c48-ff54-455d-a630-35d37e3fa031")
-		(property "Reference" "#PWR05"
-			(at 25.4 193.04 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+3.3V"
-			(at 25.4 184.15 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 25.4 189.23 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 25.4 189.23 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+3.3V\""
-			(at 25.4 189.23 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "9ce95fee-468e-43c9-97a5-8d4dc3d87fcd")
-		)
-		(instances
-			(project "Integrated FOC Stepper Driver"
-				(path "/d423f88b-f91b-436a-af28-14e717307787"
-					(reference "#PWR05")
 					(unit 1)
 				)
 			)
@@ -10976,7 +11048,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
 			(at 65.532 67.31 90)
 			(effects
 				(font
@@ -11053,7 +11125,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 67.31 199.0852 0)
 			(effects
 				(font
@@ -11262,7 +11334,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Package_TO_SOT_SMD:SOT-23_Handsoldering"
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
 			(at 60.96 106.68 0)
 			(effects
 				(font
@@ -11344,7 +11416,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 32.0548 181.61 0)
 			(effects
 				(font
@@ -11421,7 +11493,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 67.31 141.9352 0)
 			(effects
 				(font
@@ -11582,7 +11654,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
 			(at 101.6 174.498 90)
 			(effects
 				(font
@@ -11727,7 +11799,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
 			(at 16.2052 132.08 0)
 			(effects
 				(font
@@ -12202,7 +12274,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
 			(at 87.63 38.862 90)
 			(effects
 				(font
@@ -13026,7 +13098,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
 			(at 40.3352 132.08 0)
 			(effects
 				(font
@@ -13104,7 +13176,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_JST:JST_PH_S4B-PH-SM4-TB_1x04-1MP_P2.00mm_Horizontal"
+		(property "Footprint" "Connector_JST:JST_XH_S4B-XH-SM4-TB_1x04-1MP_P2.50mm_Horizontal"
 			(at 64.77 30.48 0)
 			(effects
 				(font
@@ -13131,7 +13203,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C2763695"
+		(property "LCSC" "C2831798"
 			(at 64.77 30.48 0)
 			(effects
 				(font
@@ -13266,7 +13338,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 143.51 165.4048 0)
 			(effects
 				(font
@@ -14169,7 +14241,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
 			(at 123.19 146.558 90)
 			(effects
 				(font
@@ -14248,7 +14320,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
 			(at 65.278 67.31 90)
 			(effects
 				(font
@@ -14393,7 +14465,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
 			(at 40.3352 113.03 0)
 			(effects
 				(font
@@ -14470,7 +14542,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Package_TO_SOT_SMD:SOT-23_Handsoldering"
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
 			(at 29.21 119.38 0)
 			(effects
 				(font
@@ -14550,7 +14622,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
 			(at 87.63 32.258 90)
 			(effects
 				(font
@@ -14725,7 +14797,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Package_TO_SOT_SMD:SOT-23-5_HandSoldering"
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23-5"
 			(at 29.21 109.22 0)
 			(effects
 				(font
@@ -15012,6 +15084,85 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:R")
+		(at 162.56 139.7 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "c05111a5-b214-47eb-b27d-ab6e129f5b56")
+		(property "Reference" "R16"
+			(at 165.1 138.4299 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "10k"
+			(at 165.1 140.9699 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 160.782 139.7 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 162.56 139.7 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 162.56 139.7 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C60490"
+			(at 162.56 139.7 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "69302b7e-cc3b-4780-9da8-0225a0599608")
+		)
+		(pin "2"
+			(uuid "8c204609-d5e8-42fd-8043-7215ca730a77")
+		)
+		(instances
+			(project "Integrated FOC Stepper Driver"
+				(path "/d423f88b-f91b-436a-af28-14e717307787"
+					(reference "R16")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:C")
 		(at 190.5 137.16 0)
 		(unit 1)
@@ -15039,7 +15190,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_2220_5750Metric_Pad1.97x5.40mm_HandSolder"
+		(property "Footprint" "Capacitor_SMD:C_2220_5750Metric"
 			(at 191.4652 140.97 0)
 			(effects
 				(font
@@ -15085,6 +15236,72 @@
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
 					(reference "C23")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+5V")
+		(at 25.4 166.37 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "c2b07b17-fbc4-4fc8-8fed-ff04142c93d8")
+		(property "Reference" "#PWR04"
+			(at 25.4 170.18 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+5V"
+			(at 25.4 161.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 25.4 166.37 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 25.4 166.37 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+5V\""
+			(at 25.4 166.37 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "55966730-1fe9-44d4-9eb3-3a669135e18a")
+		)
+		(instances
+			(project "Integrated FOC Stepper Driver"
+				(path "/d423f88b-f91b-436a-af28-14e717307787"
+					(reference "#PWR04")
 					(unit 1)
 				)
 			)
@@ -15249,7 +15466,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 67.31 130.5052 0)
 			(effects
 				(font
@@ -15361,6 +15578,151 @@
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787"
 					(reference "#FLG03")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 162.56 143.51 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "c50d321c-971d-4888-a935-09ee17fb44af")
+		(property "Reference" "#PWR054"
+			(at 162.56 149.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 162.56 148.59 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 162.56 143.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 162.56 143.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 162.56 143.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "e5445729-87ac-4797-968e-80d554dadb43")
+		)
+		(instances
+			(project "Integrated FOC Stepper Driver"
+				(path "/d423f88b-f91b-436a-af28-14e717307787"
+					(reference "#PWR054")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 162.56 132.08 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "c55205bb-8ebe-4c5c-8392-c0220644eb68")
+		(property "Reference" "R15"
+			(at 165.1 130.8099 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "150k"
+			(at 165.1 133.3499 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 160.782 132.08 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 162.56 132.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 162.56 132.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C93947"
+			(at 162.56 132.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "60b894e0-0226-4c76-92cc-19bb6ed846ed")
+		)
+		(pin "2"
+			(uuid "c8107bf3-b285-448f-8bba-62943c89589b")
+		)
+		(instances
+			(project "Integrated FOC Stepper Driver"
+				(path "/d423f88b-f91b-436a-af28-14e717307787"
+					(reference "R15")
 					(unit 1)
 				)
 			)
@@ -15622,7 +15984,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 102.87 145.7452 0)
 			(effects
 				(font
@@ -15701,7 +16063,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
 			(at 16.2052 113.03 0)
 			(effects
 				(font
@@ -15920,7 +16282,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 94.2848 187.96 0)
 			(effects
 				(font
@@ -15999,7 +16361,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
 			(at 247.142 105.41 90)
 			(effects
 				(font
@@ -16142,7 +16504,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 67.31 164.7952 0)
 			(effects
 				(font
@@ -16287,7 +16649,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 47.2948 181.61 0)
 			(effects
 				(font
@@ -16430,7 +16792,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
 			(at 261.62 27.178 90)
 			(effects
 				(font
@@ -16506,7 +16868,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
 			(at 87.63 39.878 90)
 			(effects
 				(font
@@ -16795,7 +17157,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 196.5452 97.79 0)
 			(effects
 				(font
@@ -16874,7 +17236,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_2220_5750Metric_Pad1.97x5.40mm_HandSolder"
+		(property "Footprint" "Capacitor_SMD:C_2220_5750Metric"
 			(at 191.4652 97.79 0)
 			(effects
 				(font
@@ -16951,7 +17313,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
 			(at 261.62 29.718 90)
 			(effects
 				(font
@@ -17094,7 +17456,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
 			(at 186.69 56.388 90)
 			(effects
 				(font
