@@ -1,12 +1,14 @@
 (kicad_sch
-	(version 20231120)
+	(version 20250114)
 	(generator "eeschema")
-	(generator_version "8.0")
+	(generator_version "9.0")
 	(uuid "511e89a6-6f2e-40d4-8d79-d0f6cd3e0fef")
 	(paper "A4")
 	(lib_symbols
 		(symbol "Device:C"
-			(pin_numbers hide)
+			(pin_numbers
+				(hide yes)
+			)
 			(pin_names
 				(offset 0.254)
 			)
@@ -79,7 +81,7 @@
 			(symbol "C_0_1"
 				(polyline
 					(pts
-						(xy -2.032 -0.762) (xy 2.032 -0.762)
+						(xy -2.032 0.762) (xy 2.032 0.762)
 					)
 					(stroke
 						(width 0.508)
@@ -91,7 +93,7 @@
 				)
 				(polyline
 					(pts
-						(xy -2.032 0.762) (xy 2.032 0.762)
+						(xy -2.032 -0.762) (xy 2.032 -0.762)
 					)
 					(stroke
 						(width 0.508)
@@ -140,12 +142,17 @@
 					)
 				)
 			)
+			(embedded_fonts no)
 		)
 		(symbol "power:+1V1"
 			(power)
-			(pin_numbers hide)
+			(pin_numbers
+				(hide yes)
+			)
 			(pin_names
-				(offset 0) hide)
+				(offset 0)
+				(hide yes)
+			)
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
@@ -217,7 +224,7 @@
 				)
 				(polyline
 					(pts
-						(xy 0 0) (xy 0 2.54)
+						(xy 0 2.54) (xy 0.762 1.27)
 					)
 					(stroke
 						(width 0)
@@ -229,7 +236,7 @@
 				)
 				(polyline
 					(pts
-						(xy 0 2.54) (xy 0.762 1.27)
+						(xy 0 0) (xy 0 2.54)
 					)
 					(stroke
 						(width 0)
@@ -260,12 +267,17 @@
 					)
 				)
 			)
+			(embedded_fonts no)
 		)
 		(symbol "power:+3.3V"
 			(power)
-			(pin_numbers hide)
+			(pin_numbers
+				(hide yes)
+			)
 			(pin_names
-				(offset 0) hide)
+				(offset 0)
+				(hide yes)
+			)
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
@@ -337,7 +349,7 @@
 				)
 				(polyline
 					(pts
-						(xy 0 0) (xy 0 2.54)
+						(xy 0 2.54) (xy 0.762 1.27)
 					)
 					(stroke
 						(width 0)
@@ -349,7 +361,7 @@
 				)
 				(polyline
 					(pts
-						(xy 0 2.54) (xy 0.762 1.27)
+						(xy 0 0) (xy 0 2.54)
 					)
 					(stroke
 						(width 0)
@@ -380,12 +392,17 @@
 					)
 				)
 			)
+			(embedded_fonts no)
 		)
 		(symbol "power:GND"
 			(power)
-			(pin_numbers hide)
+			(pin_numbers
+				(hide yes)
+			)
 			(pin_names
-				(offset 0) hide)
+				(offset 0)
+				(hide yes)
+			)
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
@@ -476,6 +493,7 @@
 					)
 				)
 			)
+			(embedded_fonts no)
 		)
 	)
 	(junction
@@ -820,7 +838,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "12c3d294-68bb-43cb-a8db-6ab5c71ad7be")
-		(property "Reference" "C17"
+		(property "Reference" "C27"
 			(at 40.64 48.2599 0)
 			(effects
 				(font
@@ -883,7 +901,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787/4b2dc276-88ea-42bf-9f9d-08904d070374"
-					(reference "C17")
+					(reference "C27")
 					(unit 1)
 				)
 			)
@@ -899,7 +917,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "15ac9308-44ac-47d1-92fb-750a5d89ebb0")
-		(property "Reference" "C16"
+		(property "Reference" "C26"
 			(at 27.94 48.2599 0)
 			(effects
 				(font
@@ -962,7 +980,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787/4b2dc276-88ea-42bf-9f9d-08904d070374"
-					(reference "C16")
+					(reference "C26")
 					(unit 1)
 				)
 			)
@@ -978,7 +996,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "31366bac-4a74-4a2b-914c-d05c84eefe30")
-		(property "Reference" "C21"
+		(property "Reference" "C31"
 			(at 101.6 48.2599 0)
 			(effects
 				(font
@@ -1041,7 +1059,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787/4b2dc276-88ea-42bf-9f9d-08904d070374"
-					(reference "C21")
+					(reference "C31")
 					(unit 1)
 				)
 			)
@@ -1125,7 +1143,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "4c924c23-9a5c-47a4-bc7f-80d7f14c77d0")
-		(property "Reference" "C27"
+		(property "Reference" "C37"
 			(at 193.04 48.2599 0)
 			(effects
 				(font
@@ -1188,7 +1206,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787/4b2dc276-88ea-42bf-9f9d-08904d070374"
-					(reference "C27")
+					(reference "C37")
 					(unit 1)
 				)
 			)
@@ -1337,7 +1355,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "67143fa1-f04e-4585-a4bd-cf8b6a9e2158")
-		(property "Reference" "C24"
+		(property "Reference" "C34"
 			(at 139.7 48.2599 0)
 			(effects
 				(font
@@ -1400,7 +1418,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787/4b2dc276-88ea-42bf-9f9d-08904d070374"
-					(reference "C24")
+					(reference "C34")
 					(unit 1)
 				)
 			)
@@ -1416,7 +1434,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "72fa2b9c-e0a4-4a1c-bd3e-a8e79127c39b")
-		(property "Reference" "C25"
+		(property "Reference" "C35"
 			(at 152.4 48.2599 0)
 			(effects
 				(font
@@ -1479,7 +1497,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787/4b2dc276-88ea-42bf-9f9d-08904d070374"
-					(reference "C25")
+					(reference "C35")
 					(unit 1)
 				)
 			)
@@ -1496,7 +1514,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "7adf18e0-28e6-48a4-af98-f90c76d29a1c")
-		(property "Reference" "C26"
+		(property "Reference" "C36"
 			(at 172.72 48.2599 0)
 			(effects
 				(font
@@ -1559,7 +1577,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787/4b2dc276-88ea-42bf-9f9d-08904d070374"
-					(reference "C26")
+					(reference "C36")
 					(unit 1)
 				)
 			)
@@ -1575,7 +1593,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "8fec446d-9e01-420d-8bf9-d521a5e39ad2")
-		(property "Reference" "C18"
+		(property "Reference" "C28"
 			(at 63.5 48.2599 0)
 			(effects
 				(font
@@ -1638,7 +1656,7 @@
 		(instances
 			(project ""
 				(path "/d423f88b-f91b-436a-af28-14e717307787/4b2dc276-88ea-42bf-9f9d-08904d070374"
-					(reference "C18")
+					(reference "C28")
 					(unit 1)
 				)
 			)
@@ -1920,7 +1938,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "bbd6c23d-c644-436b-8fcc-879c89fc2101")
-		(property "Reference" "C23"
+		(property "Reference" "C33"
 			(at 127 48.2599 0)
 			(effects
 				(font
@@ -1983,7 +2001,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787/4b2dc276-88ea-42bf-9f9d-08904d070374"
-					(reference "C23")
+					(reference "C33")
 					(unit 1)
 				)
 			)
@@ -1999,7 +2017,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "c34686b5-65f2-4908-8249-01f758976457")
-		(property "Reference" "C20"
+		(property "Reference" "C30"
 			(at 88.9 48.2599 0)
 			(effects
 				(font
@@ -2062,7 +2080,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787/4b2dc276-88ea-42bf-9f9d-08904d070374"
-					(reference "C20")
+					(reference "C30")
 					(unit 1)
 				)
 			)
@@ -2078,7 +2096,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "d381b6a3-c20e-4948-b144-c44d7d9d6bce")
-		(property "Reference" "C22"
+		(property "Reference" "C32"
 			(at 114.3 48.2599 0)
 			(effects
 				(font
@@ -2141,7 +2159,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787/4b2dc276-88ea-42bf-9f9d-08904d070374"
-					(reference "C22")
+					(reference "C32")
 					(unit 1)
 				)
 			)
@@ -2223,7 +2241,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "dc322ac0-8882-4aef-9f82-8c10946a7131")
-		(property "Reference" "C19"
+		(property "Reference" "C29"
 			(at 76.2 48.2599 0)
 			(effects
 				(font
@@ -2286,7 +2304,7 @@
 		(instances
 			(project "Integrated FOC Stepper Driver"
 				(path "/d423f88b-f91b-436a-af28-14e717307787/4b2dc276-88ea-42bf-9f9d-08904d070374"
-					(reference "C19")
+					(reference "C29")
 					(unit 1)
 				)
 			)
