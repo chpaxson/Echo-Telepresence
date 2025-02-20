@@ -11918,7 +11918,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C2831798"
+		(property "LCSC" "C157925"
 			(at 153.67 30.48 0)
 			(effects
 				(font
@@ -12311,18 +12311,17 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "9b46ec4c-979b-45d0-b522-8703476aa838")
 		(property "Reference" "SW2"
-			(at 30.48 139.7 0)
+			(at 30.48 138.43 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 			)
 		)
-		(property "Value" "~"
-			(at 30.48 139.7 0)
+		(property "Value" "BTN"
+			(at 30.48 140.462 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15199,18 +15198,17 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "f2146b5f-6e54-492c-b829-c8241a81dfa4")
 		(property "Reference" "SW1"
-			(at 24.13 29.21 0)
+			(at 24.13 28.448 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 			)
 		)
-		(property "Value" "~"
-			(at 24.13 29.21 0)
+		(property "Value" "BTN"
+			(at 24.13 30.226 0)
 			(effects
 				(font
 					(size 1.27 1.27)
