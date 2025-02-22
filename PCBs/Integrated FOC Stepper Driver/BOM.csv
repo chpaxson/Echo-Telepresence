@@ -1,0 +1,28 @@
+﻿"C1, C2",15pF,~,Capacitor_SMD:C_0402_1005Metric,2,C18164617
+"C3, C8-C10, C23, C24, C26-C35",100nF,~,Capacitor_SMD:C_0402_1005Metric,16,C960916
+"C4, C5, C7, C36, C37",1uF,~,Capacitor_SMD:C_0402_1005Metric,5,C1518208
+C6,10uF,~,Capacitor_SMD:C_0603_1608Metric,1,C96446
+C11-C22,10uF,~,Capacitor_SMD:C_0805_2012Metric,12,C440198
+C25,100nF,~,Capacitor_SMD:C_0603_1608Metric,1,C1591
+D2,BAT54C,~,Package_TO_SOT_SMD:SOT-23,1,C37704
+J1,USB C Receptacle,https://www.usb.org/sites/default/files/documents/usb_type-c.zip,Connector_USB:USB_C_Receptacle_G-Switch_GT-USB-7010ASV,1,C2988369
+J3,INPUT,~,Connector_JST:JST_PH_S4B-PH-K_1x04_P2.00mm_Horizontal,1,C157926
+J4,OUTPUT,~,Connector_JST:JST_PH_S4B-PH-K_1x04_P2.00mm_Horizontal,1,C157926
+J6,MOTOR,~,Connector_JST:JST_XH_S4B-XH-A_1x04_P2.50mm_Horizontal,1,C157925
+"R1, R2",27.4,~,Resistor_SMD:R_0402_1005Metric,2,C274349
+"R3, R7",1k,~,Resistor_SMD:R_0402_1005Metric,2,C105637
+"R4, R8, R12",10k,~,Resistor_SMD:R_0402_1005Metric,3,C60490
+"R5, R6",5.1k,~,Resistor_SMD:R_0402_1005Metric,2,C105872
+"R9, R13, R14",523,~,Resistor_SMD:R_0402_1005Metric,3,C517803
+R10,120,~,Resistor_SMD:R_0402_1005Metric,1,C114758
+R11,150k,~,Resistor_SMD:R_0402_1005Metric,1,C93947
+"R15, R16",1.8k,~,Resistor_SMD:R_0402_1005Metric,2,C163481
+"SW1, SW2",BTN,~,Button_Switch_SMD:SW_SPST_B3U-1000P,2,C231329
+U1,RP2040,https://datasheets.raspberrypi.com/rp2040/rp2040-datasheet.pdf,Package_DFN_QFN:QFN-56-1EP_7x7mm_P0.4mm_EP3.2x3.2mm,1,C2040
+U2,W25Q128JVS,https://www.winbond.com/resource-files/w25q128jv_dtr%20revc%2003272018%20plus.pdf,Package_SO:SOIC-8_5.23x5.23mm_P1.27mm,1,C97521
+U3,PJ54M50SE,,Package_TO_SOT_SMD:SOT-23-5,1,C41784039
+U4,PJ9500M33SA,,Package_TO_SOT_SMD:SOT-23,1,C20618178
+U5,SN65HVD1050D,http://www.ti.com/lit/ds/symlink/sn65hvd1050.pdf,Package_SO:SOIC-8_3.9x4.9mm_P1.27mm,1,C14019
+"U6, U7",~,,Package_SO:Texas_HSOP-8-1EP_3.9x4.9mm_P1.27mm_ThermalVias,2,C5218844
+U8,MT6701CT,https://www.magntek.com.cn/upload/MT6701_Rev.1.5.pdf,Package_SO:SO-8_3.9x4.9mm_P1.27mm,1,C19711153
+Y1,ABM8-272-T3,~,Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm,1,C20625731
