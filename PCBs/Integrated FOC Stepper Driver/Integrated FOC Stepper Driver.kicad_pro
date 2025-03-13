@@ -579,7 +579,7 @@
       "plot": "gerbers/",
       "pos_files": "",
       "specctra_dsn": "",
-      "step": "",
+      "step": "Integrated FOC Stepper Driver.step",
       "svg": "",
       "vrml": ""
     },
