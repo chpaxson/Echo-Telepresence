@@ -40,8 +40,6 @@ add_executable(motorControllerFW motorControllerFW.cpp )
 pico_set_program_name(motorControllerFW "motorControllerFW")
 pico_set_program_version(motorControllerFW "0.1")
 
-# Generate PIO header
-pico_generate_pio_header(motorControllerFW ${CMAKE_CURRENT_LIST_DIR}/blink.pio)
 
 # Modify the below lines to enable/disable output over UART/USB
 pico_enable_stdio_uart(motorControllerFW 0)
@@ -56,14 +54,13 @@ target_include_directories(motorControllerFW PRIVATE
         ${CMAKE_CURRENT_LIST_DIR}
 )
 
+# Add stepper library to the build
+add_subdirectory(../pico-stepper/lib stepper)
+
 # Add any user requested libraries
 target_link_libraries(motorControllerFW 
-        hardware_i2c
-        hardware_pio
-        hardware_timer
-        hardware_watchdog
-        hardware_clocks
+        pico_stdlib
+        pico-stepper
         )
 
 pico_add_extra_outputs(motorControllerFW)
-
