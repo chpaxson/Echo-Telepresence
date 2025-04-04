@@ -16,12 +16,12 @@
 
 // Stepper constants.
 stepper_t stepper;
-const uint8_t stepper_pin_1A = 12;
-const uint8_t stepper_pin_1B = 13;
-const uint8_t stepper_pin_2A = 14;
-const uint8_t stepper_pin_2B = 15;
+const uint8_t stepper_pin_1A = 6;
+const uint8_t stepper_pin_1B = 7;
+const uint8_t stepper_pin_2A = 8;
+const uint8_t stepper_pin_2B = 9;
 const uint16_t stepper_steps_per_revolution = 200;
-const stepper_mode_t stepping_mode = single;
+const stepper_mode_t stepping_mode = power;
 uint8_t speed = 20;
 
 int main() {
