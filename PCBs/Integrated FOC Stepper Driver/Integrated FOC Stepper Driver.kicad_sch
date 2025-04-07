@@ -16025,7 +16025,7 @@
 				)
 			)
 		)
-		(property "Value" "1.8k"
+		(property "Value" "5.1k"
 			(at 261.62 21.59 90)
 			(effects
 				(font
@@ -16613,7 +16613,6 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "fa81f51e-0bd9-40c3-a2d9-3b7acbdd41b4")
 		(property "Reference" "R16"
 			(at 261.62 31.75 90)
@@ -16623,7 +16622,7 @@
 				)
 			)
 		)
-		(property "Value" "1.8k"
+		(property "Value" "5.1k"
 			(at 261.62 34.29 90)
 			(effects
 				(font
