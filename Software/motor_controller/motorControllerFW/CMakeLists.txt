@@ -35,7 +35,9 @@ pico_sdk_init()
 
 # Add executable. Default name is the project name, version 0.1
 
-add_executable(motorControllerFW motorControllerFW.cpp )
+add_executable(motorControllerFW 
+    main.cpp 
+    )
 
 pico_set_program_name(motorControllerFW "motorControllerFW")
 pico_set_program_version(motorControllerFW "0.1")
@@ -44,19 +46,17 @@ pico_set_program_version(motorControllerFW "0.1")
 pico_enable_stdio_uart(motorControllerFW 0)
 pico_enable_stdio_usb(motorControllerFW 1)
 
-# Add the standard library to the build
+# Add libraries to the build
 target_link_libraries(motorControllerFW
-        pico_stdlib)
+        pico_stdlib
+        hardware_i2c
+        hardware_adc
+        )
 
 # Add the standard include files to the build
 target_include_directories(motorControllerFW PRIVATE
         ${CMAKE_CURRENT_LIST_DIR}
 )
-
-# Add any user requested libraries
-target_link_libraries(motorControllerFW 
-        hardware_i2c
-        )
 
 pico_add_extra_outputs(motorControllerFW)
 
