@@ -1,4 +1,13 @@
 #include "hardware/i2c.h"
+
+#define I2C_PORT i2c1
+#define I2C_SDA_PIN 2
+#define I2C_SCL_PIN 3
+
+// Initialize I2C register
+const uint8_t DEVICE_ADDR = 0b0000110; // MT6701 address 
+const uint8_t REG_ADDR_A = 0x03;
+const uint8_t REG_ADDR_B = 0x04;   
    
 
 /*******************************************************************************
@@ -69,24 +78,23 @@ int reg_read(  i2c_inst_t *i2c,
    return num_bytes_read;
 }
 
-// void i2c_read_data() {
+void i2c_read_data(uint8_t data[2]) {
 
-//     reg_read(I2C_PORT, DEVICE_ADDR, 0x03, &high, 1);
-//     reg_read(I2C_PORT, DEVICE_ADDR, 0x04, &low, 1);
+    reg_read(I2C_PORT, DEVICE_ADDR, 0x03, data, 1);
     
-//     uint16_t angle_raw = ((high << 6) | (low >> 2)) & 0x3FFF;
-//     printf("Angle: %u (raw), %.2f degrees\n", angle_raw, angle_raw * 360.0f / 16384.0f);
-// }
+    uint16_t angle_raw = ((data[0] << 6) | (data[1] >> 2)) & 0x3FFF;
+    printf("Angle: %u (raw), %.2f degrees\n", angle_raw, angle_raw * 360.0f / 16384.0f);
+}
 
-// void i2c_scan() {
-//     printf("Scanning I2C bus...\n");
-//     for (uint8_t addr = 1; addr < 127; addr++) {
-//         int result = i2c_write_blocking(I2C_PORT, addr, NULL, 0, false);
-//         if (result >= 0) {
-//             printf("Found device at 0x%02X\n", addr);
-//         }
-//     }
-// }
+void i2c_scan() {
+    printf("Scanning I2C bus...\n");
+    for (uint8_t addr = 1; addr < 127; addr++) {
+        int result = i2c_write_blocking(I2C_PORT, addr, NULL, 0, false);
+        if (result >= 0) {
+            printf("Found device at 0x%02X\n", addr);
+        }
+    }
+}
 
 /*******************************************************************************
 * Main

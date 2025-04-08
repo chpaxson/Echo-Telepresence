@@ -6,39 +6,9 @@
 
 #include "MT6701_i2c.h"
 
-#define I2C_PORT i2c1
-#define I2C_SDA_PIN 2
-#define I2C_SCL_PIN 3
-
-// Initialize I2C register
-const uint8_t DEVICE_ADDR = 0b0000110; // MT6701 address 
-const uint8_t REG_ADDR_A = 0x03;
-const uint8_t REG_ADDR_B = 0x04;   
-
-uint8_t high = 0, low = 0;
-
-void i2c_read_data() {
-
-    reg_read(I2C_PORT, DEVICE_ADDR, 0x03, &high, 1);
-    reg_read(I2C_PORT, DEVICE_ADDR, 0x04, &low, 1);
-    
-    uint16_t angle_raw = ((high << 6) | (low >> 2)) & 0x3FFF;
-    printf("Angle: %u (raw), %.2f degrees\n", angle_raw, angle_raw * 360.0f / 16384.0f);
-}
-
-void i2c_scan() {
-        printf("Scanning I2C bus...\n");
-        for (uint8_t addr = 1; addr < 127; addr++) {
-            int result = i2c_write_blocking(I2C_PORT, addr, NULL, 0, false);
-            if (result >= 0) {
-                printf("Found device at 0x%02X\n", addr);
-            }
-        }
-    }
-
 int main() {
     stdio_init_all();
-    i2c_init(I2C_PORT, 100 * 1000);  // Initialize I2C with 100kHz clock
+    i2c_init(I2C_PORT, 400 * 1000);  // Initialize I2C with 100kHz clock
     adc_init();
 
     gpio_set_function(I2C_SDA_PIN, GPIO_FUNC_I2C);
@@ -54,11 +24,10 @@ int main() {
     sleep_ms(5000);
     printf("Reading angle...\n");
 
+    uint8_t data[2] = {0};
+
     while (1) {
-        // const float conversion_factor = 3.3f / (1 << 12);
-        // uint16_t result = adc_read();
-        // printf("Raw value: 0x%03x, cuurent: %f A\n", result, result * conversion_factor);
-       // i2c_read_data();
+        i2c_read_data(data);
         i2c_scan();
         sleep_ms(100);  // Read every second
     }
