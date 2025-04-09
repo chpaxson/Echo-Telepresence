@@ -1,3 +1,7 @@
+/*******************************************************************************
+* I2C Library for the MT6701 Rotary Incoder
+*/
+
 #include "hardware/i2c.h"
 
 #define I2C_PORT i2c1
@@ -5,7 +9,7 @@
 #define I2C_SCL_PIN 3
 
 // Initialize I2C register
-const uint8_t DEVICE_ADDR = 0b0000110; // MT6701 address 
+const uint8_t DEVICE_ADDR = 0x06; // MT6701 address 
 const uint8_t REG_ADDR_A = 0x03;
 const uint8_t REG_ADDR_B = 0x04;   
    
@@ -24,6 +28,12 @@ int reg_read(  i2c_inst_t *i2c,
                const uint8_t reg,
                uint8_t *buf,
                const uint8_t nbytes);
+
+uint16_t i2c_read_raw(uint8_t buffer[2]);
+
+float i2c_read(uint8_t buffer[2]);
+
+void i2c_scan();
 
 /*******************************************************************************
 * Function Definitions
@@ -78,90 +88,71 @@ int reg_read(  i2c_inst_t *i2c,
    return num_bytes_read;
 }
 
-void i2c_read_data(uint8_t data[2]) {
+uint16_t i2c_read_raw(uint8_t buffer[2]) {
 
-    reg_read(I2C_PORT, DEVICE_ADDR, 0x03, data, 1);
-    
-    uint16_t angle_raw = ((data[0] << 6) | (data[1] >> 2)) & 0x3FFF;
-    printf("Angle: %u (raw), %.2f degrees\n", angle_raw, angle_raw * 360.0f / 16384.0f);
+    reg_read(I2C_PORT, DEVICE_ADDR, 0x03, buffer, 1);
+
+    // Data is split between 8 bits in Reg 0x03 and 6 bits in Reg 0x04
+    uint16_t angle_raw = ((buffer[0] << 8) | (buffer[1])) >> 2;
+
+    return angle_raw;
+}
+
+float i2c_read(uint8_t buffer[2]) {
+    uint16_t angle_raw = i2c_read_raw(buffer);
+
+    //scale value to degrees
+    return angle_raw * 360.0f / 16384.0f;
+}
+
+// Sweep through all 7-bit I2C addresses, to see if any slaves are present on
+// the I2C bus. Print out a table that looks like this:
+//
+// I2C Bus Scan
+//    0 1 2 3 4 5 6 7 8 9 A B C D E F
+// 00 . . . . . . . . . . . . . . . .
+// 10 . . @ . . . . . . . . . . . . .
+// 20 . . . . . . . . . . . . . . . .
+// 30 . . . . @ . . . . . . . . . . .
+// 40 . . . . . . . . . . . . . . . .
+// 50 . . . . . . . . . . . . . . . .
+// 60 . . . . . . . . . . . . . . . .
+// 70 . . . . . . . . . . . . . . . .
+// E.g. if addresses 0x12 and 0x34 were acknowledged.
+
+// I2C reserves some addresses for special purposes. We exclude these from the scan.
+// These are any addresses of the form 000 0xxx or 111 1xxx
+bool reserved_addr(uint8_t addr) {
+    return (addr & 0x78) == 0 || (addr & 0x78) == 0x78;
 }
 
 void i2c_scan() {
-    printf("Scanning I2C bus...\n");
-    for (uint8_t addr = 1; addr < 127; addr++) {
-        int result = i2c_write_blocking(I2C_PORT, addr, NULL, 0, false);
-        if (result >= 0) {
-            printf("Found device at 0x%02X\n", addr);
+
+    printf("\nI2C Bus Scan\n");
+    printf("   0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F\n");
+
+    for (int addr = 0; addr < (1 << 7); ++addr) {
+        if (addr % 16 == 0) {
+            printf("%02x ", addr);
         }
+
+        // Perform a 1-byte dummy read from the probe address. If a slave
+        // acknowledges this address, the function returns the number of bytes
+        // transferred. If the address byte is ignored, the function returns
+        // -1.
+
+        // Skip over any reserved addresses.
+        int ret;
+        uint8_t rxdata;
+
+        //MT6701 DOES NOT follow i2c reserved address specs, reserved address condition ignored
+        // if (reserved_addr(addr))
+        //     ret = PICO_ERROR_GENERIC;
+        // else
+            ret = i2c_read_blocking(I2C_PORT, addr, &rxdata, 1, false);
+
+        printf(ret < 0 ? "." : "@");
+        printf(addr % 16 == 15 ? "\n" : "  ");
     }
+    printf("Done.\n");
 }
-
-/*******************************************************************************
-* Main
-*/
-// int main() {
-
-//    int16_t acc_x;
-//    int16_t acc_y;
-//    int16_t acc_z;
-//    float acc_x_f;
-//    float acc_y_f;
-//    float acc_z_f;
-
-//    // Buffer to store raw reads
-//    uint8_t data[6];
-
-//    // Initialize chosen serial port
-//    stdio_init_all();
-
-//    //Initialize I2C port at 400 kHz
-//    i2c_init(i2c, 400 * 1000);
-
-//    // Initialize I2C pins
-//    gpio_set_function(sda_pin, GPIO_FUNC_I2C);
-//    gpio_set_function(scl_pin, GPIO_FUNC_I2C);
-
-//    // Read device ID to make sure that we can communicate with the ADXL343
-//    reg_read(i2c, ADXL343_ADDR, REG_DEVID, data, 1);
-//    if (data[0] != DEVID) {
-//        printf("ERROR: Could not communicate with ADXL343\r\n");
-//        while (true);
-//    }
-
-//    // Read Power Control register
-//    reg_read(i2c, ADXL343_ADDR, REG_POWER_CTL, data, 1);
-//    printf("0x%2X\r\n", data[0]);
-
-//    // Tell ADXL343 to start taking measurements by setting Measure bit to high
-//    data[0] |= (1 << 3);
-//    reg_write(i2c, ADXL343_ADDR, REG_POWER_CTL, &data[0], 1);
-
-//    // Test: read Power Control register back to make sure Measure bit was set
-//    reg_read(i2c, ADXL343_ADDR, REG_POWER_CTL, data, 1);
-//    printf("0x%2X\r\n", data[0]);
-
-//    // Wait before taking measurements
-//    sleep_ms(2000);
-
-//    // Loop forever
-//    while (true) {
-
-//        // Read X, Y, and Z values from registers (16 bits each)
-//        reg_read(i2c, ADXL343_ADDR, REG_DATAX0, data, 6);
-
-//        // Convert 2 bytes (little-endian) into 16-bit integer (signed)
-//        acc_x = (int16_t)((data[1] << 8) | data[0]);
-//        acc_y = (int16_t)((data[3] << 8) | data[2]);
-//        acc_z = (int16_t)((data[5] << 8) | data[4]);
-
-//        // Convert measurements to [m/s^2]
-//        acc_x_f = acc_x * SENSITIVITY_2G * EARTH_GRAVITY;
-//        acc_y_f = acc_y * SENSITIVITY_2G * EARTH_GRAVITY;
-//        acc_z_f = acc_z * SENSITIVITY_2G * EARTH_GRAVITY;
-
-//        // Print results
-//        printf("X: %.2f | Y: %.2f | Z: %.2f\r\n", acc_x_f, acc_y_f, acc_z_f);
-
-//        sleep_ms(100);
-//    }
-// }
