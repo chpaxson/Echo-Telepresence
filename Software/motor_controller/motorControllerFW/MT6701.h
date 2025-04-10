@@ -7,6 +7,7 @@
 #define I2C_PORT i2c1
 #define I2C_SDA_PIN 2
 #define I2C_SCL_PIN 3
+#define MT6701_ANALOG_PIN 28
 
 // Initialize I2C register
 const uint8_t DEVICE_ADDR = 0x06; // MT6701 address 
@@ -29,9 +30,13 @@ int reg_read(  i2c_inst_t *i2c,
                uint8_t *buf,
                const uint8_t nbytes);
 
-uint16_t i2c_read_raw(uint8_t buffer[2]);
+uint16_t angle_read_raw(uint8_t buffer[2]);
 
-float i2c_read(uint8_t buffer[2]);
+float angle_read(uint8_t buffer[2]);
+
+uint16_t analog_angle_read_raw();
+
+float analog_angle_read();
 
 void i2c_scan();
 
@@ -88,7 +93,7 @@ int reg_read(  i2c_inst_t *i2c,
    return num_bytes_read;
 }
 
-uint16_t i2c_read_raw(uint8_t buffer[2]) {
+uint16_t angle_read_raw(uint8_t buffer[2]) {
 
     reg_read(I2C_PORT, DEVICE_ADDR, 0x03, buffer, 1);
 
@@ -98,11 +103,22 @@ uint16_t i2c_read_raw(uint8_t buffer[2]) {
     return angle_raw;
 }
 
-float i2c_read(uint8_t buffer[2]) {
-    uint16_t angle_raw = i2c_read_raw(buffer);
+float angle_read(uint8_t buffer[2]) {
+    uint16_t angle_raw = angle_read_raw(buffer);
 
     //scale value to degrees
     return angle_raw * 360.0f / 16384.0f;
+}
+
+uint16_t analog_angle_read_raw() {
+    // Select ADC input 2 (GPIO28)
+    adc_select_input(2);
+
+    return adc_read();
+}
+
+float analog_angle_read() {
+    return (analog_angle_read_raw() / 4095.0f) * 360.0f;
 }
 
 // Sweep through all 7-bit I2C addresses, to see if any slaves are present on

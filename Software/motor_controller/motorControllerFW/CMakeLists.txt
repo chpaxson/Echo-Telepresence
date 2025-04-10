@@ -51,12 +51,16 @@ target_link_libraries(motorControllerFW
         pico_stdlib
         hardware_i2c
         hardware_adc
+        pico-stepper
         )
 
 # Add the standard include files to the build
 target_include_directories(motorControllerFW PRIVATE
         ${CMAKE_CURRENT_LIST_DIR}
 )
+
+# Add pico-stepper directory
+add_subdirectory(../pico-stepper/lib stepper)
 
 pico_add_extra_outputs(motorControllerFW)
 
