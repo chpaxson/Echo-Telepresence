@@ -5,11 +5,11 @@
 #include <stdio.h>
 #include <string.h>
 #include "pico/stdlib.h"
-#include "stepper.h"
 #include "pico/multicore.h"
 #include "pico/binary_info.h"
 #include "hardware/adc.h"
 
+#include "stepper.h"
 #include "MT6701.h"
 
 /*******************************************************************************
@@ -80,6 +80,10 @@ int main() {
     uint8_t data[2] = {0};
     uint16_t VBUS = 0;
     float angle = 0;
+    uint16_t Acurrent = 0;
+    uint16_t Bcurrent = 0;
+    float AI = 0;
+    float BI = 0;
 
     //scans for i2c address
     i2c_scan();
@@ -88,10 +92,18 @@ int main() {
         adc_select_input(3);
         VBUS = adc_read();  // 12-bit value (0–4095)
         angle = angle_read(data);
-  
-        printf("Angle: %.2f | Angle Analog Val: %.2f| V_BUS Analog Val: %u \r\n", angle, analog_angle_read(), VBUS);
+        adc_select_input(0);
+        Acurrent = adc_read();
+        adc_select_input(1);
+        Bcurrent = adc_read();
 
-        sleep_ms(10);  // Read every second
+        AI = (float)Acurrent * 0.001575 * 523 * 3.3 / 4095.0; // Convert to phase current
+        BI = (float)Bcurrent * 0.001575 * 523 * 3.3 / 4095.0; // Convert to phase current
+  
+        // printf("Angle: %.2f | Angle Analog Val: %.2f | V_BUS Analog Val: %u | Acurr: %.2f | Bcurr: %.2f \r\n", angle, analog_angle_read(), VBUS, AI, BI);
+        printf("Angle:%.2f,AngleAnalogVal:%.2f,V_BUSAnalogVal:%u,Acurr:%.2f,Bcurr:%.2f\r\n",angle,analog_angle_read(),VBUS,AI,BI);
+
+        // sleep_ms(1);  // Read every second
     }
 
    return 0;
