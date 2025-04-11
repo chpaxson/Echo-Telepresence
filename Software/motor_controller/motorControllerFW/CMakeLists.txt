@@ -39,6 +39,9 @@ add_executable(motorControllerFW
     main.cpp 
     )
 
+# Add pico-stepper directory
+add_subdirectory(../pico-stepper/lib stepper)
+
 pico_set_program_name(motorControllerFW "motorControllerFW")
 pico_set_program_version(motorControllerFW "0.1")
 
@@ -49,6 +52,7 @@ pico_enable_stdio_usb(motorControllerFW 1)
 # Add libraries to the build
 target_link_libraries(motorControllerFW
         pico_stdlib
+        pico_multicore
         hardware_i2c
         hardware_adc
         pico-stepper
@@ -58,9 +62,6 @@ target_link_libraries(motorControllerFW
 target_include_directories(motorControllerFW PRIVATE
         ${CMAKE_CURRENT_LIST_DIR}
 )
-
-# Add pico-stepper directory
-add_subdirectory(../pico-stepper/lib stepper)
 
 pico_add_extra_outputs(motorControllerFW)
 

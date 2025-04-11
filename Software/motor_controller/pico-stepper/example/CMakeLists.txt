@@ -45,7 +45,6 @@ pico_enable_stdio_usb(stepper-basic-example 1)
 target_link_libraries(
 	stepper-basic-example
 	pico_stdlib
-	pico-stepper
-    stepper)
+    pico-stepper)
 
 pico_add_extra_outputs(stepper-basic-example)
