@@ -56,10 +56,12 @@ void core1_main() {
 
 int main() {
     stdio_init_all();
+    
+    sleep_ms(3000);
 
     printf("Entered core0 (core=%d)\n", get_core_num());
 
-    multicore_launch_core1(core1_main);
+    // multicore_launch_core1(core1_main);
 
     i2c_init(I2C_PORT, 400 * 1000);  // Initialize I2C with 100kHz clock
     adc_init();
@@ -103,7 +105,10 @@ int main() {
         // printf("Angle: %.2f | Angle Analog Val: %.2f | V_BUS Analog Val: %u | Acurr: %.2f | Bcurr: %.2f \r\n", angle, analog_angle_read(), VBUS, AI, BI);
         printf("Angle:%.2f,AngleAnalogVal:%.2f,V_BUSAnalogVal:%u,Acurr:%.2f,Bcurr:%.2f\r\n",angle,analog_angle_read(),VBUS,AI,BI);
 
-        // sleep_ms(1);  // Read every second
+        // i2c_scan();
+        // sleep_ms(5000);
+
+        // sleep_ms(10);
     }
 
    return 0;
