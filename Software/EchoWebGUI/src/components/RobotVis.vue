@@ -43,8 +43,6 @@ function dirLen(angle: number, length: number): Point {
 function calc_fk(a: Configuration): Point {
   const e1: Point = addPoints(b1, dirLen(a.a1, armLen.u))
   const e2: Point = addPoints(b2, dirLen(a.a2, armLen.u))
-  // const e1: Point = { x: b1.x + armLen.u * Math.cos(a.a1), y: b1.y + armLen.u * Math.sin(a.a1) }
-  // const e2: Point = { x: b2.x + armLen.u * Math.cos(a.a2), y: b2.y + armLen.u * Math.sin(a.a2) }
 
   const dist = distance(e1, e2)
   const angle = getAngle(e1, e2)
@@ -138,7 +136,6 @@ watch([angle1, angle2], ([newAngle1, newAngle2]) => {
 
   drawArmSegment(`${props.label}-u1`, b1, joint1.value, armRadii.u1, armRadii.u2)
   drawArmSegment(`${props.label}-u2`, b2, joint2.value, armRadii.u1, armRadii.u2)
-
   drawArmSegment(`${props.label}-l2`, joint2.value, joint3.value, armRadii.l1, armRadii.l2)
   drawArmSegment(`${props.label}-l1`, joint1.value, joint3.value, armRadii.l1, armRadii.l2)
 })
