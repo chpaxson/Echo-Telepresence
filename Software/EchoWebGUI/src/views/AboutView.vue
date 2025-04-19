@@ -1,6 +1,9 @@
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
+    <p>
+      This is the control interface developed for David Gonzalez, Ishaan Gupta, Charles Paxson, and
+      Luz Torralba's ME135/235 final project at UC Berkeley.
+    </p>
   </div>
 </template>
 

@@ -62,10 +62,10 @@ import { RouterLink, RouterView } from 'vue-router'
 }
 
 .main-content {
+  width: 100%;
   margin-left: 150px; /* Same as sidebar width */
   padding: 2rem;
   margin-right: auto;
-  margin-left: 150px; /* Keep space for sidebar */
   box-sizing: border-box;
 }
 
