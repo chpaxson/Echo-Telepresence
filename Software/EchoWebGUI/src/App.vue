@@ -5,10 +5,12 @@ import { RouterLink, RouterView } from 'vue-router'
 <template>
   <div class="layout">
     <nav class="sidebar">
+      <h1><em>Echo</em></h1>
       <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="40" height="40" />
       <RouterLink to="/">Dashboard</RouterLink>
       <RouterLink to="/robot1">Robot 1</RouterLink>
       <RouterLink to="/robot2">Robot 2</RouterLink>
+      <RouterLink to="/draw">Drawing</RouterLink>
       <RouterLink to="/link">Link Control</RouterLink>
       <RouterLink to="/about">About</RouterLink>
     </nav>

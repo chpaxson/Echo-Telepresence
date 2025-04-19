@@ -5,8 +5,14 @@ import RobotVis from '../components/RobotVis.vue'
 <template>
   <div class="dashboard">
     <div class="viswrapper">
-      <RobotVis label="robot1" />
-      <RobotVis label="robot2" />
+      <div>
+        <h2>Robot 1</h2>
+        <RobotVis robot="robot1" :width="500" />
+      </div>
+      <div>
+        <h2>Robot 2</h2>
+        <RobotVis robot="robot2" :width="500" />
+      </div>
     </div>
   </div>
 </template>
@@ -14,9 +20,9 @@ import RobotVis from '../components/RobotVis.vue'
 <style>
 .viswrapper {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 2rem;
 }
 
