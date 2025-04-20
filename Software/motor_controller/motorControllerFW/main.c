@@ -8,9 +8,11 @@
 #include "pico/multicore.h"
 #include "pico/binary_info.h"
 #include "hardware/adc.h"
+#include "hardware/irq.h"
 
 #include "stepper.h"
 #include "MT6701.h"
+#include "can/can2040.h"
 
 /*******************************************************************************
 * Pin Definitions
@@ -25,10 +27,30 @@ const uint8_t stepper_pin_2B = 9;
 const uint16_t stepper_steps_per_revolution = 200;
 const stepper_mode_t stepping_mode = power;
 
+// CAN constants
+#define CAN_TX_PIN 0
+#define CAN_RX_PIN 1
+#define CAN_PIO    pio0
+#define CAN_SM     0
+
+struct can2040 cb;
 
 /*******************************************************************************
 * Main
 */
+
+void can_rx_callback(struct can2040 *cd, struct can2040_msg *msg) {
+    printf("Received CAN msg ID=0x%03X LEN=%d: ", msg->id, msg->dlc);
+    for (int i = 0; i < msg->dlc; i++) {
+        printf("%02X ", msg->data[i]);
+    }
+    printf("\n");
+}
+
+void can2040_irq_handler() {
+    can2040_pio_irq_handler(&cb);
+}
+
 
 void core1_main() {
 
@@ -79,6 +101,28 @@ int main() {
     sleep_ms(5000);
     printf("Start... \n");
 
+    // Initialize CAN
+    can2040_setup(&cb, 5); // 500 kbps
+    cb.callback = can_rx_callback;
+
+    irq_set_exclusive_handler(PIO0_IRQ_0 + CAN_SM, can2040_irq_handler);
+    irq_set_enabled(PIO0_IRQ_0 + CAN_SM, true);
+
+    can2040_start(&cb);
+
+    struct can2040_msg msg = {
+        .id = 0x123,
+        .dlc = 8,
+        .data = {0xDE, 0xAD, 0xBE, 0xEF, 0xBA, 0xAD, 0xF0, 0x0D}
+    };
+
+    // Send a CAN message
+    struct can2040_msg tx_msg = {
+        .id = 0x123,
+        .dlc = 2,
+        .data = {0xAB, 0xCD}
+    };
+
     uint8_t data[2] = {0};
     uint16_t VBUS = 0;
     float angle = 0;
@@ -104,6 +148,11 @@ int main() {
   
         // printf("Angle: %.2f | Angle Analog Val: %.2f | V_BUS Analog Val: %u | Acurr: %.2f | Bcurr: %.2f \r\n", angle, analog_angle_read(), VBUS, AI, BI);
         printf("Angle:%.2f,AngleAnalogVal:%.2f,V_BUSAnalogVal:%u,Acurr:%.2f,Bcurr:%.2f\r\n",angle,analog_angle_read(),VBUS,AI,BI);
+
+
+        //Can transmit
+        can2040_transmit(&cb, &tx_msg);
+        printf("Message sent\n");
 
         // i2c_scan();
         // sleep_ms(5000);
