@@ -55,7 +55,9 @@ target_link_libraries(motorControllerFW
     hardware_i2c
     hardware_adc
     hardware_irq
-    pico-stepper)
+    pico-stepper
+    cmsis_core
+    )
 
 # Add the standard include files to the build
 target_include_directories(motorControllerFW PRIVATE

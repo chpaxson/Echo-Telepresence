@@ -5,9 +5,9 @@
 #include "hardware/i2c.h"
 
 #define I2C_PORT i2c1
-#define I2C_SDA_PIN 2
-#define I2C_SCL_PIN 3
-#define MT6701_ANALOG_PIN 28
+const uint8_t I2C_SDA_PIN = 2;
+const uint8_t I2C_SCL_PIN = 3;
+const uint8_t MT6701_ANALOG_PIN = 28;
 
 // Initialize I2C register
 const uint8_t DEVICE_ADDR = 0x06; // MT6701 address 
