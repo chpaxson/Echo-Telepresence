@@ -39,7 +39,8 @@ add_subdirectory(../pico-stepper/lib stepper)
 # Add executable. Default name is the project name, version 0.1
 add_executable(motorControllerFW 
     main.c
-    can/can2040.c)
+    #can/can2040.c
+    )
 
 pico_set_program_name(motorControllerFW "motorControllerFW")
 pico_set_program_version(motorControllerFW "0.1")
@@ -59,7 +60,7 @@ target_link_libraries(motorControllerFW
 
 # Add the standard include files to the build
 target_include_directories(motorControllerFW PRIVATE
-    ${CMAKE_CURRENT_LIST_DIR}/can
+    ${CMAKE_CURRENT_LIST_DIR} #/can
 )
 
 pico_add_extra_outputs(motorControllerFW)

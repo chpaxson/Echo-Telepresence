@@ -12,7 +12,7 @@
 
 #include "stepper.h"
 #include "MT6701.h"
-#include "can/can2040.h"
+// #include "can/can2040.h"
 
 /*******************************************************************************
 * Pin Definitions
@@ -33,23 +33,23 @@ const stepper_mode_t stepping_mode = power;
 #define CAN_PIO    pio0
 #define CAN_SM     0
 
-struct can2040 cb;
+// struct can2040 cb;
 
 /*******************************************************************************
 * Main
 */
 
-void can_rx_callback(struct can2040 *cd, struct can2040_msg *msg) {
-    printf("Received CAN msg ID=0x%03X LEN=%d: ", msg->id, msg->dlc);
-    for (int i = 0; i < msg->dlc; i++) {
-        printf("%02X ", msg->data[i]);
-    }
-    printf("\n");
-}
+// void can_rx_callback(struct can2040 *cd, struct can2040_msg *msg) {
+//     printf("Received CAN msg ID=0x%03X LEN=%d: ", msg->id, msg->dlc);
+//     for (int i = 0; i < msg->dlc; i++) {
+//         printf("%02X ", msg->data[i]);
+//     }
+//     printf("\n");
+// }
 
-void can2040_irq_handler() {
-    can2040_pio_irq_handler(&cb);
-}
+// void can2040_irq_handler() {
+//     can2040_pio_irq_handler(&cb);
+// }
 
 
 void core1_main() {
@@ -83,9 +83,9 @@ int main() {
 
     printf("Entered core0 (core=%d)\n", get_core_num());
 
-    // multicore_launch_core1(core1_main);
+    multicore_launch_core1(core1_main);
 
-    i2c_init(I2C_PORT, 400 * 1000);  // Initialize I2C with 100kHz clock
+    i2c_init(I2C_PORT, 400 * 1000);  // Initialize I2C with 400kHz clock
     adc_init();
 
     gpio_set_function(I2C_SDA_PIN, GPIO_FUNC_I2C);
@@ -102,26 +102,26 @@ int main() {
     printf("Start... \n");
 
     // Initialize CAN
-    can2040_setup(&cb, 5); // 500 kbps
-    cb.callback = can_rx_callback;
+    // can2040_setup(&cb, 5); // 500 kbps
+    // cb.callback = can_rx_callback;
 
-    irq_set_exclusive_handler(PIO0_IRQ_0 + CAN_SM, can2040_irq_handler);
-    irq_set_enabled(PIO0_IRQ_0 + CAN_SM, true);
+    // irq_set_exclusive_handler(PIO0_IRQ_0 + CAN_SM, can2040_irq_handler);
+    // irq_set_enabled(PIO0_IRQ_0 + CAN_SM, true);
 
-    can2040_start(&cb);
+    // can2040_start(&cb);
 
-    struct can2040_msg msg = {
-        .id = 0x123,
-        .dlc = 8,
-        .data = {0xDE, 0xAD, 0xBE, 0xEF, 0xBA, 0xAD, 0xF0, 0x0D}
-    };
+    // struct can2040_msg msg = {
+    //     .id = 0x123,
+    //     .dlc = 8,
+    //     .data = {0xDE, 0xAD, 0xBE, 0xEF, 0xBA, 0xAD, 0xF0, 0x0D}
+    // };
 
-    // Send a CAN message
-    struct can2040_msg tx_msg = {
-        .id = 0x123,
-        .dlc = 2,
-        .data = {0xAB, 0xCD}
-    };
+    // // Send a CAN message
+    // struct can2040_msg tx_msg = {
+    //     .id = 0x123,
+    //     .dlc = 2,
+    //     .data = {0xAB, 0xCD}
+    // };
 
     uint8_t data[2] = {0};
     uint16_t VBUS = 0;
@@ -133,11 +133,15 @@ int main() {
 
     //scans for i2c address
     i2c_scan();
+    sleep_ms(5000);
 
     while (1) {
+        // read i2c angle value
+        angle = angle_read(data); // 14-bit value
+
+        // read analog values
         adc_select_input(3);
         VBUS = adc_read();  // 12-bit value (0–4095)
-        angle = angle_read(data);
         adc_select_input(0);
         Acurrent = adc_read();
         adc_select_input(1);
@@ -151,13 +155,10 @@ int main() {
 
 
         //Can transmit
-        can2040_transmit(&cb, &tx_msg);
-        printf("Message sent\n");
+        // can2040_transmit(&cb, &tx_msg);
+        // printf("Message sent\n");
 
-        // i2c_scan();
-        // sleep_ms(5000);
-
-        // sleep_ms(10);
+        sleep_ms(10);
     }
 
    return 0;
