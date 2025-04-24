@@ -36,7 +36,7 @@ const stepper_mode_t stepping_mode = power;
 
 // CAN constants
 uint8_t pio_num = 0;
-uint8_t gpio_rx = 14, gpio_tx = 15;
+uint8_t gpio_rx = 1, gpio_tx = 0;
 struct can2040 cbus;
 
 /*******************************************************************************
@@ -182,7 +182,7 @@ int main() {
         BI = (float)Bcurrent * 0.001575 * 523 * 3.3 / 4095.0;
   
         // printf("Angle: %.2f | Angle Analog Val: %.2f | V_BUS Analog Val: %u | Acurr: %.2f | Bcurr: %.2f \r\n", angle, analog_angle_read(), VBUS, AI, BI);
-        printf("Angle:%.2f,AngleAnalogVal:%.2f,V_BUSAnalogVal:%.2f,Acurr:%.2f,Bcurr:%.2f\r\n",angle,analog_angle_read(),VBUS,AI,BI);
+        // printf("Angle:%.2f,AngleAnalogVal:%.2f,V_BUSAnalogVal:%.2f,Acurr:%.2f,Bcurr:%.2f\r\n",angle,analog_angle_read(),VBUS,AI,BI);
 
 
         //Can transmit
