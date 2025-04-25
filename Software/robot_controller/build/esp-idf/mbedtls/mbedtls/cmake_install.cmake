@@ -1,4 +1,4 @@
-# Install script for directory: C:/Espressif/frameworks/esp-idf-v5.4/components/mbedtls/mbedtls
+# Install script for directory: C:/Users/chpax/esp/v5.4/esp-idf/components/mbedtls/mbedtls
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -39,10 +39,10 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("C:/Users/chpax/Documents/School/Spring-2025/MECENG 235/Echo-Telepresence/Software/station/build/esp-idf/mbedtls/mbedtls/include/cmake_install.cmake")
-  include("C:/Users/chpax/Documents/School/Spring-2025/MECENG 235/Echo-Telepresence/Software/station/build/esp-idf/mbedtls/mbedtls/3rdparty/cmake_install.cmake")
-  include("C:/Users/chpax/Documents/School/Spring-2025/MECENG 235/Echo-Telepresence/Software/station/build/esp-idf/mbedtls/mbedtls/library/cmake_install.cmake")
-  include("C:/Users/chpax/Documents/School/Spring-2025/MECENG 235/Echo-Telepresence/Software/station/build/esp-idf/mbedtls/mbedtls/pkgconfig/cmake_install.cmake")
+  include("C:/Users/chpax/Documents/Projects/Echo-Telepresence/Software/robot_controller/build/esp-idf/mbedtls/mbedtls/include/cmake_install.cmake")
+  include("C:/Users/chpax/Documents/Projects/Echo-Telepresence/Software/robot_controller/build/esp-idf/mbedtls/mbedtls/3rdparty/cmake_install.cmake")
+  include("C:/Users/chpax/Documents/Projects/Echo-Telepresence/Software/robot_controller/build/esp-idf/mbedtls/mbedtls/library/cmake_install.cmake")
+  include("C:/Users/chpax/Documents/Projects/Echo-Telepresence/Software/robot_controller/build/esp-idf/mbedtls/mbedtls/pkgconfig/cmake_install.cmake")
 
 endif()
 

@@ -24,28 +24,26 @@ const robotStore = props.robot === 'robot1'
 
 function drawArmSegment(element: string, scale: number, c1: Point, c2: Point, r1: number, r2: number): void {
   // Shift everything into the canvas
-  c1 = addPoints(c1, { x: 300, y: 75 })
-  c2 = addPoints(c2, { x: 300, y: 75 })
+  c1 = addPoints(c1, offset)
+  c2 = addPoints(c2, offset)
   const dist = getDist(c1, c2)
   const angle = getAngle(c1, c2)
-  const dr = Math.abs(r1 - r2) / 2
+  const dr = Math.abs(r1 - r2)// / 2
   const dangle = Math.acos(dr / dist)
   const angle1 = angle - dangle
   const angle2 = angle + dangle
 
   const pa0: Point = scalePoint(addPoints(c1, polar(angle1, r1)), scale)
-  const pac: Point = scalePoint(addPoints(c1, polar(angle, -r1)), scale)
   const pa1: Point = scalePoint(addPoints(c1, polar(angle2, r1)), scale)
 
   const pb0: Point = scalePoint(addPoints(c2, polar(angle1, r2)), scale)
-  const pbc: Point = scalePoint(addPoints(c2, polar(angle, r2)), scale)
   const pb1: Point = scalePoint(addPoints(c2, polar(angle2, r2)), scale)
 
   // Draw the arm segment
   const arc1 = document.getElementById(element)
   arc1?.setAttribute(
     'd',
-    `M ${pa0.x} ${pa0.y} A ${r1} ${r1} 0 0 0 ${pac.x} ${pac.y} A ${r1} ${r1} 0 0 0 ${pa1.x} ${pa1.y} L ${pb1.x} ${pb1.y} A ${r1} ${r1} 0 0 0 ${pbc.x} ${pbc.y} A ${r1} ${r1} 0 0 0 ${pb0.x} ${pb0.y} Z`,
+    `M ${pa0.x} ${pa0.y} A ${r1*scale} ${r1*scale} 0 ${r1>r2?1:0} 0 ${pa1.x} ${pa1.y} L ${pb1.x} ${pb1.y} A ${r2*scale} ${r2*scale} 0 ${r1>r2?0:1} 0 ${pb0.x} ${pb0.y} Z`,
   )
   arc1?.setAttribute('stroke', 'white')
 }
@@ -122,8 +120,8 @@ onUnmounted(() => stop())
     <path :id="`${props.robot}-l2`" />
     <path :id="`${props.robot}-l1`" />
     <circle
-      :cx="scale * robotStore.joint3.x + offset.x"
-      :cy="scale * robotStore.joint3.y + offset.y"
+      :cx="scale * (robotStore.joint3.x + offset.x)"
+      :cy="scale * (robotStore.joint3.y + offset.y)"
       :r="10*scale"
       fill="#4af"
       style="cursor: grab"

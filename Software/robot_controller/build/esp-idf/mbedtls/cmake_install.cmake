@@ -1,4 +1,4 @@
-# Install script for directory: C:/Espressif/frameworks/esp-idf-v5.4/components/mbedtls
+# Install script for directory: C:/Users/chpax/esp/v5.4/esp-idf/components/mbedtls
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -39,6 +39,6 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Users/chpax/Documents/School/Spring-2025/MECENG 235/Echo-Telepresence/Software/station/build/esp-idf/mbedtls/mbedtls/cmake_install.cmake")
+  include("C:/Users/chpax/Documents/Projects/Echo-Telepresence/Software/robot_controller/build/esp-idf/mbedtls/mbedtls/cmake_install.cmake")
 endif()
 

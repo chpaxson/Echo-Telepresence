@@ -1,4 +1,4 @@
-# Install script for directory: C:/Espressif/frameworks/esp-idf-v5.4/components/esp_driver_i2s
+# Install script for directory: C:/Users/chpax/esp/v5.4/esp-idf/components/esp_driver_i2s
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
