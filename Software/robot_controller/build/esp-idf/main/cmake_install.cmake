@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/chpax/Documents/School/Spring-2025/MECENG 235/Echo-Telepresence/Software/station/main
+# Install script for directory: C:/Users/chpax/Documents/Projects/Echo-Telepresence/Software/robot_controller/main
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

@@ -61,7 +61,7 @@ target_link_libraries(motorControllerFW
 
 # Add the standard include files to the build
 target_include_directories(motorControllerFW PRIVATE
-    ${CMAKE_CURRENT_LIST_DIR}/can
+    ${CMAKE_CURRENT_LIST_DIR} #/can
 )
 
 pico_add_extra_outputs(motorControllerFW)
