@@ -6,5 +6,10 @@
         "interface/ftdi/esp32_devkitj_v1.cfg",
         "target/esp32.cfg"
     ],
-    "idf.toolsPathWin": "C:\\Users\\gupta\\.espressif"
+    "idf.toolsPathWin": "C:\\Users\\gupta\\.espressif",
+    "idf.flashType": "UART",
+    "idf.portWin": "COM13",
+    "idf.customExtraVars": {
+        "IDF_TARGET": "esp32"
+    }
 }

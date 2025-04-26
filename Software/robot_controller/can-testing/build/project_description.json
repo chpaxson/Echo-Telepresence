@@ -1,7 +1,7 @@
 {
     "version":            "1.2",
     "project_name":       "can-testing",
-    "project_version":    "fb57f16",
+    "project_version":    "9c2c651-dirty",
     "project_path":       "C:/Users/gupta/Documents/College/Spring2025/MEC ENG 135/Echo-Telepresence/Software/robot_controller/can-testing",
     "idf_path":           "C:/Users/gupta/esp/v5.4.1/esp-idf",
     "build_dir":          "C:/Users/gupta/Documents/College/Spring2025/MEC ENG 135/Echo-Telepresence/Software/robot_controller/can-testing/build",

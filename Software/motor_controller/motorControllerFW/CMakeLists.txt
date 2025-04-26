@@ -38,7 +38,7 @@ add_subdirectory(../pico-stepper/lib stepper)
 
 # Add executable. Default name is the project name, version 0.1
 add_executable(motorControllerFW 
-    main.c
+    main.cpp
     can/can2040.c)
 
 pico_set_program_name(motorControllerFW "motorControllerFW")
