@@ -88,7 +88,7 @@ export function projectToWorkspace(e: Point, mode: String): Point {
   const a1 = getAngle(b1, e)
   const a2 = getAngle(b2, e)
   if (mode == "drag") {
-    if
+    // if
 
   } else if (mode == "x") {
 

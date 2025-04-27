@@ -1,10 +1,10 @@
 //==================================================================================//
 
-#include <CAN.h>
+// #include <CAN.h>
 #include <Arduino.h>
 
-#define TX_GPIO_NUM   15  // Connects to CTX
-#define RX_GPIO_NUM   14  // Connects to CRX
+#define TX_GPIO_NUM   A1  // Connects to CTX
+#define RX_GPIO_NUM   A0  // Connects to CRX
 
 //==================================================================================//
 
@@ -16,8 +16,8 @@ void setup() {
 void loop() {
  int a1Value = analogRead( TX_GPIO_NUM );
  int a2Value = analogRead( RX_GPIO_NUM );
- Serial.print( "A1: " );
+ Serial.print( "A1:" );
  Serial.println( a1Value );
- Serial.print( "A2: " );
+ Serial.print( ",A2:" );
  Serial.println( a2Value );
 }

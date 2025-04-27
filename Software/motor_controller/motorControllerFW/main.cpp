@@ -12,9 +12,9 @@
 #include "RP2040.h"
 
 extern "C" {
-#include "stepper.h"
-#include "MT6701.h"
-#include "can/can2040.h"
+    #include "stepper.h"
+    #include "MT6701.h"
+    #include "can/can2040.h"
 }
 /*******************************************************************************
 * Pin Definitions
@@ -136,7 +136,7 @@ int main() {
     sleep_ms(3000);
 
     printf("Entered core0 (core=%d)\n", get_core_num());
-    multicore_launch_core1(core1_main);
+    // multicore_launch_core1(core1_main);
 
     i2c_setup();    // Setup I2C
     adc_setup();    // Setup ADC
@@ -148,9 +148,9 @@ int main() {
 
     // Send a CAN message
     struct can2040_msg tx_msg = {
-        .id = 0x123,
+        .id = 0x0A2,
         .dlc = 2,
-        .data = {0xAB, 0xCD}
+        .data = {0x0A, 0x20}
     };
 
     uint8_t data[2] = {0};
@@ -167,20 +167,25 @@ int main() {
 
     while (1) {
         
-        adc_select_input(ADC_VBUS_IN);
-        V = adc_read();  // 12-bit value (0–4095)
-        angle = angle_read(data);
-        adc_select_input(ADC_CURRENT_A_IN);
-        Acurrent = adc_read();
-        adc_select_input(ADC_CURRENT_B_IN);
-        Bcurrent = adc_read();
+        // adc_select_input(ADC_VBUS_IN);
+        // V = adc_read();  // 12-bit value (0–4095)
+        // angle = angle_read(data);
+        // adc_select_input(ADC_CURRENT_A_IN);
+        // Acurrent = adc_read();
+        // adc_select_input(ADC_CURRENT_B_IN);
+        // Bcurrent = adc_read();
 
         // Convert to bus voltage (V)
-        VBUS = (float)VBUS * 12 / 4095.0; // Convert to voltage
+        // VBUS = (float)VBUS * 12 / 4095.0; // Convert to voltage
 
         // Convert to phase current (A and B)
-        AI = (float)Acurrent * 0.001575 * 523 * 3.3 / 4095.0;
-        BI = (float)Bcurrent * 0.001575 * 523 * 3.3 / 4095.0;
+        // AI = (float)Acurrent * 0.001575 * 523 * 3.3 / 4095.0;
+        // BI = (float)Bcurrent * 0.001575 * 523 * 3.3 / 4095.0;
+
+        uint16_t angle = angle_read_raw(data);
+        // Update the CAN message data with the new values
+        tx_msg.data[0] = (uint8_t)(angle >> 8); // High byte
+        tx_msg.data[1] = (uint8_t)(angle & 0xFF); // Low byte
   
         // printf("Angle: %.2f | Angle Analog Val: %.2f | V_BUS Analog Val: %u | Acurr: %.2f | Bcurr: %.2f \r\n", angle, analog_angle_read(), VBUS, AI, BI);
         // printf("Angle:%.2f,AngleAnalogVal:%.2f,V_BUSAnalogVal:%.2f,Acurr:%.2f,Bcurr:%.2f\r\n",angle,analog_angle_read(),VBUS,AI,BI);
