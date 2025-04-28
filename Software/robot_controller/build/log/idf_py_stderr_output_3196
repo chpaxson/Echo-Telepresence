@@ -1,0 +1,56 @@
+CMake Error at C:/Users/chpax/esp/v5.4/esp-idf/tools/cmake/build.cmake:610 (message):
+  Traceback (most recent call last):
+
+    File "<frozen runpy>", line 198, in _run_module_as_main
+    File "<frozen runpy>", line 88, in _run_code
+    File "C:\Users\chpax\.espressif\python_env\idf5.4_py3.11_env\Lib\site-packages\idf_component_manager\prepare_components\__main__.py", line 6, in <module>
+      main()
+    File "C:\Users\chpax\.espressif\python_env\idf5.4_py3.11_env\Lib\site-packages\idf_component_manager\prepare_components\prepare.py", line 130, in main
+      args.func(args)
+    File "C:\Users\chpax\.espressif\python_env\idf5.4_py3.11_env\Lib\site-packages\idf_component_manager\prepare_components\prepare.py", line 28, in prepare_dep_dirs
+      ).prepare_dep_dirs(
+        ^^^^^^^^^^^^^^^^^
+    File "C:\Users\chpax\.espressif\python_env\idf5.4_py3.11_env\Lib\site-packages\idf_component_manager\core.py", line 99, in wrapper
+      return func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\chpax\.espressif\python_env\idf5.4_py3.11_env\Lib\site-packages\idf_component_manager\core.py", line 717, in prepare_dep_dirs
+      downloaded_components = download_project_dependencies(
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\chpax\.espressif\python_env\idf5.4_py3.11_env\Lib\site-packages\idf_component_manager\dependencies.py", line 404, in download_project_dependencies
+      download_path = fetcher.download()
+                      ^^^^^^^^^^^^^^^^^^
+    File "C:\Users\chpax\.espressif\python_env\idf5.4_py3.11_env\Lib\site-packages\idf_component_tools\sources\fetcher.py", line 70, in download
+      return self.source.download(self.component, self.managed_path)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\chpax\.espressif\python_env\idf5.4_py3.11_env\Lib\site-packages\idf_component_tools\sources\web_service.py", line 266, in download
+      unpack_archive(file_path, self.component_cache_path(component))
+    File "C:\Users\chpax\.espressif\python_env\idf5.4_py3.11_env\Lib\site-packages\idf_component_tools\archive_tools.py", line 94, in unpack_archive
+      prepare_empty_directory(destination_directory)
+    File "C:\Users\chpax\.espressif\python_env\idf5.4_py3.11_env\Lib\site-packages\idf_component_tools\file_tools.py", line 155, in prepare_empty_directory
+      rmtree(directory)
+    File "shutil.py", line 759, in rmtree
+    File "shutil.py", line 626, in _rmtree_unsafe
+    File "shutil.py", line 624, in _rmtree_unsafe
+
+  OSError: [WinError 145] The directory is not empty:
+  'C:\\Users\\chpax\\AppData\\Local\\Espressif\\ComponentManager\\Cache\\service_d92d8f1e\\bblanchon__arduinojson_7.4.1_aee8b757'
+
+
+Call Stack (most recent call first):
+  C:/Users/chpax/esp/v5.4/esp-idf/tools/cmake/project.cmake:710 (idf_build_process)
+  CMakeLists.txt:8 (project)
+
+
+You have changed variables that require your cache to be deleted.
+Configure will be re-run and you may have to reset some variables.
+The following variables have changed:
+CMAKE_C_COMPILER= C:/Strawberry/c/bin/gcc.exe
+CMAKE_CXX_COMPILER= C:/Strawberry/c/bin/g++.exe
+
+CMake Warning:
+  Manually-specified variables were not used by the project:
+
+    ESP_PLATFORM
+
+
+CMake Generate step failed.  Build files cannot be regenerated correctly.

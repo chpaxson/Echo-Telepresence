@@ -1,0 +1,12 @@
+CMake Error at C:/Users/chpax/esp/v5.4/esp-idf/tools/cmake/component.cmake:155 (message):
+  Directory
+  'C:/Users/chpax/Documents/Projects/Echo-Telepresence/Software/robot_controller/managed_components/bblanchon__arduinojson'
+  does not contain a component.
+Call Stack (most recent call first):
+  C:/Users/chpax/esp/v5.4/esp-idf/tools/cmake/build.cmake:308 (__component_add)
+  build/managed_components_list.temp.cmake:1 (idf_build_component)
+  C:/Users/chpax/esp/v5.4/esp-idf/tools/cmake/build.cmake:613 (include)
+  C:/Users/chpax/esp/v5.4/esp-idf/tools/cmake/project.cmake:710 (idf_build_process)
+  CMakeLists.txt:8 (project)
+
+
