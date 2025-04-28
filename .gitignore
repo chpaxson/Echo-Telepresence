@@ -6,3 +6,4 @@
 *.bak
 *.kicad_sch-bak
 fp-info-cache
+Software/robot_controller/build/*

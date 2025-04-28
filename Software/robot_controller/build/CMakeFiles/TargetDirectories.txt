@@ -1,2 +1,0 @@
-C:/Users/chpax/Documents/Projects/Echo-Telepresence/Software/robot_controller/build/CMakeFiles/edit_cache.dir
-C:/Users/chpax/Documents/Projects/Echo-Telepresence/Software/robot_controller/build/CMakeFiles/rebuild_cache.dir
