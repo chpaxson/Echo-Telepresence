@@ -45,6 +45,7 @@ struct can2040 cbus;
 */
 
 static void can2040_cb(struct can2040 *cd, uint32_t notify, struct can2040_msg *msg) {
+    printf("DEBUG: can2040_cb entered. notify=0x%lX\n", notify); // Debug print
     if (notify & CAN2040_NOTIFY_RX) {
         // A message was received
         printf("Received CAN msg ID=0x%03X LEN=%d: ", msg->id, msg->dlc);
@@ -56,7 +57,7 @@ static void can2040_cb(struct can2040 *cd, uint32_t notify, struct can2040_msg *
 
     if (notify & CAN2040_NOTIFY_TX) {
         // A message was successfully transmitted
-        printf("Message transmitted successfully.\n");
+        // printf("Message transmitted successfully.\n"); // Optional: Keep or remove based on preference
     }
 
     if (notify & CAN2040_NOTIFY_ERROR) {
@@ -73,7 +74,7 @@ PIOx_IRQHandler(void)
 
 void canbus_setup(void)
 {
-    uint32_t sys_clock = 125000000, bitrate = 125000;
+    uint32_t sys_clock = 125000000, bitrate = 100000;
 
     // Setup canbus
     can2040_setup(&cbus, pio_num);
@@ -192,10 +193,12 @@ int main() {
 
 
         //Can transmit
-        can2040_transmit(&cbus, &tx_msg);
-        printf("Message sent\n");
+        // can2040_transmit(&cbus, &tx_msg); // Uncommented transmit
+        // printf("Message sent\n"); // Keep commented unless needed
 
-        sleep_ms(100);
+        printf("DEBUG: Main loop tick. Raw angle: %u\n", angle); // Debug print for main loop
+
+        sleep_ms(100); // Uncommented sleep
     }
 
    return 0;
