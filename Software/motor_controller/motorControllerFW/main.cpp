@@ -13,9 +13,11 @@
 
 extern "C" {
 #include "stepper.h"
-#include "MT6701.h"
+// #include "MT6701.h"
 #include "can/can2040.h"
 }
+
+#include "MT6701_I2C.h"
 /*******************************************************************************
 * Pin Definitions
 */
@@ -39,6 +41,11 @@ const stepper_mode_t stepping_mode = power;
 uint8_t pio_num = 0;
 uint8_t gpio_rx = 1, gpio_tx = 0;
 struct can2040 cbus;
+
+// I2C constants
+#define I2C_PORT i2c1
+const uint8_t I2C_SDA_PIN = 2;
+const uint8_t I2C_SCL_PIN = 3;
 
 /*******************************************************************************
 * Main
@@ -97,16 +104,6 @@ void adc_setup(void) {
     adc_gpio_init(ADC_VBUS_PIN); // VBUS input 3
 }
 
-void i2c_setup(void) {
-    i2c_init(I2C_PORT, 400 * 1000);  // Initialize I2C with 100kHz clock
-
-    gpio_set_function(I2C_SDA_PIN, GPIO_FUNC_I2C);
-    gpio_set_function(I2C_SCL_PIN, GPIO_FUNC_I2C);
-
-    gpio_pull_up(I2C_SDA_PIN);
-    gpio_pull_up(I2C_SCL_PIN);
-}
-
 void core1_main() {
 
     printf("Entered core0 (core=%d)\n", get_core_num());
@@ -138,7 +135,10 @@ int main() {
     printf("Entered core0 (core=%d)\n", get_core_num());
     multicore_launch_core1(core1_main);
 
-    i2c_setup();    // Setup I2C
+    // i2c_setup();    // Setup I2C
+    MT6701_I2C sensor = MT6701_I2C(sensor_default); // Create an instance of the MT6701_I2C class
+    sensor.init(I2C_PORT, I2C_SCL_PIN, I2C_SDA_PIN); // Initialize the MT6701_I2C instance
+    
     adc_setup();    // Setup ADC
     canbus_setup(); // Setup CAN bus
 
@@ -153,9 +153,7 @@ int main() {
         .data = {0xAB, 0xCD}
     };
 
-    uint8_t data[2] = {0};
     uint16_t V = 0;
-    float angle = 0;
     uint16_t Acurrent = 0;
     uint16_t Bcurrent = 0;
     float AI = 0;
@@ -163,13 +161,13 @@ int main() {
     float VBUS = 0;
 
     //scans for i2c address
-    i2c_scan();
+    sensor.i2c_scan();
 
     while (1) {
-        
+        sensor.update();
+
         adc_select_input(ADC_VBUS_IN);
         V = adc_read();  // 12-bit value (0–4095)
-        angle = angle_read(data);
         adc_select_input(ADC_CURRENT_A_IN);
         Acurrent = adc_read();
         adc_select_input(ADC_CURRENT_B_IN);
@@ -182,11 +180,12 @@ int main() {
         AI = (float)Acurrent * 0.001575 * 523 * 3.3 / 4095.0;
         BI = (float)Bcurrent * 0.001575 * 523 * 3.3 / 4095.0;
   
-        printf("Angle Bin Val: %u | Angle Val: %.2f | V_BUS Analog Val: %.2f | Acurr: %.2f | Bcurr: %.2f \r\n", angle_read_raw(data), angle, VBUS, AI, BI);
-        // printf("Angle:%.2f,AngleAnalogVal:%.2f,V_BUSAnalogVal:%.2f,Acurr:%.2f,Bcurr:%.2f\r\n",angle,analog_angle_read(),VBUS,AI,BI);
+        // printf("Velocity Val: %.4f | Angle Val: %.4f | V_BUS Analog Val: %.2f | Acurr: %.2f | Bcurr: %.2f \r\n", sensor.getVelocity(), sensor.getSensorAngle(), VBUS, AI, BI);
+        // printf("Velocity: %.4f | Angle: %.4f | SensorAngle: %.4f | MechanicalAngle: %.4f | PreciseAngle: %.4f | Full Rotations: %i \r\n", sensor.getVelocity(), sensor.getAngle(), sensor.getSensorAngle(), sensor.getMechanicalAngle(), sensor.getPreciseAngle(), sensor.getFullRotations());
+        // printf("Velocity:%.2f,Angle:%.2f,V_BUSAnalog:%.2f,Acurr:%.2f,Bcurr:%.2f\r\n",sensor.getVelocity(),sensor.getSensorAngle(),VBUS,AI,BI);
 
 
-        //Can transmit
+        //Can transmit  
         // can2040_transmit(&cbus, &tx_msg);
         // printf("Message sent\n");
 

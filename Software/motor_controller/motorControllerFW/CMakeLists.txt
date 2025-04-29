@@ -43,6 +43,8 @@ add_executable(motorControllerFW
     pid.cpp
     foc_utils.cpp
     lowpass_filter.cpp
+    MT6701_I2C.cpp
+    Sensor.cpp
     )
 
 pico_set_program_name(motorControllerFW "motorControllerFW")
