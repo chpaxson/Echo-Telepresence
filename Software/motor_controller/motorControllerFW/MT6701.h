@@ -95,7 +95,11 @@ int reg_read(  i2c_inst_t *i2c,
 
 uint16_t angle_read_raw(uint8_t buffer[2]) {
 
-    reg_read(I2C_PORT, DEVICE_ADDR, 0x03, buffer, 1);
+    //reg_read(I2C_PORT, DEVICE_ADDR, 0x03, buffer, 1);
+
+    // Read data from register(s) over I2C
+    i2c_write_blocking(I2C_PORT, DEVICE_ADDR, &REG_ADDR_A, 1, true);
+    i2c_read_blocking(I2C_PORT, DEVICE_ADDR, buffer, 1, false);
 
     // Data is split between 8 bits in Reg 0x03 and 6 bits in Reg 0x04
     uint16_t angle_raw = ((buffer[0] << 8) | (buffer[1])) >> 2;

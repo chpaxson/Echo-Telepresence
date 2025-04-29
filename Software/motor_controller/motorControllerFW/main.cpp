@@ -117,16 +117,16 @@ void core1_main() {
         stepper_steps_per_revolution, stepping_mode);
 
     while (1) {
-        stepper_set_speed_rpm(&stepper, 50);
-        stepper_rotate_degrees(&stepper, 270);
-        sleep_ms(500);
+        // stepper_set_speed_rpm(&stepper, 50);
+        // stepper_rotate_degrees(&stepper, 270);
+        // sleep_ms(500);
 
         stepper_set_speed_rpm(&stepper, 150);
-        stepper_rotate_degrees(&stepper, 360);
+        stepper_rotate_steps(&stepper, 20);
 
-        stepper_release(&stepper);
+        // stepper_release(&stepper);
         printf("Finished a stepper loop");
-        sleep_ms(4000);
+        sleep_ms(1000);
     }
 
 }
@@ -176,21 +176,21 @@ int main() {
         Bcurrent = adc_read();
 
         // Convert to bus voltage (V)
-        VBUS = (float)VBUS * 12 / 4095.0; // Convert to voltage
+        VBUS = (float)V / 4095.0 * 12.0; // Convert to voltage
 
         // Convert to phase current (A and B)
         AI = (float)Acurrent * 0.001575 * 523 * 3.3 / 4095.0;
         BI = (float)Bcurrent * 0.001575 * 523 * 3.3 / 4095.0;
   
-        // printf("Angle: %.2f | Angle Analog Val: %.2f | V_BUS Analog Val: %u | Acurr: %.2f | Bcurr: %.2f \r\n", angle, analog_angle_read(), VBUS, AI, BI);
+        printf("Angle Bin Val: %u | Angle Val: %.2f | V_BUS Analog Val: %.2f | Acurr: %.2f | Bcurr: %.2f \r\n", angle_read_raw(data), angle, VBUS, AI, BI);
         // printf("Angle:%.2f,AngleAnalogVal:%.2f,V_BUSAnalogVal:%.2f,Acurr:%.2f,Bcurr:%.2f\r\n",angle,analog_angle_read(),VBUS,AI,BI);
 
 
         //Can transmit
-        can2040_transmit(&cbus, &tx_msg);
-        printf("Message sent\n");
+        // can2040_transmit(&cbus, &tx_msg);
+        // printf("Message sent\n");
 
-        sleep_ms(100);
+        sleep_ms(100); // Sleep for 100ms
     }
 
    return 0;
