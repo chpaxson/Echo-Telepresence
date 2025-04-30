@@ -43,8 +43,10 @@ add_executable(motorControllerFW
     pid.cpp
     foc_utils.cpp
     lowpass_filter.cpp
-    MT6701_I2C.cpp
-    Sensor.cpp
+    sensors/MT6701_I2C.cpp
+    sensors/Sensor.cpp
+    drivers/StepperDriver4PWM.cpp
+    drivers/rp2040_mcu.cpp
     )
 
 pico_set_program_name(motorControllerFW "motorControllerFW")
@@ -61,6 +63,7 @@ target_link_libraries(motorControllerFW
     hardware_i2c
     hardware_adc
     hardware_irq
+    hardware_pwm
     pico-stepper
     cmsis_core
     )

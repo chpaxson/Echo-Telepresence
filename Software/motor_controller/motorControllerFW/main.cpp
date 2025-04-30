@@ -17,7 +17,7 @@ extern "C" {
 #include "can/can2040.h"
 }
 
-#include "MT6701_I2C.h"
+#include "sensors/MT6701_I2C.h"
 /*******************************************************************************
 * Pin Definitions
 */
@@ -46,6 +46,7 @@ struct can2040 cbus;
 #define I2C_PORT i2c1
 const uint8_t I2C_SDA_PIN = 2;
 const uint8_t I2C_SCL_PIN = 3;
+MT6701_I2C sensor = MT6701_I2C(sensor_default); // Create an instance of the MT6701_I2C class
 
 /*******************************************************************************
 * Main
@@ -135,10 +136,7 @@ int main() {
     printf("Entered core0 (core=%d)\n", get_core_num());
     multicore_launch_core1(core1_main);
 
-    // i2c_setup();    // Setup I2C
-    MT6701_I2C sensor = MT6701_I2C(sensor_default); // Create an instance of the MT6701_I2C class
-    sensor.init(I2C_PORT, I2C_SCL_PIN, I2C_SDA_PIN); // Initialize the MT6701_I2C instance
-    
+    sensor.init(I2C_PORT, I2C_SCL_PIN, I2C_SDA_PIN); // Initialize the MT6701_I2C instance    
     adc_setup();    // Setup ADC
     canbus_setup(); // Setup CAN bus
 
@@ -181,7 +179,7 @@ int main() {
         BI = (float)Bcurrent * 0.001575 * 523 * 3.3 / 4095.0;
   
         // printf("Velocity Val: %.4f | Angle Val: %.4f | V_BUS Analog Val: %.2f | Acurr: %.2f | Bcurr: %.2f \r\n", sensor.getVelocity(), sensor.getSensorAngle(), VBUS, AI, BI);
-        // printf("Velocity: %.4f | Angle: %.4f | SensorAngle: %.4f | MechanicalAngle: %.4f | PreciseAngle: %.4f | Full Rotations: %i \r\n", sensor.getVelocity(), sensor.getAngle(), sensor.getSensorAngle(), sensor.getMechanicalAngle(), sensor.getPreciseAngle(), sensor.getFullRotations());
+        printf("Velocity: %.4f rad/s | Angle: %.4f rad | SensorAngle: %.4f rad | MechanicalAngle: %.4f rad | PreciseAngle: %.4f rad | Full Rotations: %i rev \r\n", sensor.getVelocity(), sensor.getAngle(), sensor.getSensorAngle(), sensor.getMechanicalAngle(), sensor.getPreciseAngle(), sensor.getFullRotations());
         // printf("Velocity:%.2f,Angle:%.2f,V_BUSAnalog:%.2f,Acurr:%.2f,Bcurr:%.2f\r\n",sensor.getVelocity(),sensor.getSensorAngle(),VBUS,AI,BI);
 
 
