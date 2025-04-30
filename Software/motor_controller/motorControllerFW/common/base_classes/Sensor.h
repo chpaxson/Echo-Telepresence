@@ -2,6 +2,7 @@
 #define SENSOR_H
 
 #include <inttypes.h>
+#include "common/foc_utils.h"
 
 /**
  *  Direction structure

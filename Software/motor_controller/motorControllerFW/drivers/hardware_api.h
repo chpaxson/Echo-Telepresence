@@ -1,8 +1,8 @@
 #ifndef HARDWARE_UTILS_DRIVER_H
 #define HARDWARE_UTILS_DRIVER_H
 
-#include "../foc_utils.h"
-#include "StepperDriver.h"
+#include "common/foc_utils.h"
+#include "common/base_classes/StepperDriver.h"
 
 
 // these defines determine the polarity of the PWM output. Normally, the polarity is active-high,

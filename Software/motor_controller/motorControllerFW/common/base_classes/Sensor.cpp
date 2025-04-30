@@ -1,5 +1,4 @@
 #include "Sensor.h"
-#include "foc_utils.h"
 
 void Sensor::update() {
     float val = getSensorAngle();

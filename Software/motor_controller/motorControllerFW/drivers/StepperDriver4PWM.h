@@ -1,9 +1,9 @@
 #ifndef STEPPER_DRIVER_4PWM_h
 #define STEPPER_DRIVER_4PWM_h
 
-#include "StepperDriver.h"
-#include "../foc_utils.h"
-#include "../defaults.h"
+#include "common/base_classes/StepperDriver.h"
+#include "common/foc_utils.h"
+#include "common/defaults.h"
 #include "hardware_api.h"
 
 #include "pico/stdlib.h"

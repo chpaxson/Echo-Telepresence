@@ -1,8 +1,8 @@
 #ifndef MT6701_I2C_LIB_H
 #define MT6701_I2C_LIB_H
 
-#include "Sensor.h"
-#include "foc_utils.h"
+#include "common/base_classes/Sensor.h"
+#include "common/foc_utils.h"
 #include "hardware/i2c.h"
 #include "pico/stdlib.h"
 
