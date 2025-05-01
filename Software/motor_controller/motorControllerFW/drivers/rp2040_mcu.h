@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include "hardware_api.h"
 
 
 typedef struct RP2040DriverParams {

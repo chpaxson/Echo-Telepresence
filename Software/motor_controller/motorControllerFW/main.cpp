@@ -18,6 +18,8 @@ extern "C" {
 }
 
 #include "sensors/MT6701_I2C.h"
+#include "drivers/StepperDriver4PWM.h"
+#include "StepperMotor.h"
 /*******************************************************************************
 * Pin Definitions
 */

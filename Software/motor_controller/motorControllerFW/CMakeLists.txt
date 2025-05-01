@@ -40,19 +40,30 @@ add_subdirectory(../pico-stepper/lib stepper)
 add_executable(motorControllerFW 
     # The main program file
     main.cpp
+
     # can2040 Lib
     can/can2040.c
+
     # Simple FOC Port
     # common
     common/pid.cpp
     common/foc_utils.cpp
     common/lowpass_filter.cpp
+
+    # Main classes
     common/base_classes/Sensor.cpp
+    common/base_classes/CurrentSense.cpp
+    common/base_classes/FOCMotor.cpp
+
     # PWM Drivers
     drivers/StepperDriver4PWM.cpp
     drivers/rp2040_mcu.cpp
+
     # Sensor Drivers
     sensors/MT6701_I2C.cpp
+
+    # FOC Controller
+    StepperMotor.cpp
     )
 
 pico_set_program_name(motorControllerFW "motorControllerFW")

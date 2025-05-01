@@ -5,6 +5,7 @@
 #include "common/base_classes/StepperDriver.h"
 
 
+
 // these defines determine the polarity of the PWM output. Normally, the polarity is active-high,
 // i.e. a high-level PWM output is expected to switch on the MOSFET. But should your driver design
 // require inverted polarity, you can change the defines below, or set them via your build environment

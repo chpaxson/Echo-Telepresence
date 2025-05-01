@@ -4,7 +4,7 @@
 #include "common/base_classes/StepperDriver.h"
 #include "common/foc_utils.h"
 #include "common/defaults.h"
-#include "hardware_api.h"
+#include "rp2040_mcu.h"
 
 #include "pico/stdlib.h"
 
