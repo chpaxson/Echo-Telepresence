@@ -2,7 +2,7 @@
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "C:/Program Files (x86)/wifi_station")
+  set(CMAKE_INSTALL_PREFIX "C:/Program Files/esp-idf")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -30,11 +30,6 @@ endif()
 # Is this installation the result of a crosscompile?
 if(NOT DEFINED CMAKE_CROSSCOMPILING)
   set(CMAKE_CROSSCOMPILING "TRUE")
-endif()
-
-# Set path to fallback-tool for dependency-resolution.
-if(NOT DEFINED CMAKE_OBJDUMP)
-  set(CMAKE_OBJDUMP "C:/Users/chpax/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/bin/xtensa-esp32s3-elf-objdump.exe")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
@@ -554,6 +549,141 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Users/chpax/Documents/Projects/Echo-Telepresence/Software/robot_controller/build/esp-idf/main/cmake_install.cmake")
+  include("C:/Users/chpax/Documents/Projects/Echo-Telepresence/Software/robot_controller/build/esp-idf/esp32async__asynctcp/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/chpax/Documents/Projects/Echo-Telepresence/Software/robot_controller/build/esp-idf/bblanchon__arduinojson/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/chpax/Documents/Projects/Echo-Telepresence/Software/robot_controller/build/esp-idf/chmorgan__esp-libhelix-mp3/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/chpax/Documents/Projects/Echo-Telepresence/Software/robot_controller/build/esp-idf/espressif__esp-modbus/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/chpax/Documents/Projects/Echo-Telepresence/Software/robot_controller/build/esp-idf/espressif__esp-zboss-lib/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/chpax/Documents/Projects/Echo-Telepresence/Software/robot_controller/build/esp-idf/espressif__esp-zigbee-lib/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/chpax/Documents/Projects/Echo-Telepresence/Software/robot_controller/build/esp-idf/espressif__libsodium/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/chpax/Documents/Projects/Echo-Telepresence/Software/robot_controller/build/esp-idf/espressif__mdns/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/chpax/Documents/Projects/Echo-Telepresence/Software/robot_controller/build/esp-idf/espressif__cbor/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/chpax/Documents/Projects/Echo-Telepresence/Software/robot_controller/build/esp-idf/espressif__esp-dsp/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/chpax/Documents/Projects/Echo-Telepresence/Software/robot_controller/build/esp-idf/espressif__esp-sr/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/chpax/Documents/Projects/Echo-Telepresence/Software/robot_controller/build/esp-idf/espressif__esp_diag_data_store/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/chpax/Documents/Projects/Echo-Telepresence/Software/robot_controller/build/esp-idf/espressif__rmaker_common/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/chpax/Documents/Projects/Echo-Telepresence/Software/robot_controller/build/esp-idf/espressif__esp_diagnostics/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/chpax/Documents/Projects/Echo-Telepresence/Software/robot_controller/build/esp-idf/espressif__esp_insights/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/chpax/Documents/Projects/Echo-Telepresence/Software/robot_controller/build/esp-idf/espressif__esp_modem/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/chpax/Documents/Projects/Echo-Telepresence/Software/robot_controller/build/esp-idf/espressif__jsmn/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/chpax/Documents/Projects/Echo-Telepresence/Software/robot_controller/build/esp-idf/espressif__json_parser/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/chpax/Documents/Projects/Echo-Telepresence/Software/robot_controller/build/esp-idf/espressif__json_generator/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/chpax/Documents/Projects/Echo-Telepresence/Software/robot_controller/build/esp-idf/espressif__esp_schedule/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/chpax/Documents/Projects/Echo-Telepresence/Software/robot_controller/build/esp-idf/espressif__network_provisioning/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/chpax/Documents/Projects/Echo-Telepresence/Software/robot_controller/build/esp-idf/espressif__esp-serial-flasher/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/chpax/Documents/Projects/Echo-Telepresence/Software/robot_controller/build/esp-idf/espressif__esp_rcp_update/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/chpax/Documents/Projects/Echo-Telepresence/Software/robot_controller/build/esp-idf/espressif__esp_secure_cert_mgr/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/chpax/Documents/Projects/Echo-Telepresence/Software/robot_controller/build/esp-idf/espressif__esp_rainmaker/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/chpax/Documents/Projects/Echo-Telepresence/Software/robot_controller/build/esp-idf/espressif__qrcode/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/chpax/Documents/Projects/Echo-Telepresence/Software/robot_controller/build/esp-idf/joltwallet__littlefs/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/chpax/Documents/Projects/Echo-Telepresence/Software/robot_controller/build/esp-idf/espressif__arduino-esp32/cmake_install.cmake")
 endif()
 
