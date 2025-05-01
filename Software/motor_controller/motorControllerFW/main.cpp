@@ -12,8 +12,6 @@
 #include "RP2040.h"
 
 extern "C" {
-#include "stepper.h"
-// #include "MT6701.h"
 #include "can/can2040.h"
 }
 
@@ -31,13 +29,10 @@ const uint8_t ADC_MT6701_PIN = 28, ADC_MT6701_IN = 2; // MT6701 Analog input
 const uint8_t ADC_VBUS_PIN = 29, ADC_VBUS_IN = 3; // Voltage on Power Rail
 
 // Stepper constants.
-stepper_t stepper;
 const uint8_t stepper_pin_1A = 6;
 const uint8_t stepper_pin_1B = 7;
 const uint8_t stepper_pin_2A = 8;
 const uint8_t stepper_pin_2B = 9;
-const uint16_t stepper_steps_per_revolution = 200;
-const stepper_mode_t stepping_mode = power;
 
 // StepperMotor(pole pair number, phase resistance (optional) );
 StepperMotor motor = StepperMotor(50);
@@ -116,23 +111,19 @@ void adc_setup(void) {
 void core1_main() {
 
     printf("Entered core0 (core=%d)\n", get_core_num());
-
-    // Initialise the stepper
-    stepper_init(&stepper, stepper_pin_1A, stepper_pin_1B,
-        stepper_pin_2A, stepper_pin_2B,
-        stepper_steps_per_revolution, stepping_mode);
-
+    
+    // Send a CAN message
+    struct can2040_msg tx_msg = {
+        .id = 0x123,
+        .dlc = 2,
+        .data = {0xAB, 0xCD}
+    };
+    
     while (1) {
-        // stepper_set_speed_rpm(&stepper, 50);
-        // stepper_rotate_degrees(&stepper, 270);
-        // sleep_ms(500);
+        //Can transmit  
+        can2040_transmit(&cbus, &tx_msg);
+        printf("Message sent\n");
 
-        stepper_set_speed_rpm(&stepper, 150);
-        stepper_rotate_steps(&stepper, 20);
-
-        // stepper_release(&stepper);
-        printf("Finished a stepper loop");
-        sleep_ms(1000);
     }
 
 }
@@ -178,16 +169,9 @@ int main() {
         printf("Motor init failed!");
     }
 
-    printf("Driver ready!");
+    printf("Motor ready!");
 
     sleep_ms(5000);
-
-    // Send a CAN message
-    struct can2040_msg tx_msg = {
-        .id = 0x123,
-        .dlc = 2,
-        .data = {0xAB, 0xCD}
-    };
 
     uint16_t V = 0;
     uint16_t Acurrent = 0;
@@ -217,12 +201,6 @@ int main() {
         printf("Velocity: %.4f rad/s | Angle: %.4f rad | SensorAngle: %.4f rad | MechanicalAngle: %.4f rad | PreciseAngle: %.4f rad | Full Rotations: %i rev \r\n", motor.shaftVelocity(), sensor.getAngle(), sensor.getSensorAngle(), sensor.getMechanicalAngle(), sensor.getPreciseAngle(), sensor.getFullRotations());
         // // printf("Velocity:%.2f,Angle:%.2f,V_BUSAnalog:%.2f,Acurr:%.2f,Bcurr:%.2f\r\n",sensor.getVelocity(),sensor.getSensorAngle(),VBUS,AI,BI);
 
-
-        // //Can transmit  
-        // // can2040_transmit(&cbus, &tx_msg);
-        // // printf("Message sent\n");
-
-        //sleep_ms(100); // Sleep for 100ms
         motor.move(-6.28);
         sleep_ms(1);
     }

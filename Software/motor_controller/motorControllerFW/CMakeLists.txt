@@ -55,6 +55,10 @@ add_executable(motorControllerFW
     common/base_classes/CurrentSense.cpp
     common/base_classes/FOCMotor.cpp
 
+    # Current Sensor Drivers
+    current_sense/InlineCurrentSense.cpp
+    current_sense/rp2040_mcu.cpp
+
     # PWM Drivers
     drivers/StepperDriver4PWM.cpp
     drivers/rp2040_mcu.cpp
@@ -81,13 +85,13 @@ target_link_libraries(motorControllerFW
     hardware_adc
     hardware_irq
     hardware_pwm
-    pico-stepper
+    hardware_dma
     cmsis_core
     )
 
 # Add the standard include files to the build
 target_include_directories(motorControllerFW PRIVATE
-    ${CMAKE_CURRENT_LIST_DIR} /can
+    ${CMAKE_CURRENT_LIST_DIR}
 )
 
 pico_add_extra_outputs(motorControllerFW)

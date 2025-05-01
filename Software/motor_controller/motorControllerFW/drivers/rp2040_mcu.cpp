@@ -3,7 +3,7 @@
  * Support for the RP2040 MCU, as found on the Raspberry Pi Pico.
  */
 
- #include "./rp2040_mcu.h"
+ #include "rp2040_mcu.h"
  
 //  #if !defined(SIMPLEFOC_DEBUG_RP2040)
 //  #define SIMPLEFOC_DEBUG_RP2040
