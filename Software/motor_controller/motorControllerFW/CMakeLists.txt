@@ -68,6 +68,9 @@ add_executable(motorControllerFW
 
     # FOC Controller
     StepperMotor.cpp
+
+    # FOC Serial Command Interface
+    communication/Commander.cpp
     )
 
 pico_set_program_name(motorControllerFW "motorControllerFW")

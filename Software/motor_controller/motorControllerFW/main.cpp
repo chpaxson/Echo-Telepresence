@@ -18,6 +18,8 @@ extern "C" {
 #include "sensors/MT6701_I2C.h"
 #include "drivers/StepperDriver4PWM.h"
 #include "StepperMotor.h"
+#include "communication/Commander.h"
+#include "current_sense/InlineCurrentSense.h"
 /*******************************************************************************
 * Pin Definitions
 */
@@ -45,11 +47,16 @@ uint8_t pio_num = 0;
 uint8_t gpio_rx = 1, gpio_tx = 0;
 struct can2040 cbus;
 
-// I2C constants
+// Sensor constants
 #define I2C_PORT i2c1
 const uint8_t I2C_SDA_PIN = 2;
 const uint8_t I2C_SCL_PIN = 3;
 MT6701_I2C sensor = MT6701_I2C(sensor_default); // Create an instance of the MT6701_I2C class
+
+//Current sense constants
+InlineCurrentSense current_sense = InlineCurrentSense(.523, ADC_CURRENT_A_PIN, ADC_CURRENT_B_PIN);
+// Comamander instance
+Commander command = Commander();
 
 /*******************************************************************************
 * Main
@@ -138,71 +145,81 @@ int main() {
     // multicore_launch_core1(core1_main);
 
     sensor.init(I2C_PORT, I2C_SCL_PIN, I2C_SDA_PIN); // Initialize the MT6701_I2C instance   
-      // link the motor to the sensor
-    motor.linkSensor(&sensor); 
-    // adc_setup();    // Setup ADC
-    // canbus_setup(); // Setup CAN bus
+    // link the motor to the sensor
+    motor.linkSensor(&sensor);
 
-    // ================================================
-    // power supply voltage [V]
     driver.voltage_power_supply = 12;
-    // Max DC voltage allowed - default voltage_power_supply
-    driver.voltage_limit = 12;
-
-    // driver init
-    if (!driver.init()) {
-        printf("Driver init failed!");
-    }
-
-    // enable driver
-    driver.enable();
-    printf("Driver ready!");
-
-    // link the motor and the driver
+    // driver config
+    driver.init();
+    current_sense.linkDriver(&driver);
     motor.linkDriver(&driver);
 
-    // open loop control config
-    motor.controller = MotionControlType::velocity_openloop;
+    current_sense.init();
+    motor.linkCurrentSense(&current_sense);
 
-    // init motor hardware
-    if(!motor.init()){
-        printf("Motor init failed!");
-    }
+    //current_sense.skip_align = true;
+    // set motion control loop to be used
+    motor.torque_controller = TorqueControlType::voltage;
+    motor.controller = MotionControlType::angle;
 
-    printf("Motor ready!");
+    // controller configuration 
+    // default parameters in defaults.h
 
-    sleep_ms(5000);
+    // controller configuration based on the control type 
+    // velocity PID controller parameters
+    //default P=0.5 I = 10 D =0
+    motor.PID_velocity.P = 0.2;
+    motor.PID_velocity.I = 20;
+    motor.PID_velocity.D = 0.001;
+    // // jerk control using voltage voltage ramp
+    // // default value is 300 volts per sec  ~ 0.3V per millisecond
+    motor.PID_velocity.output_ramp = 1000;
 
-    uint16_t V = 0;
-    uint16_t Acurrent = 0;
-    uint16_t Bcurrent = 0;
-    float AI = 0;
-    float BI = 0;
-    float VBUS = 0;
+    // // velocity low pass filtering
+    // // default 5ms - try different values to see what is the best. 
+    // // the lower the less filtered
+    motor.LPF_velocity.Tf = 0.01;
 
+    // angle P controller -  default P=20
+    motor.P_angle.P = 20;
+
+    //  maximal velocity of the position control
+    // default 20
+    motor.velocity_limit = 4;
+    // default voltage_power_supply
+    motor.voltage_limit = 10;
+
+    // since the phase resistance is provided we set the current limit not voltage
+    // default 0.2
+    //motor.phase_resistance = 1.5; // Ohm
+    motor.current_limit = 1.5; // Amps
+   // motor.velocity_limit = 1; // rad/s
+    //motor.voltage_limit = 10; // Volts
+    motor.voltage_sensor_align = 7; 
+
+    //motor.target = 6.4; // target voltage
+
+
+    // initialize motor
+    motor.init();
+    // align sensor and start FOC
+    motor.initFOC();
+
+    float target = 3;
+    
     while (1) {
-        sensor.update();
+        // main FOC algorithm function
+    //    sensor.update(); // update the sensor values
 
-        // adc_select_input(ADC_VBUS_IN);
-        // V = adc_read();  // 12-bit value (0–4095)
-        // adc_select_input(ADC_CURRENT_A_IN);
-        // Acurrent = adc_read();
-        // adc_select_input(ADC_CURRENT_B_IN);
-        // Bcurrent = adc_read();
+        // Motion control function
+        uint64_t t0 = time_us_64();
+        while (time_us_64() - t0 < 9 * 1e6) {
+            motor.loopFOC();
+            motor.move(target); // target angle
+        }
 
-        // // Convert to bus voltage (V)
-        // VBUS = (float)V / 4095.0 * 12.0; // Convert to voltage
-
-        // // Convert to phase current (A and B)
-        // AI = (float)Acurrent * 0.001575 * 523 * 3.3 / 4095.0;
-        // BI = (float)Bcurrent * 0.001575 * 523 * 3.3 / 4095.0;
-  
-        // // printf("Velocity Val: %.4f | Angle Val: %.4f | V_BUS Analog Val: %.2f | Acurr: %.2f | Bcurr: %.2f \r\n", sensor.getVelocity(), sensor.getSensorAngle(), VBUS, AI, BI);
-        printf("Velocity: %.4f rad/s | Angle: %.4f rad | SensorAngle: %.4f rad | MechanicalAngle: %.4f rad | PreciseAngle: %.4f rad | Full Rotations: %i rev \r\n", motor.shaftVelocity(), sensor.getAngle(), sensor.getSensorAngle(), sensor.getMechanicalAngle(), sensor.getPreciseAngle(), sensor.getFullRotations());
-        // // printf("Velocity:%.2f,Angle:%.2f,V_BUSAnalog:%.2f,Acurr:%.2f,Bcurr:%.2f\r\n",sensor.getVelocity(),sensor.getSensorAngle(),VBUS,AI,BI);
-
-        motor.move(-6.28);
-        sleep_ms(1);
+        printf("Angle: %f | target: %f | error: %f \n", motor.shaftAngle(), target, motor.shaftAngle() - target);
+        target += 1.5;
     }
 
    return 0;

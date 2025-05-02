@@ -1,5 +1,4 @@
 
-#include "hardware_api.h"
 #include "rp2040_mcu.h"
 #include "../drivers/rp2040_mcu.h"
 // #include "communication/SimpleFOCDebug.h"

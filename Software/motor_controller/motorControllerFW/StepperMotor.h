@@ -9,6 +9,7 @@
  #include "common/base_classes/FOCMotor.h"
  #include "common/base_classes/StepperDriver.h"
  #include "common/base_classes/Sensor.h"
+  #include "common/base_classes/CurrentSense.h"
  #include "common/foc_utils.h"
  #include "common/defaults.h"
  
