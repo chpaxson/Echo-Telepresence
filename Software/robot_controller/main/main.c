@@ -16,6 +16,10 @@
 #include "esp_log.h"
 #include "nvs_flash.h"
 #include "esp_http_server.h"
+#include "nvs_flash.h"
+#include "esp_netif.h"
+#include "esp_err.h"
+#include "nvs_flash.h"
 #include "driver/twai.h" // CAN/TWAI driver
 
 #define WIFI_SSID      "EchoRobot"
@@ -57,13 +61,25 @@ uint8_t crc8(const uint8_t *data, size_t len) {
 }
 
 
+
 // --- Main Entry Point ---
 void app_main(void) {
+    ESP_LOGI(TAG, "Starting example");
     ESP_ERROR_CHECK(nvs_flash_init());
-    wifi_init_softap();
-    can_init();
-    start_webserver();
+    ESP_ERROR_CHECK(esp_netif_init());
+    ESP_ERROR_CHECK(esp_event_loop_create_default());
 
-    // Start CAN-to-WebSocket streaming task
-    xTaskCreate(can_stream_task, "can_stream_task", 4096, NULL, 5, NULL);
+    /* Initialize file storage */
+    const char* base_path = "/data";
+    ESP_ERROR_CHECK(example_mount_storage(base_path));
+
+    /* This helper function configures Wi-Fi or Ethernet, as selected in menuconfig.
+     * Read "Establishing Wi-Fi or Ethernet Connection" section in
+     * examples/protocols/README.md for more information about this function.
+     */
+    ESP_ERROR_CHECK(example_connect());
+
+    /* Start the file server */
+    ESP_ERROR_CHECK(example_start_file_server(base_path));
+    ESP_LOGI(TAG, "File server started");
 }

@@ -44,7 +44,7 @@ const xPos = computed({
     return robotStore.joint3.x
   },
   set(x: number) {
-    const projected = projectToWorkspace({ x, y: robotStore.joint3.y }, "x")
+    const projected = projectToWorkspace({ x, y: robotStore.joint3.y })
     robotStore.joint3 = projected
   }
 })
@@ -54,7 +54,7 @@ const yPos = computed({
     return robotStore.joint3.y
   },
   set(y: number) {
-    const projected = projectToWorkspace({ x: robotStore.joint3.x, y }, "y")
+    const projected = projectToWorkspace({ x: robotStore.joint3.x, y })
     robotStore.joint3 = projected
   }
 })
