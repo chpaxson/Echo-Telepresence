@@ -57,15 +57,7 @@ onUnmounted(() => {
       </div>
       <div id="linkcontrolwrapper">
         <h1 style="user-select: none;">Link Controls</h1>
-        <div class="flex gap-2 items-center">
-          <label
-            class="text-white text-[15px] leading-none pr-[15px] select-none"
-            for="linkEnable"
-          >
-            Position Link:
-          </label>
-          <!-- <input type="checkbox" class="toggle" disabled /> -->
-        </div>
+
       </div>
     </div>
   </div>

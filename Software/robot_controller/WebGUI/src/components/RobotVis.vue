@@ -189,23 +189,19 @@ onMounted(() => {
   drawBoundaries()
 })
 
+const primaryColor = $dt('primary.color')
+const surfaceColor = $dt('surface.color')
+
 </script>
 
 <template>
   <svg :width="`${props.width}`" :height="`${props.width * 0.75}`" :id="`${props.robot}-svg`">
-    <path :id="`${props.robot}-boundary`" stroke="var(--color-border)" fill="var(--color-background-soft)"/>
+    <path :id="`${props.robot}-boundary`" :stroke="`${surfaceColor}`" />
     <path :id="`${props.robot}-u1`" />
     <path :id="`${props.robot}-u2`" />
     <path :id="`${props.robot}-l2`" />
     <path :id="`${props.robot}-l1`" />
-    <circle id="ee"
-      :cx="scale * robotStore.eePos.x + offset.x"
-      :cy="scale * robotStore.eePos.y + offset.y"
-      :r="10*scale"
-      style="cursor: grab"
-      fill="var(--color-accent1)"
-      @mousedown="onDragStart"
-      @touchstart="onTouchStart"
-    />
+    <circle id="ee" :cx="scale * robotStore.eePos.x + offset.x" :cy="scale * robotStore.eePos.y + offset.y"
+      :r="10*scale" style="cursor: grab" :fill="`${primaryColor}`" @mousedown="onDragStart" @touchstart="onTouchStart" />
   </svg>
 </template>
