@@ -1,8 +1,8 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 </script>
 
 <template>
-  <main>
-    <h1>Link Controller</h1>
-  </main>
+    
 </template>
+  

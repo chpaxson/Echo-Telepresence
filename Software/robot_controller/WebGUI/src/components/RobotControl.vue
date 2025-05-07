@@ -18,44 +18,44 @@ const robotStore = props.robot === 'robot1'
 // Computed for Joint 1 angle in degrees
 const joint1Deg = computed({
   get() {
-    return (calc_ik(robotStore.joint3).a1 * 180) / Math.PI
+    return (calc_ik(robotStore.eePos).a1 * 180) / Math.PI
   },
   set(deg: number) {
-    const angles = calc_ik(robotStore.joint3)
+    const angles = calc_ik(robotStore.eePos)
     const newAngles = { a1: (deg * Math.PI) / 180, a2: angles.a2 }
-    robotStore.joint3 = calc_fk(newAngles.a1, newAngles.a2)
+    robotStore.eePos = calc_fk(newAngles.a1, newAngles.a2)
   }
 })
 
 // Computed for Joint 2 angle in degrees
 const joint2Deg = computed({
   get() {
-    return (calc_ik(robotStore.joint3).a2 * 180) / Math.PI
+    return (calc_ik(robotStore.eePos).a2 * 180) / Math.PI
   },
   set(deg: number) {
-    const angles = calc_ik(robotStore.joint3)
+    const angles = calc_ik(robotStore.eePos)
     const newAngles = { a1: angles.a1, a2: (deg * Math.PI) / 180 }
-    robotStore.joint3 = calc_fk(newAngles.a1, newAngles.a2)
+    robotStore.eePos = calc_fk(newAngles.a1, newAngles.a2)
   }
 })
 
 const xPos = computed({
   get() {
-    return robotStore.joint3.x
+    return robotStore.eePos.x
   },
   set(x: number) {
-    const projected = projectToWorkspace({ x, y: robotStore.joint3.y })
-    robotStore.joint3 = projected
+    const projected = projectToWorkspace({ x, y: robotStore.eePos.y })
+    robotStore.eePos = projected
   }
 })
 
 const yPos = computed({
   get() {
-    return robotStore.joint3.y
+    return robotStore.eePos.y
   },
   set(y: number) {
-    const projected = projectToWorkspace({ x: robotStore.joint3.x, y })
-    robotStore.joint3 = projected
+    const projected = projectToWorkspace({ x: robotStore.eePos.x, y })
+    robotStore.eePos = projected
   }
 })
 </script>

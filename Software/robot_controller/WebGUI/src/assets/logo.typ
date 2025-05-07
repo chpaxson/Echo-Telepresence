@@ -10,7 +10,7 @@
   let r1 = 3.5pt
   let dr = 2.5pt
 
-  circle((0,0), radius: 0.5cm, fill: gradient.linear(..color.map.turbo, angle: 55deg), stroke: none)
+  circle((0,0), radius: 0.5cm, fill: gradient.linear(purple.darken(40%), blue.darken(20%), angle: 55deg), stroke: none)
 
   rotate(-20deg)
 

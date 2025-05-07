@@ -18,7 +18,7 @@
   --vt-c-text-light-1: var(--vt-c-indigo);
   --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
   --vt-c-text-dark-1: var(--vt-c-white);
-  --vt-c-text-dark-2: rgba(235, 235, 235, 0.7);
+  --vt-c-text-dark-2: rgba(245, 245, 245, 0.7);
 }
 
 /* semantic color variables for this project */
@@ -32,6 +32,10 @@
 
   --color-heading: var(--vt-c-text-light-1);
   --color-text: var(--vt-c-text-light-1);
+
+  --color-fill: var(--vt-c-white);
+  --color-accent1: rgb(0, 93, 174);
+  --color-accent2: rgb(106, 8, 121);
 
   --section-gap: 160px;
 }
@@ -58,8 +62,12 @@
   font-weight: normal;
 }
 
-body {
-  min-height: 100vh;
+html, body {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
   color: var(--color-text);
   background: var(--color-background);
   transition:

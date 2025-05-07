@@ -60,28 +60,25 @@ static esp_err_t set_content_type_from_file(httpd_req_t *req, const char *filepa
 static esp_err_t rest_common_get_handler(httpd_req_t *req)
 {
     char filepath[FILE_PATH_MAX];
-
     rest_server_context_t *rest_context = (rest_server_context_t *)req->user_ctx;
     strlcpy(filepath, rest_context->base_path, sizeof(filepath));
     if (req->uri[strlen(req->uri) - 1] == '/') {
+        strlcat(filepath, "/index.html", sizeof(filepath));
+    } else if (strchr(req->uri, '.') == NULL) {
         strlcat(filepath, "/index.html", sizeof(filepath));
     } else {
         strlcat(filepath, req->uri, sizeof(filepath));
     }
     int fd = open(filepath, O_RDONLY, 0);
-    if (fd == -1) {
+    if (fd == -1) { /* Respond with 500 Internal Server Error */
         ESP_LOGE(REST_TAG, "Failed to open file : %s", filepath);
-        /* Respond with 500 Internal Server Error */
         httpd_resp_send_err(req, HTTPD_500_INTERNAL_SERVER_ERROR, "Failed to read existing file");
         return ESP_FAIL;
     }
-
     set_content_type_from_file(req, filepath);
-
     char *chunk = rest_context->scratch;
     ssize_t read_bytes;
-    do {
-        /* Read file in chunks into the scratch buffer */
+    do { /* Read file in chunks into the scratch buffer */
         read_bytes = read(fd, chunk, SCRATCH_BUFSIZE);
         if (read_bytes == -1) {
             ESP_LOGE(REST_TAG, "Failed to read file : %s", filepath);
@@ -106,22 +103,45 @@ static esp_err_t rest_common_get_handler(httpd_req_t *req)
     return ESP_OK;
 }
 
-/* Simple handler for light brightness control */
-static esp_err_t robot1_joint_angles_post_handler(httpd_req_t *req)
-{
+// static esp_err_t light_post_handler(httpd_req_t *req) {
+//     int total_len = req->content_len;
+//     int cur_len = 0;
+//     char *buf = ((rest_server_context_t *)(req->user_ctx))->scratch;
+//     int received = 0;
+//     if (total_len >= SCRATCH_BUFSIZE) { /* Respond with 500 Internal Server Error */
+//         httpd_resp_send_err(req, HTTPD_500_INTERNAL_SERVER_ERROR, "content too long");
+//         return ESP_FAIL;
+//     }
+//     while (cur_len < total_len) {
+//         received = httpd_req_recv(req, buf + cur_len, total_len);
+//         if (received <= 0) { /* Respond with 500 Internal Server Error */
+//             httpd_resp_send_err(req, HTTPD_500_INTERNAL_SERVER_ERROR, "Failed to post control value");
+//             return ESP_FAIL;
+//         }
+//         cur_len += received;
+//     }
+//     buf[total_len] = '\0';
+//     cJSON *root = cJSON_Parse(buf);
+//     int red = cJSON_GetObjectItem(root, "red")->valueint;
+//     int green = cJSON_GetObjectItem(root, "green")->valueint;
+//     int blue = cJSON_GetObjectItem(root, "blue")->valueint;
+//     ESP_LOGI(REST_TAG, "Light control: red = %d, green = %d, blue = %d", red, green, blue);
+//     cJSON_Delete(root);
+//     httpd_resp_sendstr(req, "Post control value successfully");
+//     return ESP_OK;
+// }
+static esp_err_t robot1_joint_angles_post_handler(httpd_req_t *req) {
     int total_len = req->content_len;
     int cur_len = 0;
     char *buf = ((rest_server_context_t *)(req->user_ctx))->scratch;
     int received = 0;
-    if (total_len >= SCRATCH_BUFSIZE) {
-        /* Respond with 500 Internal Server Error */
+    if (total_len >= SCRATCH_BUFSIZE) { /* Respond with 500 Internal Server Error */
         httpd_resp_send_err(req, HTTPD_500_INTERNAL_SERVER_ERROR, "content too long");
         return ESP_FAIL;
     }
     while (cur_len < total_len) {
         received = httpd_req_recv(req, buf + cur_len, total_len);
-        if (received <= 0) {
-            /* Respond with 500 Internal Server Error */
+        if (received <= 0) { /* Respond with 500 Internal Server Error */
             httpd_resp_send_err(req, HTTPD_500_INTERNAL_SERVER_ERROR, "Failed to post control value");
             return ESP_FAIL;
         }
@@ -136,7 +156,38 @@ static esp_err_t robot1_joint_angles_post_handler(httpd_req_t *req)
     // ESP_LOGI(REST_TAG, "Light control: red = %d, green = %d, blue = %d", red, green, blue);
     float a1 = cJSON_GetObjectItem(root, "a1")->valuedouble;
     float a2 = cJSON_GetObjectItem(root, "a2")->valuedouble;
-    ESP_LOGI(REST_TAG, "Joint positions: a1 = %02f, a2 = %02f", a1, a2);
+    ESP_LOGI(REST_TAG, "Robot 1 Joint positions: a1 = %02f, a2 = %02f", a1, a2);
+    cJSON_Delete(root);
+    httpd_resp_sendstr(req, "Post control value successfully");
+    return ESP_OK;
+}
+static esp_err_t robot2_joint_angles_post_handler(httpd_req_t *req) {
+    int total_len = req->content_len;
+    int cur_len = 0;
+    char *buf = ((rest_server_context_t *)(req->user_ctx))->scratch;
+    int received = 0;
+    if (total_len >= SCRATCH_BUFSIZE) { /* Respond with 500 Internal Server Error */
+        httpd_resp_send_err(req, HTTPD_500_INTERNAL_SERVER_ERROR, "content too long");
+        return ESP_FAIL;
+    }
+    while (cur_len < total_len) {
+        received = httpd_req_recv(req, buf + cur_len, total_len);
+        if (received <= 0) { /* Respond with 500 Internal Server Error */
+            httpd_resp_send_err(req, HTTPD_500_INTERNAL_SERVER_ERROR, "Failed to post control value");
+            return ESP_FAIL;
+        }
+        cur_len += received;
+    }
+    buf[total_len] = '\0';
+
+    cJSON *root = cJSON_Parse(buf);
+    // int red = cJSON_GetObjectItem(root, "red")->valueint;
+    // int green = cJSON_GetObjectItem(root, "green")->valueint;
+    // int blue = cJSON_GetObjectItem(root, "blue")->valueint;
+    // ESP_LOGI(REST_TAG, "Light control: red = %d, green = %d, blue = %d", red, green, blue);
+    float a1 = cJSON_GetObjectItem(root, "a1")->valuedouble;
+    float a2 = cJSON_GetObjectItem(root, "a2")->valuedouble;
+    ESP_LOGI(REST_TAG, "Robot 2 Joint positions: a1 = %02f, a2 = %02f", a1, a2);
     cJSON_Delete(root);
     httpd_resp_sendstr(req, "Post control value successfully");
     return ESP_OK;
@@ -203,14 +254,22 @@ esp_err_t start_rest_server(const char *base_path)
     };
     httpd_register_uri_handler(server, &temperature_data_get_uri);
 
-    /* URI handler for light brightness control */
-    httpd_uri_t joint_angles_post_uri = {
+    /* URI handler for controlling robot 1 joint angles */
+    httpd_uri_t r1_joint_angles_post_uri = {
         .uri = "/api/v1/robot1/angles",
         .method = HTTP_POST,
         .handler = robot1_joint_angles_post_handler,
         .user_ctx = rest_context
     };
-    httpd_register_uri_handler(server, &joint_angles_post_uri);
+    httpd_register_uri_handler(server, &r1_joint_angles_post_uri);
+    /* URI handler for controlling robot 1 joint angles */
+    httpd_uri_t r2_joint_angles_post_uri = {
+        .uri = "/api/v1/robot2/angles",
+        .method = HTTP_POST,
+        .handler = robot2_joint_angles_post_handler,
+        .user_ctx = rest_context
+    };
+    httpd_register_uri_handler(server, &r2_joint_angles_post_uri);
 
     /* URI handler for getting web server files */
     httpd_uri_t common_get_uri = {

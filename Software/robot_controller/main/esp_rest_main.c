@@ -44,19 +44,6 @@ static void initialise_mdns(void)
                                      sizeof(serviceTxtData) / sizeof(serviceTxtData[0])));
 }
 
-#if CONFIG_EXAMPLE_WEB_DEPLOY_SEMIHOST
-esp_err_t init_fs(void)
-{
-    esp_err_t ret = esp_vfs_semihost_register(CONFIG_EXAMPLE_WEB_MOUNT_POINT);
-    if (ret != ESP_OK) {
-        ESP_LOGE(TAG, "Failed to register semihost driver (%s)!", esp_err_to_name(ret));
-        return ESP_FAIL;
-    }
-    return ESP_OK;
-}
-#endif
-
-#if CONFIG_EXAMPLE_WEB_DEPLOY_SF
 esp_err_t init_fs(void)
 {
     esp_vfs_spiffs_conf_t conf = {
@@ -87,7 +74,6 @@ esp_err_t init_fs(void)
     }
     return ESP_OK;
 }
-#endif
 
 void app_main(void)
 {

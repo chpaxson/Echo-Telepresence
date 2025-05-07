@@ -14,9 +14,21 @@ const props = defineProps({
   width: { type: Number, default: 600 },
 })
 
-const scale = props.width / 700
-const offset = { x: props.width / 2, y: props.width / 8 }
+let scale = props.width / 700
+let offset = { x: props.width / 2, y: props.width / 8 }
 let dragOffset = { x: 0, y: 0 }
+
+// Watch for width changes
+watch(
+  () => props.width,
+  (newWidth) => {
+    scale = newWidth / 700
+    offset.x = newWidth / 2
+    offset.y = newWidth / 8
+    drawBoundaries()
+    drawRobot()
+  },
+)
 
 function shift(p: Point): Point {
   return addPoints(scalePoint(p, scale), offset)
@@ -50,18 +62,20 @@ function drawArmSegment(element: string, c1: Point, c2: Point, r1: number, r2: n
     'd',
     `M ${pa0.x} ${pa0.y} A ${r1} ${r1} 0 ${r1>r2?1:0} 0 ${pa1.x} ${pa1.y} L ${pb1.x} ${pb1.y} A ${r2} ${r2} 0 ${r1>r2?0:1} 0 ${pb0.x} ${pb0.y} Z`,
   )
-  arc1?.setAttribute('stroke', 'white')
+  arc1?.setAttribute('fill', 'black')
+  arc1?.setAttribute('stroke', 'var(--color-accent2)')
+  arc1?.setAttribute('stroke-width', '3')
 }
 
 function onDragStart(event: MouseEvent) {
-  dragOffset = { x: robotStore.joint3.x * scale - event.clientX, y: robotStore.joint3.y * scale - event.clientY }
+  dragOffset = { x: robotStore.eePos.x * scale - event.clientX, y: robotStore.eePos.y * scale - event.clientY }
   window.addEventListener('mousemove', onDragMove)
   window.addEventListener('mouseup', onDragEnd)
 }
 function onDragMove(event: MouseEvent) {
   const newPos = { x: (event.clientX + dragOffset.x) / scale, y: (event.clientY + dragOffset.y) / scale }
   console.log(validConfiguration(shift(newPos), props.robot))
-  robotStore.joint3 = validConfiguration(shift(newPos), props.robot) ? newPos : projectToWorkspace(newPos)
+  robotStore.eePos = validConfiguration(shift(newPos), props.robot) ? newPos : projectToWorkspace(newPos)
 }
 function onDragEnd() {
   window.removeEventListener('mousemove', onDragMove)
@@ -70,14 +84,14 @@ function onDragEnd() {
 
 function onTouchStart(event: TouchEvent) {
   event.preventDefault()
-  dragOffset = { x: robotStore.joint3.x * scale - event.touches[0].clientX, y: robotStore.joint3.y * scale - event.touches[0].clientY }
+  dragOffset = { x: robotStore.eePos.x * scale - event.touches[0].clientX, y: robotStore.eePos.y * scale - event.touches[0].clientY }
   window.addEventListener('touchmove', onTouchMove, { passive: false })
   window.addEventListener('touchend', onTouchEnd)
 }
 function onTouchMove(event: TouchEvent) {
   event.preventDefault()
   const newPos = { x: (event.touches[0].clientX + dragOffset.x) / scale, y: (event.touches[0].clientY + dragOffset.y) / scale }
-  robotStore.joint3 = validConfiguration(shift(newPos), props.robot) ? newPos : projectToWorkspace(newPos)
+  robotStore.eePos = validConfiguration(shift(newPos), props.robot) ? newPos : projectToWorkspace(newPos)
 }
 function onTouchEnd() {
   window.removeEventListener('touchmove', onTouchMove)
@@ -88,16 +102,16 @@ let lastDraw = 0
 let pending = false
 
 function drawRobot() {
-  const angles = calc_ik(robotStore.joint3)
+  const angles = calc_ik(robotStore.eePos)
   const j1 = addPoints(b1, polar(angles.a1, armLen.u))
   const j2 = addPoints(b2, polar(angles.a2, armLen.u))
   drawArmSegment(`${props.robot}-u1`, b1, j1, armRadii.u1, armRadii.u2)
   drawArmSegment(`${props.robot}-u2`, b2, j2, armRadii.u1, armRadii.u2)
-  drawArmSegment(`${props.robot}-l2`, j2, robotStore.joint3, armRadii.l1, armRadii.l2)
-  drawArmSegment(`${props.robot}-l1`, j1, robotStore.joint3, armRadii.l1, armRadii.l2)
+  drawArmSegment(`${props.robot}-l2`, j2, robotStore.eePos, armRadii.l1, armRadii.l2)
+  drawArmSegment(`${props.robot}-l1`, j1, robotStore.eePos, armRadii.l1, armRadii.l2)
 }
 const stop = watch(
-  () => ({ ...robotStore.joint3 }), // watch for changes in joint3
+  () => ({ ...robotStore.eePos }), // watch for changes in joint3
   () => {
     const now = performance.now()
     if (now - lastDraw > 20) {
@@ -116,7 +130,7 @@ const stop = watch(
 )
 
 const postPosition = () => {
-  const angles = calc_ik(robotStore.joint3)
+  const angles = calc_ik(robotStore.eePos)
   fetch(`/api/v1/${props.robot}/angles`, {
     method: 'POST',
     headers: {
@@ -143,7 +157,7 @@ const postPosition = () => {
 
 // Post position to the server every time it changes, at most 10 times per second
 watch(
-  () => ({ ...robotStore.joint3 }),
+  () => ({ ...robotStore.eePos }),
   () => {
     postPosition()
   },
@@ -175,35 +189,21 @@ onMounted(() => {
   drawBoundaries()
 })
 
-// const ba1 = shift(boundaryArcs[3].s)
-// const ba2 = shift(boundaryArcs[3].e)
-
 </script>
 
 <template>
-  <svg :width="`${props.width}`" :height="`${props.width * 0.75}`" style="border: 1px solid #ccc" :id="`${props.robot}-svg`">
-    <!-- <circle :cx="shift(boundaryArcs[0].c).x" :cy="shift(boundaryArcs[0].c).y" :r="scale*boundaryArcs[0].r" stroke="red" fill="none" />
-    <circle :cx="shift(boundaryArcs[1].c).x" :cy="shift(boundaryArcs[1].c).y" :r="scale*boundaryArcs[1].r" stroke="green" fill="none" />
-    <circle :cx="shift(boundaryArcs[2].c).x" :cy="shift(boundaryArcs[2].c).y" :r="scale*boundaryArcs[2].r" stroke="blue" fill="none" />
-    <circle :cx="shift(boundaryArcs[3].c).x" :cy="shift(boundaryArcs[3].c).y" :r="scale*boundaryArcs[3].r" stroke="purple" fill="none" />
-    <circle :cx="shift(boundaryArcs[4].c).x" :cy="shift(boundaryArcs[4].c).y" :r="scale*boundaryArcs[4].r" stroke="white" fill="none" />
-    <circle :cx="shift(boundaryArcs[5].c).x" :cy="shift(boundaryArcs[5].c).y" :r="scale*boundaryArcs[5].r" stroke="teal" fill="none" />
-    <circle :cx="shift(boundaryArcs[6].c).x" :cy="shift(boundaryArcs[6].c).y" :r="scale*boundaryArcs[6].r" stroke="yellow" fill="none" /> -->
-
-    <path :id="`${props.robot}-boundary`" stroke="#555555" fill="#333333"/>
-    <!-- <circle :cx="ba1.x" :cy="ba1.y" r="5" stroke="yellow" fill="none" /> -->
-    <!-- <circle :cx="ba2.x" :cy="ba2.y" r="5" stroke="yellow" fill="none" /> -->
-
+  <svg :width="`${props.width}`" :height="`${props.width * 0.75}`" :id="`${props.robot}-svg`">
+    <path :id="`${props.robot}-boundary`" stroke="var(--color-border)" fill="var(--color-background-soft)"/>
     <path :id="`${props.robot}-u1`" />
     <path :id="`${props.robot}-u2`" />
     <path :id="`${props.robot}-l2`" />
     <path :id="`${props.robot}-l1`" />
-    <circle
-      :cx="scale * robotStore.joint3.x + offset.x"
-      :cy="scale * robotStore.joint3.y + offset.y"
+    <circle id="ee"
+      :cx="scale * robotStore.eePos.x + offset.x"
+      :cy="scale * robotStore.eePos.y + offset.y"
       :r="10*scale"
-      fill="#4af"
       style="cursor: grab"
+      fill="var(--color-accent1)"
       @mousedown="onDragStart"
       @touchstart="onTouchStart"
     />
