@@ -2,7 +2,14 @@
 
 <template>
     <div class="layout-footer">
-        SAKAI by
-        <a href="https://primevue.org" target="_blank" rel="noopener noreferrer" class="text-primary font-bold hover:underline">PrimeVue</a>
+        <div class="">
+            <p>
+                <em>Echo Telepresence Control Panel</em><br />
+                UC Berkeley MECENG 135/235 - Spring 2025
+            </p>
+        </div>
+        <a href="https://github.com/chpaxson/Echo-Telepresence">
+            <i class="pi pi-github" style="font-size: 3rem"></i>
+        </a>
     </div>
 </template>

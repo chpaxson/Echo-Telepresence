@@ -9,7 +9,7 @@ const router = createRouter({
             component: AppLayout,
             children: [
                 {
-                    path: '/',
+                    path: '',
                     name: 'Dashboard',
                     component: () => import('@/views/Dashboard.vue')
                 },
@@ -21,12 +21,12 @@ const router = createRouter({
                 {
                     path: '/dashboard/robot1',
                     name: 'Robot 1',
-                    component: () => import('@/views/Dashboard.vue')
+                    component: () => import('@/views/Robot1View.vue')
                 },
                 {
                     path: '/dashboard/robot2',
                     name: 'Robot 2',
-                    component: () => import('@/views/Dashboard.vue')
+                    component: () => import('@/views/Robot2View.vue')
                 },
                 {
                     path: '/draw/canvas',
@@ -35,39 +35,28 @@ const router = createRouter({
                 },
                 {
                     path: '/draw/generator',
-                    name: 'Generator',
-                    component: () => import('@/views/Canvas.vue')
+                    name: 'Path Generators',
+                    component: () => import('@/views/GeneratorView.vue')
                 },
                 {
                     path: '/draw/Gcode',
                     name: 'GCode Console',
-                    component: () => import('@/views/Canvas.vue')
-                },
-
-                {
-                    path: '/settings/link',
-                    name: 'Robot Linking',
-                    component: () => import('@/views/Dashboard.vue')
-                },
-                {
-                    path: '/settings/kinematics',
-                    name: 'Kinematics Settings',
-                    component: () => import('@/views/Dashboard.vue')
+                    component: () => import('@/views/GcodeConsoleView.vue')
                 },
                 {
                     path: '/settings/network',
                     name: 'Network Settings',
-                    component: () => import('@/views/Dashboard.vue')
+                    component: () => import('@/views/NetworkSettingsView.vue')
                 },
                 {
                     path: '/settings/stats',
                     name: 'Statistics',
-                    component: () => import('@/views/Dashboard.vue')
+                    component: () => import('@/views/StatisticsView.vue')
                 },
                 {
                     path: '/logs',
                     name: 'Logs',
-                    component: () => import('@/views/Dashboard.vue')
+                    component: () => import('@/views/LogConsoleView.vue')
                 }
             ]
         }

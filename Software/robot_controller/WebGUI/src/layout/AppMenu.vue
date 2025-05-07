@@ -23,8 +23,6 @@ const model = ref([
     {
         label: 'Settings',
         items: [
-            { label: 'Robot Linking', icon: 'pi pi-fw pi-link', to: '/settings/link' },
-            { label: 'Kinematics', icon: 'pi pi-fw pi-arrows-alt', to: '/settings/kinematics' },
             { label: 'Network', icon: 'pi pi-fw pi-wifi', to: '/settings/network' },
             { label: 'Statistics', icon: 'pi pi-fw pi-chart-line', to: '/settings/stats' },
             { label: 'Logs', icon: 'pi pi-fw pi-inbox', to: '/logs' }

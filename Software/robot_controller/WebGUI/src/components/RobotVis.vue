@@ -1,12 +1,14 @@
 <template>
     <div width="min(100%, 600px)" style="aspect-ratio: 4/3">
         <svg width="100%" height="100%" :id="`${props.robot}-svg`" ref="svg">
-            <path :id="`${props.robot}-boundary`" :stroke="`${boundaryStroke}`" :fill="`${boundaryFill}`" />
+            <path :id="`${props.robot}-boundary`" :stroke="`var(--p-surface-600)`" :fill="`var(--p-surface-950)`" />
             <path :id="`${props.robot}-u1`" />
             <path :id="`${props.robot}-u2`" />
             <path :id="`${props.robot}-l2`" />
             <path :id="`${props.robot}-l1`" />
-            <circle id="ee" :cx="scale * robotStore.eePos.x + offset.x" :cy="scale * robotStore.eePos.y + offset.y" :r="10 * scale" style="cursor: grab" :fill="`${accentColor}`" @mousedown="onDragStart" @touchstart="onTouchStart" />
+            <circle id="ee" :cx="scale * robotStore.eePos.x + offset.x" :cy="scale * robotStore.eePos.y + offset.y" :r="10 * scale" style="cursor: grab" :fill="`var(--p-primary-500)`" @mousedown="onDragStart" @touchstart="onTouchStart" />
+            <text :x="scale * b1.x + offset.x" :y="scale * b1.y + offset.y - 15" font-size="12" text-anchor="middle" fill="var(--p-surface-100)">b1</text>
+            <text :x="scale * b2.x + offset.x" :y="scale * b2.y + offset.y - 15" font-size="12" text-anchor="middle" fill="var(--p-surface-100)">b2</text>
         </svg>
     </div>
 </template>
@@ -19,13 +21,6 @@ import { armLen, armRadii, b1, b2, boundaryArcs, calc_ik, projectToWorkspace, va
 import type { Point } from '../utils/types.ts';
 import { addPoints, getAngle, getDist, polar, scalePoint } from '../utils/utils';
 import '../utils/utils.ts';
-
-const documentStyle = getComputedStyle(document.documentElement);
-const accentColor = documentStyle.getPropertyValue('--p-primary-500');
-const armStroke = documentStyle.getPropertyValue('--p-primary-800');
-const armFill = documentStyle.getPropertyValue('--p-primary-950');
-const boundaryStroke = documentStyle.getPropertyValue('--p-surface-600');
-const boundaryFill = documentStyle.getPropertyValue('--p-surface-950');
 
 const props = defineProps({
     robot: { type: String, required: true }
@@ -77,9 +72,9 @@ function drawArmSegment(element: string, c1: Point, c2: Point, r1: number, r2: n
     // Draw the arm segment
     const arc1 = document.getElementById(element);
     arc1?.setAttribute('d', `M ${pa0.x} ${pa0.y} A ${r1} ${r1} 0 ${r1 > r2 ? 1 : 0} 0 ${pa1.x} ${pa1.y} L ${pb1.x} ${pb1.y} A ${r2} ${r2} 0 ${r1 > r2 ? 0 : 1} 0 ${pb0.x} ${pb0.y} Z`);
-    arc1?.setAttribute('stroke', armStroke);
+    arc1?.setAttribute('stroke', 'var(--p-primary-800)');
     arc1?.setAttribute('stroke-width', '3');
-    arc1?.setAttribute('fill', armFill);
+    arc1?.setAttribute('fill', 'var(--p-primary-950)');
 }
 
 function onDragStart(event: MouseEvent) {
@@ -89,7 +84,6 @@ function onDragStart(event: MouseEvent) {
 }
 function onDragMove(event: MouseEvent) {
     const newPos = { x: (event.clientX + dragOffset.x) / scale, y: (event.clientY + dragOffset.y) / scale };
-    console.log(validConfiguration(shift(newPos), props.robot));
     robotStore.eePos = validConfiguration(shift(newPos), props.robot) ? newPos : projectToWorkspace(newPos);
 }
 function onDragEnd() {
@@ -147,40 +141,40 @@ const stop = watch(
     { deep: true }
 );
 
-const postPosition = () => {
-    const angles = calc_ik(robotStore.eePos);
-    fetch(`/api/v1/${props.robot}/angles`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            a1: angles.a1,
-            a2: angles.a2
-        })
-    })
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then((data) => {
-            console.log('Success:', data);
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
-};
+// const postPosition = () => {
+//     const angles = calc_ik(robotStore.eePos);
+//     fetch(`/api/v1/${props.robot}/angles`, {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify({
+//             a1: angles.a1,
+//             a2: angles.a2
+//         })
+//     })
+//         .then((response) => {
+//             if (!response.ok) {
+//                 throw new Error(`HTTP error! status: ${response.status}`);
+//             }
+//             return response.json();
+//         })
+//         .then((data) => {
+//             console.log('Success:', data);
+//         })
+//         .catch((error) => {
+//             console.error('Error:', error);
+//         });
+// };
 
 // Post position to the server every time it changes, at most 10 times per second
-watch(
-    () => ({ ...robotStore.eePos }),
-    () => {
-        postPosition();
-    },
-    { deep: true }
-);
+// watch(
+//     () => ({ ...robotStore.eePos }),
+//     () => {
+//         postPosition();
+//     },
+//     { deep: true }
+// );
 
 onMounted(() => {
     drawRobot();
