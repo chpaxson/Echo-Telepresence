@@ -5,6 +5,10 @@ import { useToast } from 'primevue/usetoast';
 import { computed, onMounted, ref } from 'vue';
 import { calc_fk, calc_ik, projectToWorkspace } from '../utils/kinematics';
 
+const props = defineProps({
+    r: { type: String, required: true }
+});
+
 const toast = useToast();
 const confirmPopup = useConfirm();
 
@@ -23,7 +27,7 @@ onMounted(() => {
     m1_I.value = robotStore.r1.motor1_I;
     m2_R.value = robotStore.r1.motor2_R;
     m2_I.value = robotStore.r1.motor2_I;
-    const initialIK = calc_ik(robotStore.r1.eePos);
+    const initialIK = calc_ik(robotStore[props.r].eePos);
     a1.value = (initialIK.a1 * 180) / Math.PI;
     a2.value = (initialIK.a2 * 180) / Math.PI;
 });
@@ -181,7 +185,7 @@ const rac = () => {
             </div>
         </div>
         <div class="card content-center flex flex-col gap-2">
-            <h3>Kinematics</h3>
+            <h2>Kinematics</h2>
             <div class="font-semibold text-xl">Max Speed (rad/s)</div>
             <div class="flex flex-row gap-8 items-center">
                 <Slider class="w-full" v-model="robotStore.r1.maxSpeed" :min="0" :max="30" :step="0.1" />
@@ -192,7 +196,25 @@ const rac = () => {
                 <Slider class="w-full" v-model="robotStore.r1.voltage_limit" :min="0" :max="30" :step="0.1" />
                 <InputText class="w-24" v-model.number="robotStore.r1.voltage_limit" />
             </div>
-            <h3>Velocity PID</h3>
+        </div>
+        <div class="card content-center flex flex-col gap-2">
+            <div class="flex flex-row items-center">
+                <h2 class="w-full">Motor 1 Parameters</h2>
+                <div class="flex flex-row gap-2">
+                    <Button label="Save" icon="pi pi-save" :disabled="!m1_modified" :severity="m1_modified ? `success` : `contrast`" @click="m1_save"></Button>
+                    <ConfirmPopup></ConfirmPopup>
+                    <Button label="Reset" icon="pi pi-replay" :disabled="!m1_modified_from_default" :severity="m1_modified ? `danger` : `contrast`" @click="m1_modified ? m1_reset() : m1_confirm_reset($event)"></Button>
+                </div>
+            </div>
+            <div class="flow-root">
+                <div class="font-semibold text-xl float-left">Phase resistance (Ω)</div>
+                <InputText class="float-right w-24" v-model.number="m1_R" />
+            </div>
+            <div class="flow-root">
+                <div class="font-semibold text-xl float-left">Phase inductance (mH)</div>
+                <InputText class="float-right w-24" v-model.number="m1_I" />
+            </div>
+            <h2>Velocity PID</h2>
             <div class="flex flex-row gap-8 items-center">
                 <div class="font-semibold text-xl">
                     <em>K<sub>P</sub></em>
@@ -214,7 +236,7 @@ const rac = () => {
                 <Slider class="w-full" v-model="robotStore.r1.v_kD" :min="0" :max="10" :step="0.01" />
                 <InputText class="w-24" v-model.number="robotStore.r1.v_kD" />
             </div>
-            <h3>Position PID</h3>
+            <h2>Position PID</h2>
             <div class="flex flex-row gap-8 items-center">
                 <div class="font-semibold text-xl">
                     <em>K<sub>P</sub></em>
@@ -235,42 +257,6 @@ const rac = () => {
                 </div>
                 <Slider class="w-full" v-model="robotStore.r1.a_kD" :min="0" :max="10" :step="0.01" />
                 <InputText class="w-24" v-model.number="robotStore.r1.a_kD" />
-            </div>
-        </div>
-        <div class="card content-center flex flex-col gap-2">
-            <h3>Motor Parameters</h3>
-            <div class="flow-root">
-                <h3 class="float-left">Motor 1</h3>
-                <div class="float-right flex flex-row gap-2">
-                    <Button label="Save" icon="pi pi-save" :disabled="!m1_modified" :severity="m1_modified ? `success` : `contrast`" @click="m1_save"></Button>
-                    <ConfirmPopup></ConfirmPopup>
-                    <Button label="Reset" icon="pi pi-replay" :disabled="!m1_modified_from_default" :severity="m1_modified ? `danger` : `contrast`" @click="m1_modified ? m1_reset() : m1_confirm_reset($event)"></Button>
-                </div>
-            </div>
-            <div class="flow-root">
-                <div class="font-semibold text-xl float-left">Phase resistance (Ω)</div>
-                <InputText class="float-right w-24" v-model.number="m1_R" />
-            </div>
-            <div class="flow-root">
-                <div class="font-semibold text-xl float-left">Phase inductance (mH)</div>
-                <InputText class="float-right w-24" v-model.number="m1_I" />
-            </div>
-
-            <div class="flow-root">
-                <h3 class="float-left">Motor 2</h3>
-                <div class="float-right flex flex-row gap-2">
-                    <Button label="Save" icon="pi pi-save" :disabled="!m2_modified" :severity="m2_modified ? `success` : `contrast`" @click="m2_save"></Button>
-                    <ConfirmPopup></ConfirmPopup>
-                    <Button label="Reset" icon="pi pi-replay" :disabled="!m2_modified_from_default" :severity="m2_modified ? `danger` : `contrast`" @click="m2_modified ? m2_reset() : m2_confirm_reset($event)"></Button>
-                </div>
-            </div>
-            <div class="flow-root">
-                <div class="font-semibold text-xl float-left">Phase resistance (Ω)</div>
-                <InputText class="float-right w-24" v-model.number="m2_R" />
-            </div>
-            <div class="flow-root">
-                <div class="font-semibold text-xl float-left">Phase inductance (mH)</div>
-                <InputText class="float-right w-24" v-model.number="m2_I" />
             </div>
         </div>
     </div>

@@ -8,38 +8,59 @@ export const useRobotStore = defineStore('robot', {
             eePos: { x: 0, y: 200 } as Point,
             config: { a1: 0, a2: 0 } as Config,
             maxSpeed: 20 as number,
-            motor1_R: 1.3 as number,
-            motor1_I: 29 as number, // mH
-            motor2_R: 1.3 as number,
-            motor2_I: 29 as number, // mH
             voltage_limit: 24 as number,
-            v_kP: 0.5 as number,
-            v_kI: 0.1 as number,
-            v_kD: 0.1 as number,
-            a_kP: 0.5 as number,
-            a_kI: 0.1 as number,
-            a_kD: 0.1 as number,
-            j1homed: false as boolean,
-            j2homed: false as boolean,
-            input_voltage: 0 as number
+            input_voltage: 0 as number,
+            m1: {
+                homed: false as boolean,
+                R: 1.3 as number,
+                I: 29 as number, // mH
+                v_kP: 0.5 as number,
+                v_kI: 0.1 as number,
+                v_kD: 0.1 as number,
+                a_kP: 0.5 as number,
+                a_kI: 0.1 as number,
+                a_kD: 0.1 as number
+            },
+            m2: {
+                homed: false as boolean,
+                R: 1.3 as number,
+                I: 29 as number, // mH
+                v_kP: 0.5 as number,
+                v_kI: 0.1 as number,
+                v_kD: 0.1 as number,
+                a_kP: 0.5 as number,
+                a_kI: 0.1 as number,
+                a_kD: 0.1 as number
+            }
         },
         r2: {
             eePos: { x: 0, y: 200 } as Point,
+            config: { a1: 0, a2: 0 } as Config,
             maxSpeed: 20 as number,
-            motor1_R: 1.3 as number,
-            motor1_I: 29 as number, // mH
-            motor2_R: 1.3 as number,
-            motor2_I: 29 as number, // mH
             voltage_limit: 24 as number,
-            v_kP: 0.5 as number,
-            v_kI: 0.1 as number,
-            v_kD: 0.1 as number,
-            a_kP: 0.5 as number,
-            a_kI: 0.1 as number,
-            a_kD: 0.1 as number,
-            j1homed: false as boolean,
-            j2homed: false as boolean,
-            input_voltage: 0 as number
+            input_voltage: 0 as number,
+            m1: {
+                homed: false as boolean,
+                R: 1.3 as number,
+                I: 29 as number, // mH
+                v_kP: 0.5 as number,
+                v_kI: 0.1 as number,
+                v_kD: 0.1 as number,
+                a_kP: 0.5 as number,
+                a_kI: 0.1 as number,
+                a_kD: 0.1 as number
+            },
+            m2: {
+                homed: false as boolean,
+                R: 1.3 as number,
+                I: 29 as number, // mH
+                v_kP: 0.5 as number,
+                v_kI: 0.1 as number,
+                v_kD: 0.1 as number,
+                a_kP: 0.5 as number,
+                a_kI: 0.1 as number,
+                a_kD: 0.1 as number
+            }
         },
         enableLink: false,
         linkRatio: 0.5,
@@ -100,40 +121,3 @@ export const useRobotStore = defineStore('robot', {
 //     },
 //     { deep: true }
 // );
-var gateway = `ws://${window.location.hostname}/ws`;
-var websocket;
-window.addEventListener('load', onLoad);
-function initWebSocket() {
-    console.log('Trying to open a WebSocket connection...');
-    websocket = new WebSocket(gateway);
-    websocket.onopen = onOpen;
-    websocket.onclose = onClose;
-    websocket.onmessage = onMessage; // <-- add this line
-}
-function onOpen(event) {
-    console.log('Connection opened');
-}
-function onClose(event) {
-    console.log('Connection closed');
-    setTimeout(initWebSocket, 2000);
-}
-function onMessage(event) {
-    var state;
-    console.log(event.data);
-    if (event.data == '1') {
-        state = 'ON';
-    } else {
-        state = 'OFF';
-    }
-    document.getElementById('state').innerHTML = state;
-}
-function onLoad(event) {
-    initWebSocket();
-    initButton();
-}
-function initButton() {
-    document.getElementById('button').addEventListener('click', toggle);
-}
-function toggle() {
-    websocket.send('toggle');
-}
