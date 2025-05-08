@@ -20,7 +20,7 @@ const a1 = ref(0);
 const a2 = ref(0);
 
 const postHomeToRobot = (r1m1, r1m2, r2m1, r2m2) => {
-    fetch(`/api/v1/homing`, {
+    fetch(`http://echo1.local/api/v1/homing`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -285,43 +285,74 @@ watch(
     },
     { immediate: true }
 );
+
+const driveMode = ref();
+onMounted(() => {
+    switch (robotStore[props.r].driver) {
+        case 'gui':
+            driveMode.value = { label: 'GUI', value: 'gui' };
+            break;
+        case 'robot':
+            driveMode.value = { label: 'Robot Data', value: 'robot' };
+            break;
+        case 'path':
+            driveMode.value = { label: 'Path Planner', value: 'path' };
+            break;
+    }
+});
+const mc = () => {
+    robotStore[props.r].driver = driveMode.value.value;
+};
 </script>
 
 <template>
     <div class="grid grid-cols-2 gap-8">
         <div class="card content-center flex flex-col gap-4">
-            <div class="flow-root">
-                <h1 class="float-left select-none">Robot {{ props.r === 'r1' ? '1' : '2' }}</h1>
-                <SplitButton class="homeButton float-right" icon="pi pi-home" :label="homed ? `Homed` : `Home`" :model="homeButtonOptions" :severity="homed ? `` : `danger`" @click="home"></SplitButton>
+            <div class="flex flex-row items-center justify-between">
+                <h1 class="select-none m-px">Robot {{ props.r === 'r1' ? '1' : '2' }}</h1>
+                <div class="flex flex-row gap-4 h-10">
+                    <Select
+                        v-model="driveMode"
+                        @change="mc"
+                        :options="[
+                            { label: 'GUI', value: 'gui' },
+                            { label: 'Robot Data', value: 'robot' },
+                            { label: 'Path Planner', value: 'path' }
+                        ]"
+                        optionLabel="label"
+                        placeholder="Drive Source"
+                    />
+                    <SplitButton class="homeButton" icon="pi pi-home" :label="homed ? `Homed` : `Home`" :model="homeButtonOptions" :severity="homed ? `` : `danger`" @click="home"></SplitButton>
+                </div>
             </div>
             <RobotVis :r="props.r" />
             <div class="flex flex-row gap-8 items-center">
                 <div class="text-xl">
                     <em>x</em>
                 </div>
-                <Slider class="w-full" v-model="robotStore[props.r].ee.x" @change="rc" :min="-300" :max="300" :step="0.1" />
-                <InputText class="w-24" v-model.number="robotStore[props.r].ee.x" />
+                <Slider class="w-full" v-model="robotStore[props.r].ee.x" @change="rc" :min="-300" :max="300" :step="0.1" :disabled="robotStore[props.r].driver !== 'gui'" />
+                <InputText class="w-24" v-model.number="robotStore[props.r].ee.x" :disabled="robotStore[props.r].driver !== 'gui'" />
             </div>
             <div class="flex flex-row gap-8 items-center">
                 <div class="text-xl">
                     <em>y</em>
                 </div>
-                <Slider class="w-full" v-model="robotStore[props.r].ee.y" @change="rc" :min="0" :max="350" :step="0.1" />
-                <InputText class="w-24" v-model.number="robotStore[props.r].ee.y" />
+                <Slider class="w-full" v-model="robotStore[props.r].ee.y" @change="rc" :min="0" :max="350" :step="0.1" :disabled="robotStore[props.r].driver !== 'gui'" />
+                <InputText class="w-24" v-model.number="robotStore[props.r].ee.y" :disabled="robotStore[props.r].driver !== 'gui'" />
             </div>
             <div class="flex flex-row gap-8 items-center">
                 <div class="text-xl">
                     <em>a<sub>1</sub></em>
                 </div>
-                <Slider class="w-full" v-model="a1" @change="rac" :min="0" :max="270" :step="0.1" />
-                <InputText class="w-24" v-model.number="a1" />
+                <Slider class="w-full" v-model="a1" @change="rac" :min="0" :max="270" :step="0.1" :disabled="robotStore[props.r].driver !== 'gui'" />
+                <InputText class="w-24" v-model.number="a1" :disabled="robotStore[props.r].driver !== 'gui'" />
             </div>
             <div class="flex flex-row gap-8 items-center">
                 <div class="text-xl">
                     <em>a<sub>2</sub></em>
                 </div>
-                <Slider class="w-full" v-model="a2" @change="rac" :min="-90" :max="180" :step="0.1" />
-                <InputText class="w-24" v-model.number="a2" />
+                <Slider class="w-full" v-model="a2" @change="rac" :min="-90" :max="180" :step="0.1" :disabled="robotStore[props.r].driver !== 'gui'" />
+                <InputText class="w-24" v-model.number="a2" :disabled="robotStore[props.r].driver !== 'gui'" />
             </div>
             <div class="flex flex-col gap-2 mt-4">
                 <div class="flex flex-row gap-8 items-center">

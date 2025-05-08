@@ -5,7 +5,7 @@ import { defineStore } from 'pinia';
 export const useRobotStore = defineStore('robot', {
     state: () => ({
         r1: {
-            driven: false as boolean,
+            driver: 'gui' as string,
             ee: { x: 0, y: 200 } as Point,
             v: { j1: 0 as number, j2: 0 as number },
             maxSpeed: 20 as number,
@@ -37,6 +37,7 @@ export const useRobotStore = defineStore('robot', {
         },
         r2: {
             driven: false as boolean,
+            driver: 'gui' as string,
             ee: { x: 0, y: 200 } as Point,
             v: { j1: 0 as number, j2: 0 as number },
             maxSpeed: 20 as number,

@@ -83,8 +83,10 @@ app.use(ConfirmationService);
 
 app.mount('#app');
 
+const robotStore = useRobotStore();
+
 // Websocket connection and message handling
-var gateway = `ws://${window.location.hostname}/ws`;
+var gateway = `ws://echo1.local/ws`;
 var websocket;
 window.addEventListener('load', onLoad);
 function initWebSocket() {
@@ -112,17 +114,17 @@ declare global {
 }
 window.initWebSocket = initWebSocket;
 function onMessage(event) {
-    console.log('Message received from server');
-    console.log(event.data);
+    // console.log('Message received from server');
+    // console.log(event.data);
 
     // If the message is a JSON string, parse it
     try {
         const data = JSON.parse(event.data);
-        console.log('Parsed data:', data);
+        // console.log('Parsed data:', data);
         // If it has an r1 that has a1 and a2, set the robot store using calc_fk
-        if (data.r1 && data.r1.a1 !== undefined && data.r1.a2 !== undefined) {
+        if (data.r1 && data.r1.a1 !== undefined && data.r1.a2 !== undefined && robotStore.r1.driver === 'robot') {
             robotStore.r1.ee = calc_fk({ a1: (data.r1.a1 * Math.PI) / 180, a2: (data.r1.a2 * Math.PI) / 180 });
-        } else if (data.r2 && data.r2.a1 !== undefined && data.r2.a2 !== undefined) {
+        } else if (data.r2 && data.r2.a1 !== undefined && data.r2.a2 !== undefined && robotStore.r2.driver === 'robot') {
             robotStore.r2.ee = calc_fk({ a1: (data.r2.a1 * Math.PI) / 180, a2: (data.r2.a2 * Math.PI) / 180 });
         }
     } catch (error) {
@@ -132,7 +134,6 @@ function onMessage(event) {
 function onLoad() {
     initWebSocket();
 }
-const robotStore = useRobotStore();
 watch(
     () => robotStore.r1.ee,
     (newValue) => {

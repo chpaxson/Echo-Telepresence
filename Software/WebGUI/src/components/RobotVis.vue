@@ -83,8 +83,10 @@ function onDragStart(event: MouseEvent) {
     window.addEventListener('mouseup', onDragEnd);
 }
 function onDragMove(event: MouseEvent) {
-    const newPos = { x: (event.clientX + dragOffset.x) / scale, y: (event.clientY + dragOffset.y) / scale };
-    robotStore[props.r].ee = validConfiguration(shift(newPos), props.r) ? newPos : projectToWorkspace(newPos);
+    if (robotStore[props.r].driver === 'gui') {
+        const newPos = { x: (event.clientX + dragOffset.x) / scale, y: (event.clientY + dragOffset.y) / scale };
+        robotStore[props.r].ee = validConfiguration(shift(newPos), props.r) ? newPos : projectToWorkspace(newPos);
+    }
 }
 function onDragEnd() {
     window.removeEventListener('mousemove', onDragMove);
@@ -99,8 +101,10 @@ function onTouchStart(event: TouchEvent) {
 }
 function onTouchMove(event: TouchEvent) {
     event.preventDefault();
-    const newPos = { x: (event.touches[0].clientX + dragOffset.x) / scale, y: (event.touches[0].clientY + dragOffset.y) / scale };
-    robotStore[props.r].ee = validConfiguration(shift(newPos), props.r) ? newPos : projectToWorkspace(newPos);
+    if (robotStore[props.r].driver === 'gui') {
+        const newPos = { x: (event.touches[0].clientX + dragOffset.x) / scale, y: (event.touches[0].clientY + dragOffset.y) / scale };
+        robotStore[props.r].ee = validConfiguration(shift(newPos), props.r) ? newPos : projectToWorkspace(newPos);
+    }
 }
 function onTouchEnd() {
     window.removeEventListener('touchmove', onTouchMove);
