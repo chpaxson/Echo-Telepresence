@@ -5,90 +5,96 @@ import { defineStore } from 'pinia';
 export const useRobotStore = defineStore('robot', {
     state: () => ({
         r1: {
-            eePos: { x: 0, y: 200 } as Point,
-            config: { a1: 0, a2: 0 } as Config,
+            driven: false as boolean,
+            ee: { x: 0, y: 200 } as Point,
+            v: { j1: 0 as number, j2: 0 as number },
             maxSpeed: 20 as number,
-            voltage_limit: 24 as number,
             input_voltage: 0 as number,
             m1: {
                 homed: false as boolean,
+                v_lim: 24 as number, // Voltage chopping limit
                 R: 1.3 as number,
                 I: 29 as number, // mH
                 v_kP: 0.5 as number,
                 v_kI: 0.1 as number,
-                v_kD: 0.1 as number,
+                v_kD: 0.0 as number,
                 a_kP: 0.5 as number,
-                a_kI: 0.1 as number,
-                a_kD: 0.1 as number
+                a_kI: 0.0 as number,
+                a_kD: 0.0 as number
             },
             m2: {
                 homed: false as boolean,
+                v_lim: 24 as number, // Voltage chopping limit
                 R: 1.3 as number,
                 I: 29 as number, // mH
                 v_kP: 0.5 as number,
                 v_kI: 0.1 as number,
-                v_kD: 0.1 as number,
+                v_kD: 0.0 as number,
                 a_kP: 0.5 as number,
-                a_kI: 0.1 as number,
-                a_kD: 0.1 as number
+                a_kI: 0.0 as number,
+                a_kD: 0.0 as number
             }
         },
         r2: {
-            eePos: { x: 0, y: 200 } as Point,
-            config: { a1: 0, a2: 0 } as Config,
+            driven: false as boolean,
+            ee: { x: 0, y: 200 } as Point,
+            v: { j1: 0 as number, j2: 0 as number },
             maxSpeed: 20 as number,
-            voltage_limit: 24 as number,
             input_voltage: 0 as number,
             m1: {
                 homed: false as boolean,
+                v_lim: 24 as number, // Voltage chopping limit
                 R: 1.3 as number,
                 I: 29 as number, // mH
                 v_kP: 0.5 as number,
                 v_kI: 0.1 as number,
-                v_kD: 0.1 as number,
+                v_kD: 0.0 as number,
                 a_kP: 0.5 as number,
-                a_kI: 0.1 as number,
-                a_kD: 0.1 as number
+                a_kI: 0.0 as number,
+                a_kD: 0.0 as number
             },
             m2: {
                 homed: false as boolean,
+                v_lim: 24 as number, // Voltage chopping limit
                 R: 1.3 as number,
                 I: 29 as number, // mH
                 v_kP: 0.5 as number,
                 v_kI: 0.1 as number,
-                v_kD: 0.1 as number,
+                v_kD: 0.0 as number,
                 a_kP: 0.5 as number,
-                a_kI: 0.1 as number,
-                a_kD: 0.1 as number
+                a_kI: 0.0 as number,
+                a_kD: 0.0 as number
             }
         },
+        webSocketStatus: false as boolean,
         enableLink: false,
         linkRatio: 0.5,
         primaryRobot: 'robot1',
         boundaryMode: 'slide',
+        def_v_lim: 24 as number,
         def_R: 1.3 as number,
         def_I: 29 as number,
         def_v_kP: 0.5 as number,
         def_v_kI: 0.1 as number,
-        def_v_kD: 0 as number,
+        def_v_kD: 0.0 as number,
         def_a_kP: 0.5 as number,
-        def_a_kI: 0 as number,
-        def_a_kD: 0 as number
+        def_a_kI: 0.0 as number,
+        def_a_kD: 0.0 as number
     }),
     actions: {
-        setEE(robot: 'r1' | 'f2', eePos: Point) {
-            this[robot].eePos = projectToWorkspace(eePos);
-            this[robot].config = calc_ik(this[robot].eePos);
+        setEE(robot: 'r1' | 'f2', e: Point) {
+            this[robot].ee = projectToWorkspace(e);
+            this[robot].config = calc_ik(this[robot].ee);
         },
         setJA(robot: 'r1' | 'f2', jointAngles: Config) {
             this[robot].config = jointAngles;
-            this[robot].eePos = projectToWorkspace(calc_fk(jointAngles));
+            this[robot].ee = projectToWorkspace(calc_fk(jointAngles));
         }
     }
 });
 
 // const postPosition = () => {
-//     const angles = calc_ik(robotStore[props.r].eePos);
+//     const angles = calc_ik(robotStore[props.r].ee);
 //     fetch(`/api/v1/${props.r}/angles`, {
 //         method: 'POST',
 //         headers: {
@@ -115,7 +121,7 @@ export const useRobotStore = defineStore('robot', {
 
 // Post position to the server every time it changes, at most 10 times per second
 // watch(
-//     () => ({ ...robotStore[props.r].eePos }),
+//     () => ({ ...robotStore[props.r].ee }),
 //     () => {
 //         postPosition();
 //     },

@@ -20,9 +20,65 @@
 #include "lwip/apps/netbiosns.h"
 #include "esp_mac.h"
 #include "protocol_examples_common.h"
+#include "esp_now.h"
+#include "esp_wifi.h"
+#include "esp_http_server.h"
+#include "cJSON.h"
+#include "config_vars.h"
+#include "rest_server.h"
+#include "driver/adc.h"
+#include "esp_adc/adc_oneshot.h"
+
+// Store the WebSocket URI for sending
+#define WS_URI "/ws"
 
 #define MDNS_INSTANCE "Web Server"
-#define HOST_NAME "echo1"
+#define GPIO_INPUT_PIN 19
+char host_name[16] = ""; // Allocate enough space for "echo1" or "echo2"
+
+static void configure_gpio(void)
+{
+    gpio_config_t io_conf = {
+        .pin_bit_mask = (1ULL << GPIO_INPUT_PIN),
+        .mode = GPIO_MODE_INPUT,
+        .pull_up_en = GPIO_PULLUP_DISABLE,
+        .pull_down_en = GPIO_PULLDOWN_ENABLE,
+        .intr_type = GPIO_INTR_DISABLE
+    };
+    gpio_config(&io_conf);
+}
+
+static adc_oneshot_unit_handle_t adc1_handle;
+
+static void init_adc(void)
+{
+    adc_oneshot_unit_init_cfg_t init_config1 = {
+        .unit_id = ADC_UNIT_1,
+        .ulp_mode = ADC_ULP_MODE_DISABLE,
+    };
+    adc_oneshot_new_unit(&init_config1, &adc1_handle);
+
+    adc_oneshot_chan_cfg_t config = {
+        .bitwidth = ADC_BITWIDTH_DEFAULT,
+        .atten = ADC_ATTEN_DB_12,
+    };
+    adc_oneshot_config_channel(adc1_handle, ADC_CHANNEL_6, &config); // GPIO7
+    adc_oneshot_config_channel(adc1_handle, ADC_CHANNEL_4, &config); // GPIO5
+}
+
+static int read_adc_gpio7(void)
+{
+    int result = 0;
+    adc_oneshot_read(adc1_handle, ADC_CHANNEL_6, &result);
+    return result;
+}
+
+static int read_adc_gpio5(void)
+{
+    int result = 0;
+    adc_oneshot_read(adc1_handle, ADC_CHANNEL_4, &result);
+    return result;
+}
 
 static const char *TAG = "Web Server";
 
@@ -31,7 +87,7 @@ esp_err_t start_rest_server(const char *base_path);
 static void initialise_mdns(void)
 {
     mdns_init();
-    mdns_hostname_set(HOST_NAME);
+    mdns_hostname_set(host_name);
     mdns_instance_name_set(MDNS_INSTANCE);
 
     mdns_txt_item_t serviceTxtData[] = {
@@ -48,7 +104,7 @@ esp_err_t init_fs(void)
     esp_vfs_spiffs_conf_t conf = {
         .base_path = "/www",
         .partition_label = NULL,
-        .max_files = 5,
+        .max_files = 16,
         .format_if_mount_failed = false
     };
     esp_err_t ret = esp_vfs_spiffs_register(&conf);
@@ -73,28 +129,84 @@ esp_err_t init_fs(void)
     }
     return ESP_OK;
 }
-/*****************************************************************
- * Global configuration variables
- *****************************************************************/
-// Default robot parameters - posted and fetched from the web server
-float r1_vel_pid[3] = {0.0, 0.0, 0.0}; // Robot 1 Velocity PID Parameters (kP, kI, kD)
-float r2_vel_pid[3] = {0.0, 0.0, 0.0}; // Robot 2 Velocity PID Parameters (kP, kI, kD)
-float r1_pos_pid[3] = {0.0, 0.0, 0.0}; // Robot 1 Position PID Parameters (kP, kI, kD)
-float r2_pos_pid[3] = {0.0, 0.0, 0.0}; // Robot 2 Position PID Parameters (kP, kI, kD)
+
+void setup_espnow_as_host(void)
+{
+    // Initialize WiFi in AP or STA mode as needed
+    // Initialize ESP-NOW
+    // Register send/receive callbacks
+    // Ready to accept connections from echo2
+}
+
+void setup_espnow_as_client(void)
+{
+    // Initialize WiFi in STA mode
+    // Initialize ESP-NOW
+    // Register send/receive callbacks
+    // Scan for echo1 and add its MAC as a peer
+    // Attempt to connect/send to echo1
+}
+
+void sendJointAngles_ws_task(void *pvParameter)
+{
+    while (1) {
+        if (!global_httpd_server) {
+            vTaskDelay(pdMS_TO_TICKS(40));
+            continue;
+        }
+        int raw_a1 = read_adc_gpio7();
+        int raw_a2 = read_adc_gpio5();
+
+        // Scale raw_a1 (0-4095) to 0-270
+        float a1 = (raw_a1 / 4095.0f) * 270.0f;
+        // Scale raw_a2 (0-4095) to -90 to 180
+        float a2 = (raw_a2 / 4095.0f) * 270.0f - 90.0f;
+
+        cJSON *root = cJSON_CreateObject();
+        cJSON *r1 = cJSON_CreateObject();
+        cJSON_AddNumberToObject(r1, "a1", a1);
+        cJSON_AddNumberToObject(r1, "a2", a2);
+        cJSON_AddItemToObject(root, "r1", r1);
+
+        char *msg = cJSON_PrintUnformatted(root);
+        if (msg) {
+            ws_broadcast_text(msg);
+        }
+        cJSON_Delete(root);
+        if (msg) free(msg);
+
+        vTaskDelay(pdMS_TO_TICKS(40)); // 25 Hz
+    }
+}
 
 void app_main(void)
 {
+    configure_gpio();
+    strcpy(host_name, gpio_get_level(GPIO_INPUT_PIN) == 0 ? "echo1" : "echo2");
+    ESP_LOGI(TAG, "Host name: %s", host_name);
 
+    if (gpio_get_level(GPIO_INPUT_PIN) == 0) {
+        ESP_ERROR_CHECK(nvs_flash_init());
+        ESP_ERROR_CHECK(esp_netif_init());
+        ESP_ERROR_CHECK(esp_event_loop_create_default());
+        initialise_mdns();
+        netbiosns_init();
+        netbiosns_set_name(host_name);
 
-
-    ESP_ERROR_CHECK(nvs_flash_init());
-    ESP_ERROR_CHECK(esp_netif_init());
-    ESP_ERROR_CHECK(esp_event_loop_create_default());
-    initialise_mdns();
-    netbiosns_init();
-    netbiosns_set_name(HOST_NAME);
-
-    ESP_ERROR_CHECK(example_connect());
-    ESP_ERROR_CHECK(init_fs());
-    ESP_ERROR_CHECK(start_rest_server("/www"));
+        ESP_ERROR_CHECK(example_connect());
+        ESP_ERROR_CHECK(init_fs());
+        esp_err_t rest_ok = start_rest_server("/www");
+        if (rest_ok == ESP_OK) {
+            ESP_LOGI(TAG, "Starting WebSocket task");
+            init_adc(); // <-- Add this line
+            xTaskCreate(sendJointAngles_ws_task, "analog_ws_task", 6144, NULL, 5, NULL);
+        } else {
+            ESP_LOGE(TAG, "REST server failed to start, not starting WebSocket task");
+        }
+    } else {
+        ESP_ERROR_CHECK(nvs_flash_init());
+        ESP_ERROR_CHECK(esp_netif_init());
+        ESP_ERROR_CHECK(esp_event_loop_create_default());
+        // setup_espnow_as_client();
+    }
 }

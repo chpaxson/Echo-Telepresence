@@ -6,16 +6,7 @@
             <path :id="`${props.r}-u2`" />
             <path :id="`${props.r}-l2`" />
             <path :id="`${props.r}-l1`" />
-            <circle
-                id="ee"
-                :cx="scale * robotStore[props.r].eePos.x + offset.x"
-                :cy="scale * robotStore[props.r].eePos.y + offset.y"
-                :r="10 * scale"
-                style="cursor: grab"
-                :fill="`var(--p-primary-500)`"
-                @mousedown="onDragStart"
-                @touchstart="onTouchStart"
-            />
+            <circle id="ee" :cx="scale * robotStore[props.r].ee.x + offset.x" :cy="scale * robotStore[props.r].ee.y + offset.y" :r="10 * scale" style="cursor: grab" :fill="`var(--p-primary-500)`" @mousedown="onDragStart" @touchstart="onTouchStart" />
             <text :x="scale * b1.x + offset.x" :y="scale * (b1.y - 30) + offset.y" font-size="12" text-anchor="middle" fill="var(--p-surface-100)" class="select-none">b1</text>
             <text :x="scale * b2.x + offset.x" :y="scale * (b2.y - 30) + offset.y" font-size="12" text-anchor="middle" fill="var(--p-surface-100)" class="select-none">b2</text>
         </svg>
@@ -48,9 +39,9 @@ useResizeObserver(svgElement, (entries) => {
     offset = { x: width / 2, y: width / 8 };
     drawBoundaries();
     drawRobot();
-    // Slightly nudge eePos to update the end effector circle
-    robotStore[props.r].eePos = { x: robotStore[props.r].eePos.x + 0.0001, y: robotStore[props.r].eePos.y };
-    robotStore[props.r].eePos = { x: robotStore[props.r].eePos.x - 0.0001, y: robotStore[props.r].eePos.y };
+    // Slightly nudge e to update the end effector circle
+    robotStore[props.r].ee = { x: robotStore[props.r].ee.x + 0.0001, y: robotStore[props.r].ee.y };
+    robotStore[props.r].ee = { x: robotStore[props.r].ee.x - 0.0001, y: robotStore[props.r].ee.y };
 });
 
 function shift(p: Point): Point {
@@ -87,13 +78,13 @@ function drawArmSegment(element: string, c1: Point, c2: Point, r1: number, r2: n
 }
 
 function onDragStart(event: MouseEvent) {
-    dragOffset = { x: robotStore[props.r].eePos.x * scale - event.clientX, y: robotStore[props.r].eePos.y * scale - event.clientY };
+    dragOffset = { x: robotStore[props.r].ee.x * scale - event.clientX, y: robotStore[props.r].ee.y * scale - event.clientY };
     window.addEventListener('mousemove', onDragMove);
     window.addEventListener('mouseup', onDragEnd);
 }
 function onDragMove(event: MouseEvent) {
     const newPos = { x: (event.clientX + dragOffset.x) / scale, y: (event.clientY + dragOffset.y) / scale };
-    robotStore[props.r].eePos = validConfiguration(shift(newPos), props.r) ? newPos : projectToWorkspace(newPos);
+    robotStore[props.r].ee = validConfiguration(shift(newPos), props.r) ? newPos : projectToWorkspace(newPos);
 }
 function onDragEnd() {
     window.removeEventListener('mousemove', onDragMove);
@@ -102,14 +93,14 @@ function onDragEnd() {
 
 function onTouchStart(event: TouchEvent) {
     event.preventDefault();
-    dragOffset = { x: robotStore[props.r].eePos.x * scale - event.touches[0].clientX, y: robotStore[props.r].eePos.y * scale - event.touches[0].clientY };
+    dragOffset = { x: robotStore[props.r].ee.x * scale - event.touches[0].clientX, y: robotStore[props.r].ee.y * scale - event.touches[0].clientY };
     window.addEventListener('touchmove', onTouchMove, { passive: false });
     window.addEventListener('touchend', onTouchEnd);
 }
 function onTouchMove(event: TouchEvent) {
     event.preventDefault();
     const newPos = { x: (event.touches[0].clientX + dragOffset.x) / scale, y: (event.touches[0].clientY + dragOffset.y) / scale };
-    robotStore[props.r].eePos = validConfiguration(shift(newPos), props.r) ? newPos : projectToWorkspace(newPos);
+    robotStore[props.r].ee = validConfiguration(shift(newPos), props.r) ? newPos : projectToWorkspace(newPos);
 }
 function onTouchEnd() {
     window.removeEventListener('touchmove', onTouchMove);
@@ -120,16 +111,16 @@ let lastDraw = 0;
 let pending = false;
 
 function drawRobot() {
-    const angles = calc_ik(robotStore[props.r].eePos);
+    const angles = calc_ik(robotStore[props.r].ee);
     const j1 = addPoints(b1, polar(angles.a1, armLen.u));
     const j2 = addPoints(b2, polar(angles.a2, armLen.u));
     drawArmSegment(`${props.r}-u1`, b1, j1, armRadii.u1, armRadii.u2);
     drawArmSegment(`${props.r}-u2`, b2, j2, armRadii.u1, armRadii.u2);
-    drawArmSegment(`${props.r}-l2`, j2, robotStore[props.r].eePos, armRadii.l1, armRadii.l2);
-    drawArmSegment(`${props.r}-l1`, j1, robotStore[props.r].eePos, armRadii.l1, armRadii.l2);
+    drawArmSegment(`${props.r}-l2`, j2, robotStore[props.r].ee, armRadii.l1, armRadii.l2);
+    drawArmSegment(`${props.r}-l1`, j1, robotStore[props.r].ee, armRadii.l1, armRadii.l2);
 }
 const stop = watch(
-    () => ({ ...robotStore[props.r].eePos }), // watch for changes in joint3
+    () => ({ ...robotStore[props.r].ee }), // watch for changes in joint3
     () => {
         const now = performance.now();
         if (now - lastDraw > 20) {

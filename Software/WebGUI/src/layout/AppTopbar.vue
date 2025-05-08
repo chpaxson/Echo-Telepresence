@@ -1,8 +1,24 @@
 <script setup>
 import { useLayout } from '@/layout/composables/layout';
+import { useRobotStore } from '@/stores/robotStore';
+import { useToast } from 'primevue/usetoast';
 import AppConfigurator from './AppConfigurator.vue';
+const toast = useToast();
+
+const robotStore = useRobotStore();
 
 const { toggleMenu, toggleDarkMode, isDarkTheme } = useLayout();
+
+const attemptReconnect = () => {
+    toast.add({
+        severity: 'info',
+        summary: 'Reconnecting...',
+        life: 2000
+    });
+    if (window.initWebSocket) {
+        window.initWebSocket();
+    }
+};
 </script>
 
 <template>
@@ -20,6 +36,15 @@ const { toggleMenu, toggleDarkMode, isDarkTheme } = useLayout();
 
         <div class="layout-topbar-actions">
             <div class="layout-config-menu">
+                <!-- Websocket reconnect -->
+                <Button
+                    :label="robotStore.webSocketStatus ? `Connected` : `Lost connection!  Reconnect?`"
+                    icon="pi pi-exclamation-triangle"
+                    :disabled="robotStore.webSocketStatus"
+                    :severity="robotStore.webSocketStatus ? `success` : `danger`"
+                    @click="attemptReconnect"
+                ></Button>
+
                 <button type="button" class="layout-topbar-action" @click="toggleDarkMode">
                     <i :class="['pi', { 'pi-moon': isDarkTheme, 'pi-sun': !isDarkTheme }]"></i>
                 </button>

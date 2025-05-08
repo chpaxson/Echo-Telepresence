@@ -10,6 +10,7 @@ import ConfirmationService from 'primevue/confirmationservice';
 import ToastService from 'primevue/toastservice';
 
 import { useRobotStore } from '@/stores/robotStore';
+import { calc_fk, calc_ik } from '@/utils/kinematics';
 import { watch } from 'vue';
 
 import '@/assets/styles.scss';
@@ -91,29 +92,53 @@ function initWebSocket() {
     websocket = new WebSocket(gateway);
     websocket.onopen = onOpen;
     websocket.onclose = onClose;
-    websocket.onmessage = onMessage; // <-- add this line
+    websocket.onmessage = onMessage;
 }
 function onOpen(event) {
     console.log('Connection opened');
+    robotStore.webSocketStatus = true;
 }
 function onClose(event) {
     console.log('Connection closed');
+    robotStore.webSocketStatus = false;
     setTimeout(initWebSocket, 2000);
 }
-function onMessage(event) {
-    console.log(event.data);
+
+// Extend the Window interface to include initWebSocket
+declare global {
+    interface Window {
+        initWebSocket: () => void;
+    }
 }
+window.initWebSocket = initWebSocket;
+function onMessage(event) {
+    console.log('Message received from server');
+    console.log(event.data);
 
-initWebSocket();
-
-robotStore = useRobotStore();
-// Watch robotStore.r1.eePos and send a message to the server when it changes
+    // If the message is a JSON string, parse it
+    try {
+        const data = JSON.parse(event.data);
+        console.log('Parsed data:', data);
+        // If it has an r1 that has a1 and a2, set the robot store using calc_fk
+        if (data.r1 && data.r1.a1 !== undefined && data.r1.a2 !== undefined) {
+            robotStore.r1.ee = calc_fk({ a1: (data.r1.a1 * Math.PI) / 180, a2: (data.r1.a2 * Math.PI) / 180 });
+        } else if (data.r2 && data.r2.a1 !== undefined && data.r2.a2 !== undefined) {
+            robotStore.r2.ee = calc_fk({ a1: (data.r2.a1 * Math.PI) / 180, a2: (data.r2.a2 * Math.PI) / 180 });
+        }
+    } catch (error) {
+        console.error('Error parsing JSON:', error);
+    }
+}
+function onLoad() {
+    initWebSocket();
+}
+const robotStore = useRobotStore();
 watch(
-    robotStore.r1.eePos,
+    () => robotStore.r1.ee,
     (newValue) => {
         if (websocket && websocket.readyState === WebSocket.OPEN) {
-            websocket.send(JSON.stringify({ eePos: newValue }));
+            websocket.send(JSON.stringify(calc_ik(newValue)));
         }
     },
-    { immediate: true }
+    { immediate: true, deep: true }
 );

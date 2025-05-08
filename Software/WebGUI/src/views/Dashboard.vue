@@ -76,10 +76,10 @@ const r1Homed = computed(() => robotStore.r1.j1Homed && robotStore.r1.j2Homed);
 const r2Homed = computed(() => robotStore.r2.j1Homed && robotStore.r2.j2Homed);
 
 const r1_c = () => {
-    robotStore.r1.eePos = projectToWorkspace(robotStore.r1.eePos);
+    robotStore.r1.ee = projectToWorkspace(robotStore.r1.ee);
 };
 const r2_c = () => {
-    robotStore.r2.eePos = projectToWorkspace(robotStore.r2.eePos);
+    robotStore.r2.ee = projectToWorkspace(robotStore.r2.ee);
 };
 </script>
 
@@ -95,15 +95,15 @@ const r2_c = () => {
                 <div class="font-semibold text-xl">
                     <em>x</em>
                 </div>
-                <Slider class="w-full" v-model="robotStore.r1.eePos.x" @change="r1_c" :min="-300" :max="300" :step="0.1" />
-                <InputText class="w-24" v-model.number="robotStore.r1.eePos.x" />
+                <Slider class="w-full" v-model="robotStore.r1.ee.x" @change="r1_c" :min="-300" :max="300" :step="0.1" />
+                <InputText class="w-24" v-model.number="robotStore.r1.ee.x" />
             </div>
             <div class="flex flex-row gap-8 items-center">
                 <div class="font-semibold text-xl">
                     <em>y</em>
                 </div>
-                <Slider class="w-full" v-model="robotStore.r1.eePos.y" @change="r1_c" :min="0" :max="350" :step="0.1" />
-                <InputText class="w-24" v-model.number="robotStore.r1.eePos.y" />
+                <Slider class="w-full" v-model="robotStore.r1.ee.y" @change="r1_c" :min="0" :max="350" :step="0.1" />
+                <InputText class="w-24" v-model.number="robotStore.r1.ee.y" />
             </div>
         </div>
         <div class="card content-center flex flex-col gap-2">
@@ -116,15 +116,15 @@ const r2_c = () => {
                 <div class="font-semibold text-xl">
                     <em>x</em>
                 </div>
-                <Slider class="w-full" v-model="robotStore.r2.eePos.x" @change="r2_c" :min="-300" :max="300" :step="0.1" />
-                <InputText class="w-24" v-model.number="robotStore.r2.eePos.x" />
+                <Slider class="w-full" v-model="robotStore.r2.ee.x" @change="r2_c" :min="-300" :max="300" :step="0.1" />
+                <InputText class="w-24" v-model.number="robotStore.r2.ee.x" />
             </div>
             <div class="flex flex-row gap-8 items-center">
                 <div class="font-semibold text-xl">
                     <em>y</em>
                 </div>
-                <Slider class="w-full" v-model="robotStore.r2.eePos.y" @change="r2_c" :min="0" :max="350" :step="0.1" />
-                <InputText class="w-24" v-model.number="robotStore.r2.eePos.y" />
+                <Slider class="w-full" v-model="robotStore.r2.ee.y" @change="r2_c" :min="0" :max="350" :step="0.1" />
+                <InputText class="w-24" v-model.number="robotStore.r2.ee.y" />
             </div>
         </div>
         <div class="card flex flex-col gap-4">

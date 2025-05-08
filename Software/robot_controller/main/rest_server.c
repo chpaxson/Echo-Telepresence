@@ -16,6 +16,15 @@
 #include "cJSON.h"
 
 #include "config_vars.h"
+#include <sys/param.h>
+#define MAX_WS_CLIENTS 4
+static int ws_clients[MAX_WS_CLIENTS] = {0};
+static int ws_client_count = 0;
+static portMUX_TYPE ws_clients_mux = portMUX_INITIALIZER_UNLOCKED;
+
+struct ws_async_arg {
+    char *msg;
+};
 
 static const char *REST_TAG = "esp-rest";
 #define REST_CHECK(a, str, goto_tag, ...)                                              \
@@ -104,8 +113,18 @@ static esp_err_t rest_common_get_handler(httpd_req_t *req)
     httpd_resp_send_chunk(req, NULL, 0);
     return ESP_OK;
 }
-
-static esp_err_t pid_get_handler(httpd_req_t *req)
+// Robot parameter JSON structure
+// {
+//     r1: {
+//         m1: { v_lim: 24 as number, R: 1.3 as number, I: 29 as number, v_kP: 0.5 as number, v_kI: 0.1 as number, v_kD: 0.0 as number, a_kP: 0.5 as number, a_kI: 0.0 as number, a_kD: 0.0 as number},
+//         m2: {v_lim: 24 as number, R: 1.3 as number, I: 29 as number, v_kP: 0.5 as number, v_kI: 0.1 as number, v_kD: 0.0 as number, a_kP: 0.5 as number, a_kI: 0.0 as number, a_kD: 0.0 as number}
+//     }, 
+//     r2: {
+//         m1: { v_lim: 24 as number, R: 1.3 as number, I: 29 as number, v_kP: 0.5 as number, v_kI: 0.1 as number, v_kD: 0.0 as number, a_kP: 0.5 as number, a_kI: 0.0 as number, a_kD: 0.0 as number},
+//         m2: {v_lim: 24 as number, R: 1.3 as number, I: 29 as number, v_kP: 0.5 as number, v_kI: 0.1 as number, v_kD: 0.0 as number, a_kP: 0.5 as number, a_kI: 0.0 as number, a_kD: 0.0 as number}
+//     }
+// }
+static esp_err_t motorParams_get_handler(httpd_req_t *req)
 {
     httpd_resp_set_type(req, "application/json");
     cJSON *root = cJSON_CreateObject();
@@ -114,6 +133,9 @@ static esp_err_t pid_get_handler(httpd_req_t *req)
     cJSON *r2 = cJSON_CreateObject();
 
     cJSON *r1m1 = cJSON_CreateObject();
+    cJSON_AddNumberToObject(r1m1, "v_lim", r1m1_vlim);
+    cJSON_AddNumberToObject(r1m1, "R", r1m1_R);
+    cJSON_AddNumberToObject(r1m1, "I", r1m1_I);
     cJSON_AddNumberToObject(r1m1, "v_kp", r1m1_vel_pid[0]);
     cJSON_AddNumberToObject(r1m1, "v_ki", r1m1_vel_pid[1]);
     cJSON_AddNumberToObject(r1m1, "v_kd", r1m1_vel_pid[2]);
@@ -123,6 +145,9 @@ static esp_err_t pid_get_handler(httpd_req_t *req)
     cJSON_AddItemToObject(r1, "m1", r1m1);
 
     cJSON *r1m2 = cJSON_CreateObject();
+    cJSON_AddNumberToObject(r1m2, "v_lim", r1m2_vlim);
+    cJSON_AddNumberToObject(r1m2, "R", r1m2_R);
+    cJSON_AddNumberToObject(r1m2, "I", r1m2_I);
     cJSON_AddNumberToObject(r1m2, "v_kp", r1m2_vel_pid[0]);
     cJSON_AddNumberToObject(r1m2, "v_ki", r1m2_vel_pid[1]);
     cJSON_AddNumberToObject(r1m2, "v_kd", r1m2_vel_pid[2]);
@@ -132,6 +157,9 @@ static esp_err_t pid_get_handler(httpd_req_t *req)
     cJSON_AddItemToObject(r1, "m2", r1m2);
 
     cJSON *r2m1 = cJSON_CreateObject();
+    cJSON_AddNumberToObject(r2m1, "v_lim", r2m1_vlim);
+    cJSON_AddNumberToObject(r2m1, "R", r2m1_R);
+    cJSON_AddNumberToObject(r2m1, "I", r2m1_I);
     cJSON_AddNumberToObject(r2m1, "v_kp", r2m1_vel_pid[0]);
     cJSON_AddNumberToObject(r2m1, "v_ki", r2m1_vel_pid[1]);
     cJSON_AddNumberToObject(r2m1, "v_kd", r2m1_vel_pid[2]);
@@ -141,6 +169,9 @@ static esp_err_t pid_get_handler(httpd_req_t *req)
     cJSON_AddItemToObject(r2, "m1", r2m1);
 
     cJSON *r2m2 = cJSON_CreateObject();
+    cJSON_AddNumberToObject(r2m2, "v_lim", r2m2_vlim);
+    cJSON_AddNumberToObject(r2m2, "R", r2m2_R);
+    cJSON_AddNumberToObject(r2m2, "I", r2m2_I);
     cJSON_AddNumberToObject(r2m2, "v_kp", r2m2_vel_pid[0]);
     cJSON_AddNumberToObject(r2m2, "v_ki", r2m2_vel_pid[1]);
     cJSON_AddNumberToObject(r2m2, "v_kd", r2m2_vel_pid[2]);
@@ -159,7 +190,7 @@ static esp_err_t pid_get_handler(httpd_req_t *req)
     return ESP_OK;
 }
 
-static esp_err_t pid_post_handler(httpd_req_t *req)
+static esp_err_t motParams_post_handler(httpd_req_t *req)
 {
     int total_len = req->content_len;
     int cur_len = 0;
@@ -186,11 +217,14 @@ static esp_err_t pid_post_handler(httpd_req_t *req)
     }
 
     // Helper macro to extract values safely
-    #define SET_PID_FROM_JSON(rob, mot, vel_arr, pos_arr) do { \
+    #define SET_PID_FROM_JSON(rob, mot, vlim, R, I, vel_arr, pos_arr) do { \
         cJSON *rob_obj = cJSON_GetObjectItem(root, #rob); \
         if (rob_obj) { \
             cJSON *mot_obj = cJSON_GetObjectItem(rob_obj, #mot); \
             if (mot_obj) { \
+                cJSON *c_vlim = cJSON_GetObjectItem(mot_obj, "v_lim"); \
+                cJSON *c_R = cJSON_GetObjectItem(mot_obj, "R"); \
+                cJSON *c_I = cJSON_GetObjectItem(mot_obj, "I"); \
                 cJSON *v_kp = cJSON_GetObjectItem(mot_obj, "v_kp"); \
                 cJSON *v_ki = cJSON_GetObjectItem(mot_obj, "v_ki"); \
                 cJSON *v_kd = cJSON_GetObjectItem(mot_obj, "v_kd"); \
@@ -198,6 +232,9 @@ static esp_err_t pid_post_handler(httpd_req_t *req)
                 cJSON *a_ki = cJSON_GetObjectItem(mot_obj, "a_ki"); \
                 cJSON *a_kd = cJSON_GetObjectItem(mot_obj, "a_kd"); \
                 if (v_kp && v_ki && v_kd && a_kp && a_ki && a_kd) { \
+                    vlim = c_vlim->valuedouble; \
+                    R = c_R->valuedouble; \
+                    I = c_I->valuedouble; \
                     vel_arr[0] = v_kp->valuedouble; \
                     vel_arr[1] = v_ki->valuedouble; \
                     vel_arr[2] = v_kd->valuedouble; \
@@ -209,14 +246,54 @@ static esp_err_t pid_post_handler(httpd_req_t *req)
         } \
     } while(0)
 
-    SET_PID_FROM_JSON(r1, m1, r1m1_vel_pid, r1m1_pos_pid);
-    SET_PID_FROM_JSON(r1, m2, r1m2_vel_pid, r1m2_pos_pid);
-    SET_PID_FROM_JSON(r2, m1, r2m1_vel_pid, r2m1_pos_pid);
-    SET_PID_FROM_JSON(r2, m2, r2m2_vel_pid, r2m2_pos_pid);
+    SET_PID_FROM_JSON(r1, m1, r1m1_vlim, r1m1_R, r1m1_I, r1m1_vel_pid, r1m1_pos_pid);
+    SET_PID_FROM_JSON(r1, m2, r1m2_vlim, r1m2_R, r1m2_I, r1m2_vel_pid, r1m2_pos_pid);
+    SET_PID_FROM_JSON(r2, m1, r2m1_vlim, r2m1_R, r2m1_I, r2m1_vel_pid, r2m1_pos_pid);
+    SET_PID_FROM_JSON(r2, m2, r2m2_vlim, r2m2_R, r2m2_I, r2m2_vel_pid, r2m2_pos_pid);
 
     cJSON_Delete(root);
 
     httpd_resp_sendstr(req, "PID parameters updated successfully");
+    return ESP_OK;
+}
+
+static esp_err_t home_post_handler(httpd_req_t *req)
+{
+    int total_len = req->content_len;
+    int cur_len = 0;
+    char *buf = ((rest_server_context_t *)(req->user_ctx))->scratch;
+    int received = 0;
+    if (total_len >= SCRATCH_BUFSIZE) {
+        httpd_resp_send_err(req, HTTPD_500_INTERNAL_SERVER_ERROR, "content too long");
+        return ESP_FAIL;
+    }
+    while (cur_len < total_len) {
+        received = httpd_req_recv(req, buf + cur_len, total_len);
+        if (received <= 0) {
+            httpd_resp_send_err(req, HTTPD_500_INTERNAL_SERVER_ERROR, "Failed to post control value");
+            return ESP_FAIL;
+        }
+        cur_len += received;
+    }
+    buf[total_len] = '\0';
+
+    cJSON *root = cJSON_Parse(buf);
+    if (!root) {
+        httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "Invalid JSON");
+        return ESP_FAIL;
+    }
+    cJSON *r1 = cJSON_GetObjectItem(root, "r1");
+    cJSON *r2 = cJSON_GetObjectItem(root, "r2");
+    uint8_t r1m1 = cJSON_GetObjectItem(r1, "m1")->valueint;
+    uint8_t r1m2 = cJSON_GetObjectItem(r1, "m2")->valueint;
+    uint8_t r2m1 = cJSON_GetObjectItem(r2, "m1")->valueint;
+    uint8_t r2m2 = cJSON_GetObjectItem(r2, "m2")->valueint;
+
+    ESP_LOGI(REST_TAG, "r1m1: %d, r1m2: %d, r2m1: %d, r2m2: %d", r1m1, r1m2, r2m1, r2m2);
+            
+    cJSON_Delete(root);
+
+    httpd_resp_sendstr(req, "Homing motors...");
     return ESP_OK;
 }
 
@@ -252,7 +329,12 @@ static esp_err_t temperature_data_get_handler(httpd_req_t *req)
 static esp_err_t ws_handler(httpd_req_t *req)
 {
     if (req->method == HTTP_GET) {
-        // Handshake done, nothing to do here
+        int sockfd = httpd_req_to_sockfd(req);
+        portENTER_CRITICAL(&ws_clients_mux);
+        if (ws_client_count < MAX_WS_CLIENTS) {
+            ws_clients[ws_client_count++] = sockfd;
+        }
+        portEXIT_CRITICAL(&ws_clients_mux);
         return ESP_OK;
     }
 
@@ -261,21 +343,18 @@ static esp_err_t ws_handler(httpd_req_t *req)
     ws_pkt.type = HTTPD_WS_TYPE_TEXT;
     ws_pkt.payload = NULL;
 
-    // Get frame length
     esp_err_t ret = httpd_ws_recv_frame(req, &ws_pkt, 0);
     if (ret != ESP_OK) {
         ESP_LOGE("ws", "Failed to get frame length: %d", ret);
         return ret;
     }
 
-    // Allocate memory for payload
     ws_pkt.payload = malloc(ws_pkt.len + 1);
     if (ws_pkt.payload == NULL) {
         ESP_LOGE("ws", "Failed to allocate memory for payload");
         return ESP_ERR_NO_MEM;
     }
 
-    // Receive actual data
     ret = httpd_ws_recv_frame(req, &ws_pkt, ws_pkt.len);
     if (ret != ESP_OK) {
         ESP_LOGE("ws", "Failed to receive frame: %d", ret);
@@ -300,6 +379,55 @@ static esp_err_t ws_handler(httpd_req_t *req)
     return ESP_OK;
 }
 
+void ws_remove_client(int sockfd) {
+    portENTER_CRITICAL(&ws_clients_mux);
+    for (int i = 0; i < ws_client_count; ++i) {
+        if (ws_clients[i] == sockfd) {
+            for (int j = i; j < ws_client_count - 1; ++j) {
+                ws_clients[j] = ws_clients[j + 1];
+            }
+            ws_client_count--;
+            break;
+        }
+    }
+    portEXIT_CRITICAL(&ws_clients_mux);
+}
+
+static void ws_async_send(void *arg) {
+    struct ws_async_arg *ws_arg = (struct ws_async_arg *)arg;
+    httpd_ws_frame_t ws_pkt = {
+        .final = true,
+        .fragmented = false,
+        .type = HTTPD_WS_TYPE_TEXT,
+        .payload = (uint8_t *)ws_arg->msg,
+        .len = strlen(ws_arg->msg)
+    };
+
+    portENTER_CRITICAL(&ws_clients_mux);
+    int count = ws_client_count;
+    int fds[MAX_WS_CLIENTS];
+    memcpy(fds, ws_clients, sizeof(fds));
+    portEXIT_CRITICAL(&ws_clients_mux);
+
+    for (int i = 0; i < count; ++i) {
+        int fd_info = httpd_ws_get_fd_info(global_httpd_server, fds[i]);
+        if (fd_info == HTTPD_WS_CLIENT_WEBSOCKET) {
+            httpd_ws_send_frame_async(global_httpd_server, fds[i], &ws_pkt);
+        }
+    }
+    free(ws_arg->msg);
+    free(ws_arg);
+}
+
+void ws_broadcast_text(const char *msg) {
+    if (!global_httpd_server) return;
+    struct ws_async_arg *arg = malloc(sizeof(struct ws_async_arg));
+    if (!arg) return;
+    arg->msg = strdup(msg);
+    if (!arg->msg) { free(arg); return; }
+    httpd_queue_work(global_httpd_server, ws_async_send, arg);
+}
+
 esp_err_t start_rest_server(const char *base_path)
 {
     REST_CHECK(base_path, "wrong base path", err);
@@ -314,23 +442,33 @@ esp_err_t start_rest_server(const char *base_path)
 
     ESP_LOGI(REST_TAG, "Starting HTTP Server");
     REST_CHECK(httpd_start(&server, &config) == ESP_OK, "Start server failed", err_start);
+    
+    global_httpd_server = server;
 
     // Register consolidated PID GET and POST handlers
-    httpd_uri_t pid_get_uri = {
-        .uri = "/api/v1/pid",
+    httpd_uri_t motParams_get_uri = {
+        .uri = "/api/v1/mParams ",
         .method = HTTP_GET,
-        .handler = pid_get_handler,
+        .handler = motorParams_get_handler,
         .user_ctx = rest_context
     };
-    httpd_register_uri_handler(server, &pid_get_uri);
+    httpd_register_uri_handler(server, &motParams_get_uri);
 
-    httpd_uri_t pid_post_uri = {
-        .uri = "/api/v1/pid",
+    httpd_uri_t motParams_post_uri = {
+        .uri = "/api/v1/mParams",
         .method = HTTP_POST,
-        .handler = pid_post_handler,
+        .handler = motParams_post_handler,
         .user_ctx = rest_context
     };
-    httpd_register_uri_handler(server, &pid_post_uri);
+    httpd_register_uri_handler(server, &motParams_post_uri);
+
+    httpd_uri_t home_post_uri = {
+        .uri = "/api/v1/homing",
+        .method = HTTP_POST,
+        .handler = home_post_handler,
+        .user_ctx = rest_context
+    };
+    httpd_register_uri_handler(server, &home_post_uri);
 
     /* URI handler for fetching system info */
     httpd_uri_t system_info_get_uri = {
@@ -350,15 +488,7 @@ esp_err_t start_rest_server(const char *base_path)
     };
     httpd_register_uri_handler(server, &temperature_data_get_uri);
 
-    /* URI handler for getting web server files */
-    httpd_uri_t common_get_uri = {
-        .uri = "/*",
-        .method = HTTP_GET,
-        .handler = rest_common_get_handler,
-        .user_ctx = rest_context
-    };
-    httpd_register_uri_handler(server, &common_get_uri);
-
+    // Register the WebSocket handler BEFORE the wildcard handler
     httpd_uri_t ws_uri = {
         .uri = "/ws",
         .method = HTTP_GET,
@@ -367,6 +497,15 @@ esp_err_t start_rest_server(const char *base_path)
         .is_websocket = true
     };
     httpd_register_uri_handler(server, &ws_uri);
+
+    /* URI handler for getting web server files */
+    httpd_uri_t common_get_uri = {
+        .uri = "/*",
+        .method = HTTP_GET,
+        .handler = rest_common_get_handler,
+        .user_ctx = rest_context
+    };
+    httpd_register_uri_handler(server, &common_get_uri);
 
     return ESP_OK;
 err_start:
