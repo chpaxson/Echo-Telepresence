@@ -6,7 +6,16 @@
             <path :id="`${props.robot}-u2`" />
             <path :id="`${props.robot}-l2`" />
             <path :id="`${props.robot}-l1`" />
-            <circle id="ee" :cx="scale * robotStore.eePos.x + offset.x" :cy="scale * robotStore.eePos.y + offset.y" :r="10 * scale" style="cursor: grab" :fill="`var(--p-primary-500)`" @mousedown="onDragStart" @touchstart="onTouchStart" />
+            <circle
+                id="ee"
+                :cx="scale * robotStore[robot].eePos.x + offset.x"
+                :cy="scale * robotStore[robot].eePos.y + offset.y"
+                :r="10 * scale"
+                style="cursor: grab"
+                :fill="`var(--p-primary-500)`"
+                @mousedown="onDragStart"
+                @touchstart="onTouchStart"
+            />
             <text :x="scale * b1.x + offset.x" :y="scale * b1.y + offset.y - 15" font-size="12" text-anchor="middle" fill="var(--p-surface-100)">b1</text>
             <text :x="scale * b2.x + offset.x" :y="scale * b2.y + offset.y - 15" font-size="12" text-anchor="middle" fill="var(--p-surface-100)">b2</text>
         </svg>
@@ -14,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import { useRobot1Store, useRobot2Store } from '@/stores/robotStore';
+import { useRobot1Store, useRobot2Store, useRobotStore } from '@/stores/robotStore';
 import { useResizeObserver } from '@vueuse/core';
 import { onMounted, onUnmounted, useTemplateRef, watch } from 'vue';
 import { armLen, armRadii, b1, b2, boundaryArcs, calc_ik, projectToWorkspace, validConfiguration } from '../utils/kinematics';
@@ -25,6 +34,7 @@ import '../utils/utils.ts';
 const props = defineProps({
     robot: { type: String, required: true }
 });
+const robot = props.robot === 'robot1' ? 'r1' : 'r2';
 
 let scale = 400 / 700;
 let offset = { x: 400 / 2, y: 400 / 8 };
@@ -41,16 +51,17 @@ useResizeObserver(svgElement, (entries) => {
     drawBoundaries();
     drawRobot();
     // Slightly nudge eePos to update the end effector circle
-    robotStore.eePos = { x: robotStore.eePos.x + 0.0001, y: robotStore.eePos.y };
-    robotStore.eePos = { x: robotStore.eePos.x - 0.0001, y: robotStore.eePos.y };
+    robotStore[robot].eePos = { x: robotStore[robot].eePos.x + 0.0001, y: robotStore[robot].eePos.y };
+    robotStore[robot].eePos = { x: robotStore[robot].eePos.x - 0.0001, y: robotStore[robot].eePos.y };
 });
 
 function shift(p: Point): Point {
     return addPoints(scalePoint(p, scale), offset);
 }
 
+const robotStore = useRobotStore();
 // Dynamically select the store
-const robotStore = props.robot === 'robot1' ? useRobot1Store() : useRobot2Store();
+// const robotStore[robot] = props.robot === 'robot1' ? useRobot1Store() : useRobot2Store();
 
 function drawArmSegment(element: string, c1: Point, c2: Point, r1: number, r2: number): void {
     // Shift everything into the canvas
@@ -78,13 +89,13 @@ function drawArmSegment(element: string, c1: Point, c2: Point, r1: number, r2: n
 }
 
 function onDragStart(event: MouseEvent) {
-    dragOffset = { x: robotStore.eePos.x * scale - event.clientX, y: robotStore.eePos.y * scale - event.clientY };
+    dragOffset = { x: robotStore[robot].eePos.x * scale - event.clientX, y: robotStore[robot].eePos.y * scale - event.clientY };
     window.addEventListener('mousemove', onDragMove);
     window.addEventListener('mouseup', onDragEnd);
 }
 function onDragMove(event: MouseEvent) {
     const newPos = { x: (event.clientX + dragOffset.x) / scale, y: (event.clientY + dragOffset.y) / scale };
-    robotStore.eePos = validConfiguration(shift(newPos), props.robot) ? newPos : projectToWorkspace(newPos);
+    robotStore[robot].eePos = validConfiguration(shift(newPos), props.robot) ? newPos : projectToWorkspace(newPos);
 }
 function onDragEnd() {
     window.removeEventListener('mousemove', onDragMove);
@@ -93,14 +104,14 @@ function onDragEnd() {
 
 function onTouchStart(event: TouchEvent) {
     event.preventDefault();
-    dragOffset = { x: robotStore.eePos.x * scale - event.touches[0].clientX, y: robotStore.eePos.y * scale - event.touches[0].clientY };
+    dragOffset = { x: robotStore[robot].eePos.x * scale - event.touches[0].clientX, y: robotStore[robot].eePos.y * scale - event.touches[0].clientY };
     window.addEventListener('touchmove', onTouchMove, { passive: false });
     window.addEventListener('touchend', onTouchEnd);
 }
 function onTouchMove(event: TouchEvent) {
     event.preventDefault();
     const newPos = { x: (event.touches[0].clientX + dragOffset.x) / scale, y: (event.touches[0].clientY + dragOffset.y) / scale };
-    robotStore.eePos = validConfiguration(shift(newPos), props.robot) ? newPos : projectToWorkspace(newPos);
+    robotStore[robot].eePos = validConfiguration(shift(newPos), props.robot) ? newPos : projectToWorkspace(newPos);
 }
 function onTouchEnd() {
     window.removeEventListener('touchmove', onTouchMove);
@@ -111,16 +122,16 @@ let lastDraw = 0;
 let pending = false;
 
 function drawRobot() {
-    const angles = calc_ik(robotStore.eePos);
+    const angles = calc_ik(robotStore[robot].eePos);
     const j1 = addPoints(b1, polar(angles.a1, armLen.u));
     const j2 = addPoints(b2, polar(angles.a2, armLen.u));
     drawArmSegment(`${props.robot}-u1`, b1, j1, armRadii.u1, armRadii.u2);
     drawArmSegment(`${props.robot}-u2`, b2, j2, armRadii.u1, armRadii.u2);
-    drawArmSegment(`${props.robot}-l2`, j2, robotStore.eePos, armRadii.l1, armRadii.l2);
-    drawArmSegment(`${props.robot}-l1`, j1, robotStore.eePos, armRadii.l1, armRadii.l2);
+    drawArmSegment(`${props.robot}-l2`, j2, robotStore[robot].eePos, armRadii.l1, armRadii.l2);
+    drawArmSegment(`${props.robot}-l1`, j1, robotStore[robot].eePos, armRadii.l1, armRadii.l2);
 }
 const stop = watch(
-    () => ({ ...robotStore.eePos }), // watch for changes in joint3
+    () => ({ ...robotStore[robot].eePos }), // watch for changes in joint3
     () => {
         const now = performance.now();
         if (now - lastDraw > 20) {
@@ -142,7 +153,7 @@ const stop = watch(
 );
 
 // const postPosition = () => {
-//     const angles = calc_ik(robotStore.eePos);
+//     const angles = calc_ik(robotStore[robot].eePos);
 //     fetch(`/api/v1/${props.robot}/angles`, {
 //         method: 'POST',
 //         headers: {
@@ -169,7 +180,7 @@ const stop = watch(
 
 // Post position to the server every time it changes, at most 10 times per second
 // watch(
-//     () => ({ ...robotStore.eePos }),
+//     () => ({ ...robotStore[robot].eePos }),
 //     () => {
 //         postPosition();
 //     },

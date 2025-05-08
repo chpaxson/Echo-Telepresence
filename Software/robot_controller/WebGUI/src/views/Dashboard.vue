@@ -9,11 +9,6 @@ function showWarn() {
 
 const robotStore = useRobotStore();
 
-const r1x = ref(robotStore.r1.eePos.x);
-const r1y = ref(robotStore.r1.eePos.y);
-const r2x = ref(robotStore.r2.eePos.x);
-const r2y = ref(robotStore.r2.eePos.y);
-
 const primaryRobotDropdownValues = ref([
     { name: 'Robot 1', code: 'robot1' },
     { name: 'Robot 2', code: 'robot2' }
@@ -89,11 +84,11 @@ const r2Homed = computed(() => robotStore.r2.j1Homed && robotStore.r2.j2Homed);
             </div>
             <RobotVis robot="robot1" />
             <div class="font-semibold text-xl"><em>x</em> Position</div>
-            <InputText v-model.number="r1x" />
-            <Slider v-model="r1x" :min="-300" :max="300" />
+            <InputText v-model.number="robotStore.r1.eePos.x" />
+            <Slider v-model="robotStore.r1.eePos.x" :min="-300" :max="300" />
             <div class="font-semibold text-xl"><em>y</em> Position</div>
-            <InputText v-model.number="r1y" />
-            <Slider v-model="r1y" :min="0" :max="300" />
+            <InputText v-model.number="robotStore.r1.eePos.y" />
+            <Slider v-model="robotStore.r1.eePos.y" :min="0" :max="350" />
         </div>
         <div class="card content-center flex flex-col gap-4">
             <div class="flow-root">
@@ -102,11 +97,11 @@ const r2Homed = computed(() => robotStore.r2.j1Homed && robotStore.r2.j2Homed);
             </div>
             <RobotVis robot="robot2" />
             <div class="font-semibold text-xl"><em>x</em> Position</div>
-            <InputText v-model.number="r2x" />
-            <Slider v-model="r2x" :min="-300" :max="300" />
+            <InputText v-model.number="robotStore.r2.eePos.x" />
+            <Slider v-model="robotStore.r2.eePos.x" :min="-300" :max="300" />
             <div class="font-semibold text-xl"><em>y</em> Position</div>
-            <InputText v-model.number="r2y" />
-            <Slider v-model="r2y" :min="0" :max="300" />
+            <InputText v-model.number="robotStore.r2.eePos.y" />
+            <Slider v-model="robotStore.r2.eePos.y" :min="0" :max="350" />
         </div>
         <div class="card flex flex-col gap-4">
             <h1>Robot Linking</h1>
