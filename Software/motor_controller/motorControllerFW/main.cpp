@@ -178,20 +178,22 @@ int main() {
     // link the motor to the sensor
     motor.linkSensor(&sensor);
 
-    driver.voltage_power_supply = 12; // set the power supply voltage for the driver
+    driver.voltage_power_supply = 24; // set the power supply voltage for the driver
     // driver config
     driver.init();
     motor.linkDriver(&driver);
 
     // set motion control loop to be used
-    motor.torque_controller = TorqueControlType::voltage;
+    // motor.torque_controller = TorqueControlType::voltage;
     motor.controller = MotionControlType::torque;
 
     // default voltage_power_supply
-    motor.voltage_limit = 7; // Volts
-    motor.phase_resistance = 1.3; // Ohm
-    motor.current_limit = 4; // Amps
+    motor.voltage_limit = 24; // Volts
+    motor.phase_resistance = 1.85; // Ohm
+    motor.current_limit = 2; // Amps
     motor.voltage_sensor_align = 7; 
+
+    motor.zero_electric_angle = 5.52; // Set the zero electric angle to 0
 
     // initialize motor
     motor.init();
@@ -213,24 +215,25 @@ int main() {
         motor.loopFOC();
 
         // Determine offset based on the direction of the difference
-        error = received_angle - motor.shaft_angle;
+        // error = received_angle - motor.shaft_angle;
 
-        motor.move( ((error > 0 ) ? offset : (-1 * offset)) + (gain * error)); // target torque
+        // motor.move( ((error > 0 ) ? offset : (-1 * offset)) + (gain * error)); // target torque
+        motor.move(8);
 
-        if(can_downsample_cnt == can_downsample) {
-            // Send the sensor angle to core 1
-            // Convert the angle to a 32-bit integer representation
+        // if(can_downsample_cnt == can_downsample) {
+        //     // Send the sensor angle to core 1
+        //     // Convert the angle to a 32-bit integer representation
 
-            angle = motor.shaft_angle;
-            memcpy(&raw_data, &angle, sizeof(float)); // Convert float to uint32_t
-            multicore_fifo_push_blocking(raw_data); // Send the data to core 1
+        //     angle = motor.shaft_angle;
+        //     memcpy(&raw_data, &angle, sizeof(float)); // Convert float to uint32_t
+        //     multicore_fifo_push_blocking(raw_data); // Send the data to core 1
 
-            can_downsample_cnt = 0; // Reset downsample counter
+        //     can_downsample_cnt = 0; // Reset downsample counter
 
-            // printf("MyAngle:%f,RecievedAngle:%f,error:%f,applied_torque:%f\n", angle, received_angle, error, ((error > 0 ) ? offset : (-1 * offset)) + (gain * error));
-        }
-        can_downsample_cnt++;
-        sleep_ms(1); // Sleep for 1ms to avoid busy waiting
+        //     // printf("MyAngle:%f,RecievedAngle:%f,error:%f,applied_torque:%f\n", angle, received_angle, error, ((error > 0 ) ? offset : (-1 * offset)) + (gain * error));
+        // }
+        // can_downsample_cnt++;
+        // sleep_ms(1); // Sleep for 1ms to avoid busy waiting
     }
 
    return 0;

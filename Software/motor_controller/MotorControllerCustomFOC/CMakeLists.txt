@@ -23,20 +23,21 @@ if (EXISTS ${picoVscode})
     include(${picoVscode})
 endif()
 # ====================================================================================
-set(PICO_BOARD pico CACHE STRING "Board type")
+set(PICO_BOARD pico2 CACHE STRING "Board type")
 
 # Pull in Raspberry Pi Pico SDK (must be before project)
 include(pico_sdk_import.cmake)
 
-project(motorControllerFW C CXX ASM)
+project(MotorControllerCustomFOC C CXX ASM)
 
 # Initialise the Raspberry Pi Pico SDK
 pico_sdk_init()
 
 # Add executable. Default name is the project name, version 0.1
-add_executable(motorControllerFW 
-    # The main program file
-    main.cpp
+
+add_executable(MotorControllerCustomFOC 
+    
+    main.cpp 
 
     # can2040 Lib
     can/can2040.c
@@ -49,50 +50,37 @@ add_executable(motorControllerFW
 
     # Main classes
     common/base_classes/Sensor.cpp
-    common/base_classes/CurrentSense.cpp
-    common/base_classes/FOCMotor.cpp
-
-    # Current Sensor Drivers
-    current_sense/InlineCurrentSense.cpp
-    current_sense/rp2040_mcu.cpp
-
-    # PWM Drivers
-    drivers/StepperDriver4PWM.cpp
-    drivers/rp2040_mcu.cpp
 
     # Sensor Drivers
     sensors/MT6701_I2C.cpp
-
-    # FOC Controller
-    StepperMotor.cpp
-
-    # FOC Serial Command Interface
-    communication/Commander.cpp
-    )
-
-pico_set_program_name(motorControllerFW "motorControllerFW")
-pico_set_program_version(motorControllerFW "0.1")
-
-# Modify the below lines to enable/disable output over UART/USB
-pico_enable_stdio_uart(motorControllerFW 0)
-pico_enable_stdio_usb(motorControllerFW 1)
-
-# Add libraries to the build
-target_link_libraries(motorControllerFW
-    pico_stdlib
-    pico_multicore
-    hardware_i2c
-    hardware_adc
-    hardware_irq
-    hardware_pwm
-    hardware_dma
-    cmsis_core
-    )
-
-# Add the standard include files to the build
-target_include_directories(motorControllerFW PRIVATE
-    ${CMAKE_CURRENT_LIST_DIR}
 )
 
-pico_add_extra_outputs(motorControllerFW)
+pico_set_program_name(MotorControllerCustomFOC "MotorControllerCustomFOC")
+pico_set_program_version(MotorControllerCustomFOC "0.1")
+
+# Modify the below lines to enable/disable output over UART/USB
+pico_enable_stdio_uart(MotorControllerCustomFOC 0)
+pico_enable_stdio_usb(MotorControllerCustomFOC 1)
+
+# Add the standard library to the build
+target_link_libraries(MotorControllerCustomFOC
+        pico_stdlib)
+
+# Add the standard include files to the build
+target_include_directories(MotorControllerCustomFOC PRIVATE
+        ${CMAKE_CURRENT_LIST_DIR}
+)
+
+# Add any user requested libraries
+target_link_libraries(MotorControllerCustomFOC 
+        hardware_i2c
+        pico_multicore
+        hardware_adc
+        hardware_irq
+        hardware_pwm
+        hardware_dma
+        cmsis_core
+        )
+
+pico_add_extra_outputs(MotorControllerCustomFOC)
 
