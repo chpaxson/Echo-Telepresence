@@ -116,19 +116,19 @@ window.initWebSocket = initWebSocket;
 function onMessage(event) {
     const ID = event.data.split(',')[0].split(':')[1].trim();
     const data = event.data.split(',')[1].split(':')[1].trim();
-
+    console.log('Message received:', event.data);
     switch (ID) {
-        case '0x018':
-            robotStore.r1.realConfig.a1 = parseFloat(data) / 4.5;
+        case '0x18':
+            robotStore.r1.realConfig.a1 = parseFloat(data) / 4.5 + Math.PI * 0.75;
             break;
         case '0x118':
-            robotStore.r1.realConfig.a2 = parseFloat(data) / 4.5;
+            robotStore.r1.realConfig.a2 = parseFloat(data) / 4.5 - Math.PI / 2;
             break;
         case '0x218':
-            robotStore.r2.realConfig.a1 = parseFloat(data) / 4.5;
+            robotStore.r2.realConfig.a1 = parseFloat(data) / 4.5 + Math.PI;
             break;
         case '0x318':
-            robotStore.r2.realConfig.a2 = parseFloat(data) / 4.5;
+            robotStore.r2.realConfig.a2 = parseFloat(data) / 4.5 - Math.PI / 4;
             break;
     }
 }
@@ -159,7 +159,7 @@ watch(
             const r1ang = calc_ik(robotStore.r1.ee);
             const r2ang = calc_ik(robotStore.r2.ee);
             if (websocket && websocket.readyState === WebSocket.OPEN) {
-                websocket.send(r1ang.a1 + ',' + r1ang.a2 + ',' + r2ang.a1 + ',' + r2ang.a2);
+                websocket.send(r1ang.a1 * 4.5 + ',' + r1ang.a2 * 4.5 + ',' + r2ang.a1 * 4.5 + ',' + r2ang.a2 * 4.5);
                 // websocket.send(robotStore.r1.a1 + ',' + robotStore.r1.a2 + ',' + robotStore.r2.a1 + ',' + robotStore.r2.a2);
             }
             lastSentTime = performance.now();
