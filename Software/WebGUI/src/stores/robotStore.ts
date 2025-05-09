@@ -6,16 +6,20 @@ export const useRobotStore = defineStore('robot', {
     state: () => ({
         r1: {
             driver: 'GUI' as string,
+            homed: false as boolean,
             ee: { x: 0, y: 200 } as Point,
             realConfig: { a1: 0 as number, a2: 0 as number },
             v: { j1: 0 as number, j2: 0 as number },
             maxSpeed: 20 as number,
             input_voltage: 0 as number,
             m1: {
-                homed: false as boolean,
-                v_lim: 24 as number, // Voltage chopping limit
+                controller: 'Position' as string,
+                v_lim: 24 as number,
+                i_lim: 2 as number,
+                vel_lim: 10 as number,
                 R: 1.3 as number,
                 I: 29 as number, // mH
+                kV: 25 as number,
                 v_kP: 0.5 as number,
                 v_kI: 0.1 as number,
                 v_kD: 0.0 as number,
@@ -24,7 +28,7 @@ export const useRobotStore = defineStore('robot', {
                 a_kD: 0.0 as number
             },
             m2: {
-                homed: false as boolean,
+                controller: 'Position' as string,
                 v_lim: 24 as number, // Voltage chopping limit
                 R: 1.3 as number,
                 I: 29 as number, // mH
@@ -37,15 +41,15 @@ export const useRobotStore = defineStore('robot', {
             }
         },
         r2: {
-            driven: false as boolean,
             driver: 'GUI' as string,
+            homed: false as boolean,
             ee: { x: 0, y: 200 } as Point,
             realConfig: { a1: 0 as number, a2: 0 as number },
             v: { j1: 0 as number, j2: 0 as number },
             maxSpeed: 20 as number,
             input_voltage: 0 as number,
             m1: {
-                homed: false as boolean,
+                controller: 'Position' as string,
                 v_lim: 24 as number, // Voltage chopping limit
                 R: 1.3 as number,
                 I: 29 as number, // mH
@@ -57,7 +61,7 @@ export const useRobotStore = defineStore('robot', {
                 a_kD: 0.0 as number
             },
             m2: {
-                homed: false as boolean,
+                controller: 'Position' as string,
                 v_lim: 24 as number, // Voltage chopping limit
                 R: 1.3 as number,
                 I: 29 as number, // mH
@@ -73,7 +77,8 @@ export const useRobotStore = defineStore('robot', {
         enableLink: false,
         linkRatio: 0.5,
         primaryRobot: 'robot1',
-        boundaryMode: 'slide',
+
+        def_controller: 'Position' as string,
         def_v_lim: 24 as number,
         def_R: 1.3 as number,
         def_I: 29 as number,

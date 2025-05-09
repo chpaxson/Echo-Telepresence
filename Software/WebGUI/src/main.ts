@@ -86,7 +86,7 @@ app.mount('#app');
 const robotStore = useRobotStore();
 
 // Websocket connection and message handling
-var gateway = `ws://echo1.local/ws`;
+var gateway = `ws://echo.local/ws`;
 var websocket;
 window.addEventListener('load', onLoad);
 function initWebSocket() {
