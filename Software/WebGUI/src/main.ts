@@ -10,7 +10,7 @@ import ConfirmationService from 'primevue/confirmationservice';
 import ToastService from 'primevue/toastservice';
 
 import { useRobotStore } from '@/stores/robotStore';
-import { calc_fk, calc_ik } from '@/utils/kinematics';
+import { calc_ik } from '@/utils/kinematics';
 import { watch } from 'vue';
 
 import '@/assets/styles.scss';
@@ -114,32 +114,36 @@ declare global {
 }
 window.initWebSocket = initWebSocket;
 function onMessage(event) {
-    // console.log('Message received from server');
-    // console.log(event.data);
-
-    // If the message is a JSON string, parse it
-    try {
-        const data = JSON.parse(event.data);
-        // console.log('Parsed data:', data);
-        // If it has an r1 that has a1 and a2, set the robot store using calc_fk
-        if (data.r1 && data.r1.a1 !== undefined && data.r1.a2 !== undefined && robotStore.r1.driver === 'robot') {
-            robotStore.r1.ee = calc_fk({ a1: (data.r1.a1 * Math.PI) / 180, a2: (data.r1.a2 * Math.PI) / 180 });
-        } else if (data.r2 && data.r2.a1 !== undefined && data.r2.a2 !== undefined && robotStore.r2.driver === 'robot') {
-            robotStore.r2.ee = calc_fk({ a1: (data.r2.a1 * Math.PI) / 180, a2: (data.r2.a2 * Math.PI) / 180 });
-        }
-    } catch (error) {
-        console.error('Error parsing JSON:', error);
-    }
+    // Split the message by commas
+    const data = event.data.split(',');
+    const r1a1 = (parseInt(data[0]) / 4095.0) * 1.5 * Math.PI;
+    const r1a2 = (parseInt(data[1]) / 4095.0) * 1.5 * Math.PI - Math.PI / 2;
+    robotStore.r1.realConfig = { a1: r1a1, a2: r1a2 };
 }
 function onLoad() {
     initWebSocket();
 }
+
+// Watch robotStore.r1.ee and robotStore.r2.ee for changes and calculate ik
+let lastSentTime = 0;
 watch(
-    () => robotStore.r1.ee,
-    (newValue) => {
-        if (websocket && websocket.readyState === WebSocket.OPEN) {
-            websocket.send(JSON.stringify(calc_ik(newValue)));
+    () => [robotStore.r1.ee, robotStore.r2.ee],
+    ([r1, r2]) => {
+        if (lastSentTime + 20 < performance.now()) {
+            let r1angles, r2angles;
+            if (robotStore.r1.driver !== 'Robot Data') {
+                r1angles = calc_ik(r1);
+            }
+            if (robotStore.r2.driver !== 'Robot Data') {
+                r2angles = calc_ik(r2);
+            }
+
+            if (websocket && websocket.readyState === WebSocket.OPEN) {
+                // r1a1, r1a2, r2a1, r2a2
+                websocket.send(Math.floor(r1angles.a1 * 16384) + ',' + Math.floor(r1angles.a2 * 16384) + ',' + Math.floor(r2angles.a1 * 16384) + ',' + Math.floor(r2angles.a2 * 16384));
+            }
+            lastSentTime = performance.now();
         }
     },
-    { immediate: true, deep: true }
+    { deep: true }
 );

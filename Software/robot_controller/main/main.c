@@ -28,6 +28,7 @@
 #include "rest_server.h"
 #include "driver/adc.h"
 #include "esp_adc/adc_oneshot.h"
+#include "driver/twai.h"  // Include the TWAI (CAN) driver library
 
 // Store the WebSocket URI for sending
 #define WS_URI "/ws"
@@ -156,26 +157,39 @@ void sendJointAngles_ws_task(void *pvParameter)
         }
         int raw_a1 = read_adc_gpio7();
         int raw_a2 = read_adc_gpio5();
+        // raaw_a1,raw_a2
+        // Just send strings
+        char *msg = malloc(32);
+        if (msg) {
+            snprintf(msg, 32, "%d,%d", raw_a1, raw_a2);
+        } else {
+            ESP_LOGE(TAG, "Failed to allocate memory for message");
+            vTaskDelay(pdMS_TO_TICKS(40));
+            continue;
+        }
 
-        // Scale raw_a1 (0-4095) to 0-270
-        float a1 = (raw_a1 / 4095.0f) * 270.0f;
-        // Scale raw_a2 (0-4095) to -90 to 180
-        float a2 = (raw_a2 / 4095.0f) * 270.0f - 90.0f;
-
-        cJSON *root = cJSON_CreateObject();
-        cJSON *r1 = cJSON_CreateObject();
-        cJSON_AddNumberToObject(r1, "a1", a1);
-        cJSON_AddNumberToObject(r1, "a2", a2);
-        cJSON_AddItemToObject(root, "r1", r1);
-
-        char *msg = cJSON_PrintUnformatted(root);
         if (msg) {
             ws_broadcast_text(msg);
         }
-        cJSON_Delete(root);
         if (msg) free(msg);
 
         vTaskDelay(pdMS_TO_TICKS(40)); // 25 Hz
+    }
+}
+
+void twai_receive_task(void *pvParameter)
+{
+    twai_message_t rx_message;
+    while (1) {
+        if (twai_receive(&rx_message, pdMS_TO_TICKS(1000)) == ESP_OK) {
+            ESP_LOGI(TAG, "Message received");
+            ESP_LOGI(TAG, "ID: 0x%x, DLC: %d, Data:", (unsigned int)rx_message.identifier, rx_message.data_length_code);
+            for (int i = 0; i < rx_message.data_length_code; i++) {
+                ESP_LOGI(TAG, "Data[%d]: 0x%x", i, rx_message.data[i]);
+            }
+        } else {
+            ESP_LOGW(TAG, "No CAN message received in last second");
+        }
     }
 }
 
@@ -184,6 +198,42 @@ void app_main(void)
     configure_gpio();
     strcpy(host_name, gpio_get_level(GPIO_INPUT_PIN) == 0 ? "echo1" : "echo2");
     ESP_LOGI(TAG, "Host name: %s", host_name);
+
+
+    twai_general_config_t g_config = TWAI_GENERAL_CONFIG_DEFAULT(GPIO_NUM_41, GPIO_NUM_42, TWAI_MODE_NORMAL);
+    twai_timing_config_t t_config = TWAI_TIMING_CONFIG_125KBITS();
+    twai_filter_config_t f_config = TWAI_FILTER_CONFIG_ACCEPT_ALL();
+
+    if (twai_driver_install(&g_config, &t_config, &f_config) == ESP_OK) {
+        ESP_LOGI(TAG, "TWAI driver installed successfully");
+    } else {
+        ESP_LOGE(TAG, "Failed to install TWAI driver");
+        return; // Exit the function if driver installation fails
+    }
+
+    // Start the CAN driver
+    if (twai_start() == ESP_OK) {
+        ESP_LOGI(TAG, "TWAI driver started successfully");
+    } else {
+        ESP_LOGE(TAG, "Failed to start TWAI driver");
+        return; // Exit the function if driver start fails
+    }
+
+    // Start TWAI receive task
+    xTaskCreate(twai_receive_task, "twai_receive_task", 4096, NULL, 5, NULL);
+
+
+    // twai_message_t rx_message;  // Declare a message structure for receiving
+    // if (twai_receive(&rx_message, pdMS_TO_TICKS(1000)) == ESP_OK) {
+    //     ESP_LOGI(TAG, "Message received");
+    //     ESP_LOGI(TAG, "ID: 0x%x, DLC: %d, Data:", (unsigned int)rx_message.identifier, rx_message.data_length_code);
+    //     for (int i = 0; i < rx_message.data_length_code; i++) {
+    //         ESP_LOGI(TAG, "Data[%d]: 0x%x", i, rx_message.data[i]);
+    //     }
+    // } else {
+    //     ESP_LOGE(TAG, "Failed to receive message");
+    // }
+
 
     if (gpio_get_level(GPIO_INPUT_PIN) == 0) {
         ESP_ERROR_CHECK(nvs_flash_init());
@@ -209,4 +259,8 @@ void app_main(void)
         ESP_ERROR_CHECK(esp_event_loop_create_default());
         // setup_espnow_as_client();
     }
+
+    // twai_stop();                         
+    // twai_driver_uninstall();             
+    // ESP_LOGI(TAG, "TWAI driver uninstalled");
 }

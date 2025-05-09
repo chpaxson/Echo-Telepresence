@@ -6,11 +6,11 @@
     "interface/ftdi/esp32_devkitj_v1.cfg",
     "target/esp32s3.cfg"
   ],
-  "idf.portWin": "COM13",
+  "idf.portWin": "COM23",
   "idf.toolsPathWin": "C:\\Users\\chpax\\.espressif",
   "idf.customExtraVars": {
     "IDF_TARGET": "esp32s3"
   },
   "idf.flashType": "UART",
-  "idf.monitorPort": "COM13"
+  "idf.monitorPort": "COM23"
 }

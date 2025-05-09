@@ -97,6 +97,16 @@ const home = () => {
 
 const homed = computed(() => robotStore[props.r].m1.homed && robotStore[props.r].m2.homed);
 
+watch(
+    () => robotStore[props.r].ee,
+    () => {
+        const ik = calc_ik(robotStore[props.r].ee);
+        a1.value = (ik.a1 * 180) / Math.PI;
+        a2.value = (ik.a2 * 180) / Math.PI;
+    },
+    { immediate: true }
+);
+
 const rc = () => {
     robotStore[props.r].ee = projectToWorkspace(robotStore[props.r].ee);
     const ik = calc_ik(robotStore[props.r].ee);
@@ -123,10 +133,14 @@ const deltat = 0.1;
 // Use plain arrays for raw data storage
 const rawA1 = [];
 const rawA2 = [];
+const rawA1Real = []; // For real joint 1
+const rawA2Real = []; // For real joint 2
 const rawLabels = [];
 
 const dataA1 = ref([]); // For Chart binding
 const dataA2 = ref([]); // For Chart binding
+const dataA1Real = ref([]); // For Chart binding (real)
+const dataA2Real = ref([]); // For Chart binding (real)
 const labels = ref([]); // For Chart binding
 
 const lineDataA1 = ref(null);
@@ -141,7 +155,7 @@ const updateJointData = () => {
     }
     const t = performance.now() / 1000 - initialTime - maxT;
 
-    // Calculate joint angles from current end effector position
+    // Calculate joint angles from current end effector position (target)
     const ik = calc_ik(robotStore[props.r].ee);
     const angle1 = (ik.a1 * 180) / Math.PI;
     const angle2 = (ik.a2 * 180) / Math.PI;
@@ -149,14 +163,20 @@ const updateJointData = () => {
     if (rawA1.length > maxT / deltat) {
         rawA1.shift();
         rawA2.shift();
+        rawA1Real.shift();
+        rawA2Real.shift();
     } else {
         rawLabels.push(t);
     }
     rawA1.push(angle1);
     rawA2.push(angle2);
+    rawA1Real.push((robotStore[props.r].realConfig.a1 * 180) / Math.PI);
+    rawA2Real.push((robotStore[props.r].realConfig.a2 * 180) / Math.PI);
 
     dataA1.value = rawA1.slice();
     dataA2.value = rawA2.slice();
+    dataA1Real.value = rawA1Real.slice();
+    dataA2Real.value = rawA2Real.slice();
     labels.value = rawLabels.slice();
 
     lineDataA1.value = {
@@ -167,6 +187,15 @@ const updateJointData = () => {
                 data: dataA1.value,
                 fill: false,
                 borderColor: $dt('primary.500').value,
+                tension: 0.4,
+                pointRadius: 0
+            },
+            {
+                label: 'Actual',
+                data: dataA1Real.value,
+                fill: false,
+                borderColor: $dt('primary.200').value,
+                borderDash: [5, 5],
                 tension: 0.4,
                 pointRadius: 0
             }
@@ -180,6 +209,15 @@ const updateJointData = () => {
                 data: dataA2.value,
                 fill: false,
                 borderColor: $dt('primary.500').value,
+                tension: 0.4,
+                pointRadius: 0
+            },
+            {
+                label: 'Actual',
+                data: dataA2Real.value,
+                fill: false,
+                borderColor: $dt('primary.200').value,
+                borderDash: [5, 5],
                 tension: 0.4,
                 pointRadius: 0
             }
@@ -201,18 +239,25 @@ onMounted(() => {
     const ik = calc_ik(robotStore[props.r].ee);
     const angle1 = (ik.a1 * 180) / Math.PI;
     const angle2 = (ik.a2 * 180) / Math.PI;
+    const angle1Real = (robotStore[props.r].realConfig.a1 * 180) / Math.PI;
+    const angle2Real = (robotStore[props.r].realConfig.a2 * 180) / Math.PI;
 
-    // Fill arrays so the graph is full on load
     rawA1.length = 0;
     rawA2.length = 0;
+    rawA1Real.length = 0;
+    rawA2Real.length = 0;
     rawLabels.length = 0;
     for (let i = 0; i < maxT / deltat; i++) {
         rawA1.push(angle1);
         rawA2.push(angle2);
+        rawA1Real.push(angle1Real);
+        rawA2Real.push(angle2Real);
         rawLabels.push(i * deltat - maxT);
     }
     dataA1.value = rawA1.slice();
     dataA2.value = rawA2.slice();
+    dataA1Real.value = rawA1Real.slice();
+    dataA2Real.value = rawA2Real.slice();
     labels.value = rawLabels.slice();
 });
 
@@ -286,22 +331,13 @@ watch(
     { immediate: true }
 );
 
+const driveModeOptions = ['GUI', 'Robot Data', 'Linked', 'Path Planner'];
 const driveMode = ref();
 onMounted(() => {
-    switch (robotStore[props.r].driver) {
-        case 'gui':
-            driveMode.value = { label: 'GUI', value: 'gui' };
-            break;
-        case 'robot':
-            driveMode.value = { label: 'Robot Data', value: 'robot' };
-            break;
-        case 'path':
-            driveMode.value = { label: 'Path Planner', value: 'path' };
-            break;
-    }
+    driveMode.value = robotStore[props.r].driver;
 });
 const mc = () => {
-    robotStore[props.r].driver = driveMode.value.value;
+    robotStore[props.r].driver = driveMode.value;
 };
 </script>
 
@@ -311,17 +347,7 @@ const mc = () => {
             <div class="flex flex-row items-center justify-between">
                 <h1 class="select-none m-px">Robot {{ props.r === 'r1' ? '1' : '2' }}</h1>
                 <div class="flex flex-row gap-4 h-10">
-                    <Select
-                        v-model="driveMode"
-                        @change="mc"
-                        :options="[
-                            { label: 'GUI', value: 'gui' },
-                            { label: 'Robot Data', value: 'robot' },
-                            { label: 'Path Planner', value: 'path' }
-                        ]"
-                        optionLabel="label"
-                        placeholder="Drive Source"
-                    />
+                    <Select v-model="driveMode" @change="mc" :options="driveModeOptions" />
                     <SplitButton class="homeButton" icon="pi pi-home" :label="homed ? `Homed` : `Home`" :model="homeButtonOptions" :severity="homed ? `` : `danger`" @click="home"></SplitButton>
                 </div>
             </div>
@@ -330,29 +356,29 @@ const mc = () => {
                 <div class="text-xl">
                     <em>x</em>
                 </div>
-                <Slider class="w-full" v-model="robotStore[props.r].ee.x" @change="rc" :min="-300" :max="300" :step="0.1" :disabled="robotStore[props.r].driver !== 'gui'" />
-                <InputText class="w-24" v-model.number="robotStore[props.r].ee.x" :disabled="robotStore[props.r].driver !== 'gui'" />
+                <Slider class="w-full" v-model="robotStore[props.r].ee.x" @change="rc" :min="-300" :max="300" :step="0.1" :disabled="robotStore[props.r].driver !== 'GUI'" />
+                <InputText class="w-24" v-model.number="robotStore[props.r].ee.x" :disabled="robotStore[props.r].driver !== 'GUI'" />
             </div>
             <div class="flex flex-row gap-8 items-center">
                 <div class="text-xl">
                     <em>y</em>
                 </div>
-                <Slider class="w-full" v-model="robotStore[props.r].ee.y" @change="rc" :min="0" :max="350" :step="0.1" :disabled="robotStore[props.r].driver !== 'gui'" />
-                <InputText class="w-24" v-model.number="robotStore[props.r].ee.y" :disabled="robotStore[props.r].driver !== 'gui'" />
+                <Slider class="w-full" v-model="robotStore[props.r].ee.y" @change="rc" :min="0" :max="350" :step="0.1" :disabled="robotStore[props.r].driver !== 'GUI'" />
+                <InputText class="w-24" v-model.number="robotStore[props.r].ee.y" :disabled="robotStore[props.r].driver !== 'GUI'" />
             </div>
             <div class="flex flex-row gap-8 items-center">
                 <div class="text-xl">
                     <em>a<sub>1</sub></em>
                 </div>
-                <Slider class="w-full" v-model="a1" @change="rac" :min="0" :max="270" :step="0.1" :disabled="robotStore[props.r].driver !== 'gui'" />
-                <InputText class="w-24" v-model.number="a1" :disabled="robotStore[props.r].driver !== 'gui'" />
+                <Slider class="w-full" v-model="a1" @change="rac" :min="0" :max="270" :step="0.1" :disabled="robotStore[props.r].driver !== 'GUI'" />
+                <InputText class="w-24" v-model.number="a1" :disabled="robotStore[props.r].driver !== 'GUI'" />
             </div>
             <div class="flex flex-row gap-8 items-center">
                 <div class="text-xl">
                     <em>a<sub>2</sub></em>
                 </div>
-                <Slider class="w-full" v-model="a2" @change="rac" :min="-90" :max="180" :step="0.1" :disabled="robotStore[props.r].driver !== 'gui'" />
-                <InputText class="w-24" v-model.number="a2" :disabled="robotStore[props.r].driver !== 'gui'" />
+                <Slider class="w-full" v-model="a2" @change="rac" :min="-90" :max="180" :step="0.1" :disabled="robotStore[props.r].driver !== 'GUI'" />
+                <InputText class="w-24" v-model.number="a2" :disabled="robotStore[props.r].driver !== 'GUI'" />
             </div>
             <div class="flex flex-col gap-2 mt-4">
                 <div class="flex flex-row gap-8 items-center">

@@ -55,7 +55,7 @@ uint32_t receive_msg_id = 0x200; // ID for the message to be received
 // uint32_t transmit_msg_id = 0x200; // ID for the message to be transmitted
 // uint32_t receive_msg_id = 0x100; // ID for the message to be received
 
-int can_downsample = 10; // downsample the can bus to 1s
+int can_downsample = 1; // downsample the can bus to 1s
 
 // Sensor constants
 #define I2C_PORT i2c1
@@ -112,7 +112,7 @@ PIOx_IRQHandler(void)
 
 void canbus_setup(void)
 {
-    uint32_t sys_clock = 125000000, bitrate = 125000;
+    uint32_t sys_clock = 125000000, bitrate = 750000;
 
     // Setup canbus
     can2040_setup(&cbus, pio_num);
@@ -188,9 +188,17 @@ int main() {
     motor.controller = MotionControlType::torque;
 
     // default voltage_power_supply
+<<<<<<< Updated upstream
     motor.voltage_limit = 24; // Volts
     motor.phase_resistance = 1.85; // Ohm
     motor.current_limit = 2; // Amps
+=======
+    motor.voltage_limit = 9; // Volts
+    motor.phase_resistance = 1.3; // Ohm
+    motor.phase_inductance = 0.0029; // Henry
+    mmmotor.kV_rating = 0.1;
+    motor.current_limit = 4; // Amps
+>>>>>>> Stashed changes
     motor.voltage_sensor_align = 7; 
 
     motor.zero_electric_angle = 5.52; // Set the zero electric angle to 0
@@ -206,19 +214,28 @@ int main() {
     float angle;
     uint32_t raw_data;
 
-    float offset = 5.0f; // Offset for the target angle
-    float gain = 2.0f; // Gain for the error term
-    float error;
+    float offset = 3.0f; // Offset for the target angle
+    float gain = 3.0f; // Gain for the error term
+    float error, targetTorque;
 
     while (1) {
         // main FOC algorithm function
         motor.loopFOC();
 
         // Determine offset based on the direction of the difference
+<<<<<<< Updated upstream
         // error = received_angle - motor.shaft_angle;
 
         // motor.move( ((error > 0 ) ? offset : (-1 * offset)) + (gain * error)); // target torque
         motor.move(8);
+=======
+        error = received_angle - motor.shaft_angle;
+        targetTorque = ((error > 0 ) ? offset : (-1 * offset)) + (gain * error);
+        if (targetTorque < 7.0f && targetTorque > -7.0f) {
+            targetTorque = 0.0f; // Set to zero if within the deadband
+        }
+        motor.move(targetTorque); // target torque
+>>>>>>> Stashed changes
 
         // if(can_downsample_cnt == can_downsample) {
         //     // Send the sensor angle to core 1
@@ -230,10 +247,17 @@ int main() {
 
         //     can_downsample_cnt = 0; // Reset downsample counter
 
+<<<<<<< Updated upstream
         //     // printf("MyAngle:%f,RecievedAngle:%f,error:%f,applied_torque:%f\n", angle, received_angle, error, ((error > 0 ) ? offset : (-1 * offset)) + (gain * error));
         // }
         // can_downsample_cnt++;
         // sleep_ms(1); // Sleep for 1ms to avoid busy waiting
+=======
+            printf("MyAngle:%f,RecievedAngle:%f,error:%f,applied_torque:%f\n", angle, received_angle, error, ((error > 0 ) ? offset : (-1 * offset)) + (gain * error));
+        }
+        can_downsample_cnt++;
+        sleep_ms(1); // Sleep for 1ms to avoid busy waiting
+>>>>>>> Stashed changes
     }
 
    return 0;

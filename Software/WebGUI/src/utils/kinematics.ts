@@ -117,6 +117,11 @@ boundaryArcs[5].e = findCircleIntersection(boundaryArcs[6], boundaryArcs[1])[1];
 boundaryArcs[6].s = boundaryArcs[5].e;
 boundaryArcs[6].e = boundaryArcs[0].s;
 
+export const centroid = {
+    x: 0,
+    y: (boundaryArcs[0].s.y + boundaryArcs[4].c.y - boundaryArcs[4].r) / 2
+};
+
 export function calc_fk(angles: Config): Point {
     const e1: Point = addPoints(b1, polar(angles.a1, armLen.u));
     const e2: Point = addPoints(b2, polar(angles.a2, armLen.u));
@@ -142,7 +147,7 @@ export function calc_ik(e: Point): { a1: number; a2: number } {
     const a2 = b2angle - Math.acos(-(armLen.l ** 2 - armLen.u ** 2 - b2dist ** 2) / (2 * armLen.u * b2dist));
 
     if (Number.isNaN(a1) || Number.isNaN(a2)) {
-        return calc_ik(scalePoint(e, 0.999));
+        return calc_ik(scalePoint(e, 0.99));
     }
 
     return { a1: a1, a2: a2 };

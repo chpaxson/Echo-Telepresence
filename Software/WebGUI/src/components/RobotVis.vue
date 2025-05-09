@@ -83,7 +83,7 @@ function onDragStart(event: MouseEvent) {
     window.addEventListener('mouseup', onDragEnd);
 }
 function onDragMove(event: MouseEvent) {
-    if (robotStore[props.r].driver === 'gui') {
+    if (robotStore[props.r].driver === 'GUI') {
         const newPos = { x: (event.clientX + dragOffset.x) / scale, y: (event.clientY + dragOffset.y) / scale };
         robotStore[props.r].ee = validConfiguration(shift(newPos), props.r) ? newPos : projectToWorkspace(newPos);
     }
@@ -101,7 +101,7 @@ function onTouchStart(event: TouchEvent) {
 }
 function onTouchMove(event: TouchEvent) {
     event.preventDefault();
-    if (robotStore[props.r].driver === 'gui') {
+    if (robotStore[props.r].driver === 'GUI') {
         const newPos = { x: (event.touches[0].clientX + dragOffset.x) / scale, y: (event.touches[0].clientY + dragOffset.y) / scale };
         robotStore[props.r].ee = validConfiguration(shift(newPos), props.r) ? newPos : projectToWorkspace(newPos);
     }
