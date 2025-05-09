@@ -248,7 +248,7 @@ int StepperMotor::alignSensor() {
     zero_electric_angle = electricalAngle();
     sleep_ms(20);
     // if(monitor_port){
-      printf("MOT: Zero elec. angle: %.2f ", zero_electric_angle);
+      printf("MOT: Zero elec. angle: %.2f \n", zero_electric_angle);
     // }
     // stop everything
     setPhaseVoltage(0, 0, 0);
@@ -261,7 +261,7 @@ int StepperMotor::alignSensor() {
 // - to the index
 int StepperMotor::absoluteZeroSearch() {
 
-//   SIMPLEFOC_DEBUG("MOT: Index search...");
+  puts("MOT: Index search...");
   // search the absolute zero with small velocity
   float limit_vel = velocity_limit;
   float limit_volt = voltage_limit;
@@ -336,8 +336,8 @@ void StepperMotor::loopFOC() {
       // if(_isset(phase_inductance)) voltage.d = _constrain( voltage.d - current_sp*shaft_velocity*pole_pairs*phase_inductance, -voltage_limit, voltage_limit);
       break;
     default:
-      // no torque control selected
-    //   SIMPLEFOC_DEBUG("MOT: no torque control selected!");
+      // no torque control selected    
+      //puts("MOT: no torque control selected!");
       break;
   }
   // set the phase voltage - FOC heart function :)

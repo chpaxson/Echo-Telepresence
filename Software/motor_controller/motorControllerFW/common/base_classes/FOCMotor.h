@@ -31,7 +31,7 @@ enum MotionControlType : uint8_t {
 };
 
 /**
- *  Motiron control type
+ *  Motion control type
  */
 enum TorqueControlType : uint8_t { 
   voltage            = 0x00,     //!< Torque control using voltage

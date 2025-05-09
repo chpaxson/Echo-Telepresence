@@ -47,6 +47,16 @@ uint8_t pio_num = 0;
 uint8_t gpio_rx = 1, gpio_tx = 0;
 struct can2040 cbus;
 
+// LEFT MOTOR
+uint32_t transmit_msg_id = 0x100; // ID for the message to be transmitted
+uint32_t receive_msg_id = 0x200; // ID for the message to be received
+
+// RIGHT MOTOR
+// uint32_t transmit_msg_id = 0x200; // ID for the message to be transmitted
+// uint32_t receive_msg_id = 0x100; // ID for the message to be received
+
+int can_downsample = 10; // downsample the can bus to 1s
+
 // Sensor constants
 #define I2C_PORT i2c1
 const uint8_t I2C_SDA_PIN = 2;
@@ -58,6 +68,9 @@ InlineCurrentSense current_sense = InlineCurrentSense(.523, ADC_CURRENT_A_PIN, A
 // Comamander instance
 Commander command = Commander();
 
+//
+float received_angle;
+
 /*******************************************************************************
 * Main
 */
@@ -65,16 +78,24 @@ Commander command = Commander();
 static void can2040_cb(struct can2040 *cd, uint32_t notify, struct can2040_msg *msg) {
     if (notify & CAN2040_NOTIFY_RX) {
         // A message was received
-        printf("Received CAN msg ID=0x%03X LEN=%d: ", msg->id, msg->dlc);
-        for (int i = 0; i < msg->dlc; i++) {
-            printf("%02X ", msg->data[i]);
+        // printf("Received CAN msg ID=0x%03X LEN=%d: ", msg->id, msg->dlc);
+        // for (int i = 0; i < msg->dlc; i++) {
+        //     printf("%u ", msg->data[i]);
+        // }
+        // printf("\n");
+
+        // // Example: Process received data
+        if (msg->id == receive_msg_id && msg->dlc == 4) { // Check message ID and data length
+            memcpy(&received_angle, msg->data, sizeof(float)); // Copy the bytes into a float
+            // printf("Received angle: %f\n", received_angle); // Print the received angle
         }
-        printf("\n");
     }
+
+
 
     if (notify & CAN2040_NOTIFY_TX) {
         // A message was successfully transmitted
-        printf("Message transmitted successfully.\n");
+        //printf("Message transmitted successfully.\n");
     }
 
     if (notify & CAN2040_NOTIFY_ERROR) {
@@ -104,6 +125,7 @@ void canbus_setup(void)
 
     // Start canbus
     can2040_start(&cbus, sys_clock, bitrate, gpio_rx, gpio_tx);
+    printf("CAN bus initialized.\n");
 }
 
 void adc_setup(void) {
@@ -116,21 +138,29 @@ void adc_setup(void) {
 }
 
 void core1_main() {
-
+    canbus_setup();
     printf("Entered core0 (core=%d)\n", get_core_num());
     
     // Send a CAN message
     struct can2040_msg tx_msg = {
-        .id = 0x123,
-        .dlc = 2,
-        .data = {0xAB, 0xCD}
+        .id = transmit_msg_id,
+        .dlc = sizeof(float),
     };
-    
-    while (1) {
-        //Can transmit  
-        can2040_transmit(&cbus, &tx_msg);
-        printf("Message sent\n");
 
+    uint32_t raw_data; // Initialize raw_data
+    float angle; // Initialize angle
+    while (1) {
+        raw_data = multicore_fifo_pop_blocking(); // Receive raw 32-bit data
+
+        memcpy(&angle, &raw_data, sizeof(float)); // Copy the raw data back into a float
+        memcpy(tx_msg.data, &angle, sizeof(float)); // Copy the angle to the CAN message data
+
+        int result = can2040_transmit(&cbus, &tx_msg);
+        if (result == 0) {
+            // printf("Message queued for transmission.\n");
+        } else {
+            printf("Failed to queue message for transmission. Error: %d\n", result);
+        }
     }
 
 }
@@ -141,85 +171,66 @@ int main() {
 
     printf("Start... \n");
 
-    // printf("Entered core0 (core=%d)\n", get_core_num());
-    // multicore_launch_core1(core1_main);
+    printf("Entered core0 (core=%d)\n", get_core_num());
+    multicore_launch_core1(core1_main);
 
     sensor.init(I2C_PORT, I2C_SCL_PIN, I2C_SDA_PIN); // Initialize the MT6701_I2C instance   
     // link the motor to the sensor
     motor.linkSensor(&sensor);
 
-    driver.voltage_power_supply = 12;
+    driver.voltage_power_supply = 12; // set the power supply voltage for the driver
     // driver config
     driver.init();
-    current_sense.linkDriver(&driver);
     motor.linkDriver(&driver);
 
-    current_sense.init();
-    motor.linkCurrentSense(&current_sense);
-
-    //current_sense.skip_align = true;
     // set motion control loop to be used
     motor.torque_controller = TorqueControlType::voltage;
-    motor.controller = MotionControlType::angle;
+    motor.controller = MotionControlType::torque;
 
-    // controller configuration 
-    // default parameters in defaults.h
-
-    // controller configuration based on the control type 
-    // velocity PID controller parameters
-    //default P=0.5 I = 10 D =0
-    motor.PID_velocity.P = 0.2;
-    motor.PID_velocity.I = 20;
-    motor.PID_velocity.D = 0.001;
-    // // jerk control using voltage voltage ramp
-    // // default value is 300 volts per sec  ~ 0.3V per millisecond
-    motor.PID_velocity.output_ramp = 1000;
-
-    // // velocity low pass filtering
-    // // default 5ms - try different values to see what is the best. 
-    // // the lower the less filtered
-    motor.LPF_velocity.Tf = 0.01;
-
-    // angle P controller -  default P=20
-    motor.P_angle.P = 20;
-
-    //  maximal velocity of the position control
-    // default 20
-    motor.velocity_limit = 4;
     // default voltage_power_supply
-    motor.voltage_limit = 10;
-
-    // since the phase resistance is provided we set the current limit not voltage
-    // default 0.2
-    //motor.phase_resistance = 1.5; // Ohm
-    motor.current_limit = 1.5; // Amps
-   // motor.velocity_limit = 1; // rad/s
-    //motor.voltage_limit = 10; // Volts
+    motor.voltage_limit = 7; // Volts
+    motor.phase_resistance = 1.3; // Ohm
+    motor.current_limit = 4; // Amps
     motor.voltage_sensor_align = 7; 
-
-    //motor.target = 6.4; // target voltage
-
 
     // initialize motor
     motor.init();
     // align sensor and start FOC
     motor.initFOC();
 
-    float target = 3;
+    //motor.motion_downsample = 100; // downsample the motion control loop to 15ms
     
+    int can_downsample_cnt = 0;
+    float angle;
+    uint32_t raw_data;
+
+    float offset = 5.0f; // Offset for the target angle
+    float gain = 2.0f; // Gain for the error term
+    float error;
+
     while (1) {
         // main FOC algorithm function
-    //    sensor.update(); // update the sensor values
+        motor.loopFOC();
 
-        // Motion control function
-        uint64_t t0 = time_us_64();
-        while (time_us_64() - t0 < 9 * 1e6) {
-            motor.loopFOC();
-            motor.move(target); // target angle
+        // Determine offset based on the direction of the difference
+        error = received_angle - motor.shaft_angle;
+
+        motor.move( ((error > 0 ) ? offset : (-1 * offset)) + (gain * error)); // target torque
+
+        if(can_downsample_cnt == can_downsample) {
+            // Send the sensor angle to core 1
+            // Convert the angle to a 32-bit integer representation
+
+            angle = motor.shaft_angle;
+            memcpy(&raw_data, &angle, sizeof(float)); // Convert float to uint32_t
+            multicore_fifo_push_blocking(raw_data); // Send the data to core 1
+
+            can_downsample_cnt = 0; // Reset downsample counter
+
+            // printf("MyAngle:%f,RecievedAngle:%f,error:%f,applied_torque:%f\n", angle, received_angle, error, ((error > 0 ) ? offset : (-1 * offset)) + (gain * error));
         }
-
-        printf("Angle: %f | target: %f | error: %f \n", motor.shaftAngle(), target, motor.shaftAngle() - target);
-        target += 1.5;
+        can_downsample_cnt++;
+        sleep_ms(1); // Sleep for 1ms to avoid busy waiting
     }
 
    return 0;
