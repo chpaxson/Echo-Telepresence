@@ -20,6 +20,7 @@
 #include "driver/twai.h"
 #include "freertos/queue.h"
 extern QueueHandle_t ws_to_can_queue;
+static const char *REST_TAG = "esp-rest";
 
 // Helper: pack 32 bits (4 bytes) into CAN frame
 static void pack_32bits(uint8_t *dest, const void *src) {
@@ -27,8 +28,8 @@ static void pack_32bits(uint8_t *dest, const void *src) {
 }
 
 // Helper: pack sense_dir (1 bit, LSB) and controller (8 bits, bits 1-8) into 1st byte and 2nd byte
-static void pack_sense_dir_controller(uint8_t *dest, bool sense_dir, int controller) {
-    dest[0] = (sense_dir ? 0x01 : 0x00);
+static void pack_sense_dir_controller(uint8_t *dest, uint8_t sense_dir, int controller) {
+    dest[0] = sense_dir; // Use all 8 bits for sense_dir
     dest[1] = (uint8_t)(controller & 0xFF);
     dest[2] = 0;
     dest[3] = 0;
@@ -52,25 +53,6 @@ enum {
     PARAM_CONTROLLER_SENSEDIR // Special: controller (int, 4 bytes) + sense_dir (1 bit in byte 0)
 };
 
-static void send_motor_param_float(uint32_t can_id, uint8_t param_id, float value) {
-    twai_message_t msg = {0};
-    msg.identifier = can_id;
-    msg.data_length_code = 5;
-    msg.data[0] = param_id;
-    memcpy(&msg.data[1], &value, sizeof(float));
-    xQueueSend(ws_to_can_queue, &msg, 0);
-}
-
-static void send_motor_param_controller(uint32_t can_id, int controller, bool sense_dir) {
-    twai_message_t msg = {0};
-    msg.identifier = can_id;
-    msg.data_length_code = 5;
-    // Use lower 7 bits for controller, highest bit for sense_dir
-    msg.data[0] = (uint8_t)((controller & 0x7F) | (sense_dir ? 0x80 : 0x00));
-    memcpy(&msg.data[1], &controller, sizeof(int));
-    xQueueSend(ws_to_can_queue, &msg, 0);
-}
-
 // Main function to send all fields
 void send_motor_params_over_can(uint8_t motor_index, const MotorParams *params) {
     twai_message_t msg = {0};
@@ -89,11 +71,12 @@ void send_motor_params_over_can(uint8_t motor_index, const MotorParams *params) 
         pack_32bits(msg.data, float_params[i]);
         xQueueSend(ws_to_can_queue, &msg, 0);
     }
-    // sense_dir + controller (packed into 2 bytes, rest zero)
+    // sense_dir (8 bits) + controller (8 bits), rest zero
     msg.identifier = (motor_index << 8) | 13;
     msg.data_length_code = 4;
     pack_sense_dir_controller(msg.data, params->sense_dir, params->controller);
     xQueueSend(ws_to_can_queue, &msg, 0);
+    ESP_LOGI(REST_TAG, "Sent motor params over CAN for motor %d", motor_index);
 }
 
 #define MAX_WS_CLIENTS 4
@@ -104,8 +87,6 @@ static portMUX_TYPE ws_clients_mux = portMUX_INITIALIZER_UNLOCKED;
 struct ws_async_arg {
     char *msg;
 };
-
-static const char *REST_TAG = "esp-rest";
 #define REST_CHECK(a, str, goto_tag, ...)                                              \
     do                                                                                 \
     {                                                                                  \
@@ -195,21 +176,8 @@ static esp_err_t rest_common_get_handler(httpd_req_t *req)
 
 
 
-static esp_err_t r1m1_params_get_handler(httpd_req_t *req) {
-    httpd_resp_set_type(req, "text/plain");
-    char buf[256];
-    snprintf(buf, sizeof(buf),
-        "%f,%f,%f,%f,%f,%f,%d,%f,%f,%f,%f,%f,%f,%f,%d",
-        r1m1_params.R, r1m1_params.L, r1m1_params.kV, r1m1_params.v_lim, r1m1_params.I_lim, r1m1_params.vel_lim,
-        r1m1_params.sense_dir ? 1 : 0, r1m1_params.zea,
-        r1m1_params.vel_pid[0], r1m1_params.vel_pid[1], r1m1_params.vel_pid[2],
-        r1m1_params.pos_pid[0], r1m1_params.pos_pid[1], r1m1_params.pos_pid[2],
-        r1m1_params.controller
-    );
-    httpd_resp_sendstr(req, buf);
-    return ESP_OK;
-}
 static esp_err_t r1m1_params_post_handler(httpd_req_t *req) {
+    httpd_resp_set_hdr(req, "Access-Control-Allow-Origin", "*");
     // Expected order: R,L,kV,v_lim,I_lim,vel_lim,sense_dir,zea,vel_kp,vel_ki,vel_kd,pos_kp,pos_ki,pos_kd,controller
     char buf[512];
     int total_len = req->content_len;
@@ -227,9 +195,12 @@ static esp_err_t r1m1_params_post_handler(httpd_req_t *req) {
     float vals[14];
     int controller = 0;
     int sense_dir = 0;
+    ESP_LOGI(REST_TAG, "Received: %s", buf);
     int parsed = sscanf(buf, "%f,%f,%f,%f,%f,%f,%d,%f,%f,%f,%f,%f,%f,%f,%d",
         &vals[0], &vals[1], &vals[2], &vals[3], &vals[4], &vals[5], &sense_dir, &vals[6],
         &vals[7], &vals[8], &vals[9], &vals[10], &vals[11], &vals[12], &controller);
+
+    ESP_LOGI(REST_TAG, "Parsed: %d", parsed);
 
     if (parsed < 15) {
         httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "Invalid parameter count");
@@ -242,7 +213,7 @@ static esp_err_t r1m1_params_post_handler(httpd_req_t *req) {
     r1m1_params.v_lim = vals[3];
     r1m1_params.I_lim = vals[4];
     r1m1_params.vel_lim = vals[5];
-    r1m1_params.sense_dir = sense_dir ? true : false;
+    r1m1_params.sense_dir = (uint8_t)sense_dir; // Now 8-bit integer
     r1m1_params.zea = vals[6];
     r1m1_params.vel_pid[0] = vals[7];
     r1m1_params.vel_pid[1] = vals[8];
@@ -258,22 +229,8 @@ static esp_err_t r1m1_params_post_handler(httpd_req_t *req) {
     return ESP_OK;
 }
 
-static esp_err_t r1m2_params_get_handler(httpd_req_t *req) {
-    httpd_resp_set_type(req, "text/plain");
-    char buf[256];
-    snprintf(buf, sizeof(buf),
-        "%f,%f,%f,%f,%f,%f,%d,%f,%f,%f,%f,%f,%f,%f,%d",
-        r1m2_params.R, r1m2_params.L, r1m2_params.kV, r1m2_params.v_lim, r1m2_params.I_lim, r1m2_params.vel_lim,
-        r1m2_params.sense_dir ? 1 : 0, r1m2_params.zea,
-        r1m2_params.vel_pid[0], r1m2_params.vel_pid[1], r1m2_params.vel_pid[2],
-        r1m2_params.pos_pid[0], r1m2_params.pos_pid[1], r1m2_params.pos_pid[2],
-        r1m2_params.controller
-    );
-    httpd_resp_sendstr(req, buf);
-    return ESP_OK;
-}
-
 static esp_err_t r1m2_params_post_handler(httpd_req_t *req) {
+    httpd_resp_set_hdr(req, "Access-Control-Allow-Origin", "*");
     char buf[256];
     int total_len = req->content_len;
     if (total_len >= sizeof(buf)) {
@@ -290,9 +247,12 @@ static esp_err_t r1m2_params_post_handler(httpd_req_t *req) {
     float vals[14];
     int controller = 0;
     int sense_dir = 0;
+    ESP_LOGI(REST_TAG, "Received: %s", buf);
     int parsed = sscanf(buf, "%f,%f,%f,%f,%f,%f,%d,%f,%f,%f,%f,%f,%f,%f,%d",
         &vals[0], &vals[1], &vals[2], &vals[3], &vals[4], &vals[5], &sense_dir, &vals[6],
         &vals[7], &vals[8], &vals[9], &vals[10], &vals[11], &vals[12], &controller);
+
+    ESP_LOGI(REST_TAG, "Parsed: %d", parsed);
 
     if (parsed < 15) {
         httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "Invalid parameter count");
@@ -305,7 +265,7 @@ static esp_err_t r1m2_params_post_handler(httpd_req_t *req) {
     r1m2_params.v_lim = vals[3];
     r1m2_params.I_lim = vals[4];
     r1m2_params.vel_lim = vals[5];
-    r1m2_params.sense_dir = sense_dir ? true : false;
+    r1m2_params.sense_dir = (uint8_t)sense_dir; // Now 8-bit integer
     r1m2_params.zea = vals[6];
     r1m2_params.vel_pid[0] = vals[7];
     r1m2_params.vel_pid[1] = vals[8];
@@ -321,22 +281,8 @@ static esp_err_t r1m2_params_post_handler(httpd_req_t *req) {
     return ESP_OK;
 }
 
-static esp_err_t r2m1_params_get_handler(httpd_req_t *req) {
-    httpd_resp_set_type(req, "text/plain");
-    char buf[256];
-    snprintf(buf, sizeof(buf),
-        "%f,%f,%f,%f,%f,%f,%d,%f,%f,%f,%f,%f,%f,%f,%d",
-        r2m1_params.R, r2m1_params.L, r2m1_params.kV, r2m1_params.v_lim, r2m1_params.I_lim, r2m1_params.vel_lim,
-        r2m1_params.sense_dir ? 1 : 0, r2m1_params.zea,
-        r2m1_params.vel_pid[0], r2m1_params.vel_pid[1], r2m1_params.vel_pid[2],
-        r2m1_params.pos_pid[0], r2m1_params.pos_pid[1], r2m1_params.pos_pid[2],
-        r2m1_params.controller
-    );
-    httpd_resp_sendstr(req, buf);
-    return ESP_OK;
-}
-
 static esp_err_t r2m1_params_post_handler(httpd_req_t *req) {
+    httpd_resp_set_hdr(req, "Access-Control-Allow-Origin", "*");
     char buf[256];
     int total_len = req->content_len;
     if (total_len >= sizeof(buf)) {
@@ -353,9 +299,12 @@ static esp_err_t r2m1_params_post_handler(httpd_req_t *req) {
     float vals[14];
     int controller = 0;
     int sense_dir = 0;
+    ESP_LOGI(REST_TAG, "Received: %s", buf);
     int parsed = sscanf(buf, "%f,%f,%f,%f,%f,%f,%d,%f,%f,%f,%f,%f,%f,%f,%d",
         &vals[0], &vals[1], &vals[2], &vals[3], &vals[4], &vals[5], &sense_dir, &vals[6],
         &vals[7], &vals[8], &vals[9], &vals[10], &vals[11], &vals[12], &controller);
+
+    ESP_LOGI(REST_TAG, "Parsed: %d", parsed);
 
     if (parsed < 15) {
         httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "Invalid parameter count");
@@ -368,7 +317,7 @@ static esp_err_t r2m1_params_post_handler(httpd_req_t *req) {
     r2m1_params.v_lim = vals[3];
     r2m1_params.I_lim = vals[4];
     r2m1_params.vel_lim = vals[5];
-    r2m1_params.sense_dir = sense_dir ? true : false;
+    r2m1_params.sense_dir = (uint8_t)sense_dir; // Now 8-bit integer
     r2m1_params.zea = vals[6];
     r2m1_params.vel_pid[0] = vals[7];
     r2m1_params.vel_pid[1] = vals[8];
@@ -384,22 +333,8 @@ static esp_err_t r2m1_params_post_handler(httpd_req_t *req) {
     return ESP_OK;
 }
 
-static esp_err_t r2m2_params_get_handler(httpd_req_t *req) {
-    httpd_resp_set_type(req, "text/plain");
-    char buf[256];
-    snprintf(buf, sizeof(buf),
-        "%f,%f,%f,%f,%f,%f,%d,%f,%f,%f,%f,%f,%f,%f,%d",
-        r2m2_params.R, r2m2_params.L, r2m2_params.kV, r2m2_params.v_lim, r2m2_params.I_lim, r2m2_params.vel_lim,
-        r2m2_params.sense_dir ? 1 : 0, r2m2_params.zea,
-        r2m2_params.vel_pid[0], r2m2_params.vel_pid[1], r2m2_params.vel_pid[2],
-        r2m2_params.pos_pid[0], r2m2_params.pos_pid[1], r2m2_params.pos_pid[2],
-        r2m2_params.controller
-    );
-    httpd_resp_sendstr(req, buf);
-    return ESP_OK;
-}
-
 static esp_err_t r2m2_params_post_handler(httpd_req_t *req) {
+    httpd_resp_set_hdr(req, "Access-Control-Allow-Origin", "*");
     char buf[256];
     int total_len = req->content_len;
     if (total_len >= sizeof(buf)) {
@@ -416,9 +351,12 @@ static esp_err_t r2m2_params_post_handler(httpd_req_t *req) {
     float vals[14];
     int controller = 0;
     int sense_dir = 0;
+    ESP_LOGI(REST_TAG, "Received: %s", buf);
     int parsed = sscanf(buf, "%f,%f,%f,%f,%f,%f,%d,%f,%f,%f,%f,%f,%f,%f,%d",
         &vals[0], &vals[1], &vals[2], &vals[3], &vals[4], &vals[5], &sense_dir, &vals[6],
         &vals[7], &vals[8], &vals[9], &vals[10], &vals[11], &vals[12], &controller);
+
+    ESP_LOGI(REST_TAG, "Parsed: %d", parsed);
 
     if (parsed < 15) {
         httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "Invalid parameter count");
@@ -431,7 +369,7 @@ static esp_err_t r2m2_params_post_handler(httpd_req_t *req) {
     r2m2_params.v_lim = vals[3];
     r2m2_params.I_lim = vals[4];
     r2m2_params.vel_lim = vals[5];
-    r2m2_params.sense_dir = sense_dir ? true : false;
+    r2m2_params.sense_dir = (uint8_t)sense_dir; // Now 8-bit integer
     r2m2_params.zea = vals[6];
     r2m2_params.vel_pid[0] = vals[7];
     r2m2_params.vel_pid[1] = vals[8];
@@ -449,6 +387,7 @@ static esp_err_t r2m2_params_post_handler(httpd_req_t *req) {
 
 static esp_err_t home_post_handler(httpd_req_t *req)
 {
+    httpd_resp_set_hdr(req, "Access-Control-Allow-Origin", "*");
     // Sends as plain text {robot} where robot is 1 or 2
     char buf[256];
     int total_len = req->content_len;
@@ -465,7 +404,7 @@ static esp_err_t home_post_handler(httpd_req_t *req)
     
     int robot = 0;
     int parsed = sscanf(buf, "%d", &robot);
-    if (parsed < 2) {
+    if (parsed < 1) {
         httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "Invalid parameter count");
         return ESP_FAIL;
     }
@@ -485,6 +424,7 @@ static esp_err_t home_post_handler(httpd_req_t *req)
 
 static esp_err_t ws_handler(httpd_req_t *req)
 {
+    httpd_resp_set_hdr(req, "Access-Control-Allow-Origin", "*");
     if (req->method == HTTP_GET) {
         int sockfd = httpd_req_to_sockfd(req);
         portENTER_CRITICAL(&ws_clients_mux);
@@ -522,23 +462,22 @@ static esp_err_t ws_handler(httpd_req_t *req)
 
     ESP_LOGI("ws", "Received: %s", (char*)ws_pkt.payload);
 
-    // Parse and forward to CAN if possible
-    twai_message_t tx_msg = {0};
-    char *saveptr;
-    char *token = strtok_r((char*)ws_pkt.payload, ",", &saveptr);
-    if (token) {
-        tx_msg.identifier = (uint32_t)strtol(token, NULL, 0);
-        tx_msg.extd = 0; // Standard frame, change if needed
-        tx_msg.rtr = 0;
-        tx_msg.ss = 1;
-        int i = 0;
-        while ((token = strtok_r(NULL, ",", &saveptr)) && i < 8) {
-            tx_msg.data[i++] = (uint8_t)strtol(token, NULL, 16);
+    // Parse 4 comma-separated floats and send each as a CAN message
+    float vals[4];
+    int parsed = sscanf((char*)ws_pkt.payload, "%f,%f,%f,%f", &vals[0], &vals[1], &vals[2], &vals[3]);
+    if (parsed == 4) {
+        uint32_t ids[4] = {0x014, 0x114, 0x214, 0x314};
+        for (int i = 0; i < 4; ++i) {
+            twai_message_t msg = {0};
+            msg.identifier = ids[i];
+            msg.data_length_code = 4;
+            memcpy(msg.data, &vals[i], sizeof(float));
+            if (ws_to_can_queue) {
+                xQueueSend(ws_to_can_queue, &msg, 0);
+            }
         }
-        tx_msg.data_length_code = i;
-        if (ws_to_can_queue) {
-            xQueueSend(ws_to_can_queue, &tx_msg, 0);
-        }
+    } else {
+        ESP_LOGE("ws", "Invalid float count in WebSocket payload");
     }
 
     free(ws_pkt.payload);
@@ -612,14 +551,6 @@ esp_err_t start_rest_server(const char *base_path)
     global_httpd_server = server;
 
     // Register r1m1 handlers
-    httpd_uri_t r1m1_get_uri = {
-        .uri = "/api/v1/r1m1_params",
-        .method = HTTP_GET,
-        .handler = r1m1_params_get_handler,
-        .user_ctx = rest_context
-    };
-    httpd_register_uri_handler(server, &r1m1_get_uri);
-
     httpd_uri_t r1m1_post_uri = {
         .uri = "/api/v1/r1m1_params",
         .method = HTTP_POST,
@@ -629,14 +560,6 @@ esp_err_t start_rest_server(const char *base_path)
     httpd_register_uri_handler(server, &r1m1_post_uri);
 
     // Register r1m2 handlers
-    httpd_uri_t r1m2_get_uri = {
-        .uri = "/api/v1/r1m2_params",
-        .method = HTTP_GET,
-        .handler = r1m2_params_get_handler,
-        .user_ctx = rest_context
-    };
-    httpd_register_uri_handler(server, &r1m2_get_uri);
-
     httpd_uri_t r1m2_post_uri = {
         .uri = "/api/v1/r1m2_params",
         .method = HTTP_POST,
@@ -646,14 +569,6 @@ esp_err_t start_rest_server(const char *base_path)
     httpd_register_uri_handler(server, &r1m2_post_uri);
 
     // Register r2m1 handlers
-    httpd_uri_t r2m1_get_uri = {
-        .uri = "/api/v1/r2m1_params",
-        .method = HTTP_GET,
-        .handler = r2m1_params_get_handler,
-        .user_ctx = rest_context
-    };
-    httpd_register_uri_handler(server, &r2m1_get_uri);
-
     httpd_uri_t r2m1_post_uri = {
         .uri = "/api/v1/r2m1_params",
         .method = HTTP_POST,
@@ -663,14 +578,6 @@ esp_err_t start_rest_server(const char *base_path)
     httpd_register_uri_handler(server, &r2m1_post_uri);
 
     // Register r2m2 handlers
-    httpd_uri_t r2m2_get_uri = {
-        .uri = "/api/v1/r2m2_params",
-        .method = HTTP_GET,
-        .handler = r2m2_params_get_handler,
-        .user_ctx = rest_context
-    };
-    httpd_register_uri_handler(server, &r2m2_get_uri);
-
     httpd_uri_t r2m2_post_uri = {
         .uri = "/api/v1/r2m2_params",
         .method = HTTP_POST,
@@ -678,6 +585,15 @@ esp_err_t start_rest_server(const char *base_path)
         .user_ctx = rest_context
     };
     httpd_register_uri_handler(server, &r2m2_post_uri);
+
+    // Register home handler
+    httpd_uri_t home_post_uri = {
+        .uri = "/api/v1/home",
+        .method = HTTP_POST,
+        .handler = home_post_handler,
+        .user_ctx = rest_context
+    };
+    httpd_register_uri_handler(server, &home_post_uri);
 
     // Register the WebSocket handler BEFORE the wildcard handler
     httpd_uri_t ws_uri = {
@@ -703,4 +619,13 @@ err_start:
     free(rest_context);
 err:
     return ESP_FAIL;
+}
+
+/* Example CORS preflight handler */
+static esp_err_t cors_options_handler(httpd_req_t *req) {
+    httpd_resp_set_hdr(req, "Access-Control-Allow-Origin", "*");
+    httpd_resp_set_hdr(req, "Access-Control-Allow-Methods", "POST, GET, OPTIONS");
+    httpd_resp_set_hdr(req, "Access-Control-Allow-Headers", "Content-Type");
+    httpd_resp_send(req, NULL, 0);
+    return ESP_OK;
 }

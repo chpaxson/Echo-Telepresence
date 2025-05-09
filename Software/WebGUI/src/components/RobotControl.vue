@@ -25,7 +25,7 @@ const postHomeToRobot = (robot, command) => {
         headers: {
             'Content-Type': 'text/plain'
         },
-        body: `${robot},${command}`
+        body: `${robot} == 'r1' ? 1 : 2`
     })
         .then((response) => {
             if (!response.ok) {
@@ -370,5 +370,36 @@ const mc = () => {
         </div>
         <RobotMotorParams :robotStore="robotStore" :r="props.r" motor="m1" :def="robotStore" label="Motor 1 Parameters" />
         <RobotMotorParams :robotStore="robotStore" :r="props.r" motor="m2" :def="robotStore" label="Motor 2 Parameters" />
+        <div class="card">
+            <h2 class="select-none">Large Parameters (testing)</h2>
+            <div class="flex flex-row gap-8 items-center">
+                <div class="text-xl">
+                    <em>r<sub>1</sub>a<sub>1</sub></em>
+                </div>
+                <Slider class="w-full" v-model="robotStore.r1.a1" :min="-5" :max="5" :step="0.1" />
+                <InputText class="w-24" v-model.number="robotStore.r1.a1" />
+            </div>
+            <div class="flex flex-row gap-8 items-center">
+                <div class="text-xl">
+                    <em>r<sub>1</sub>a<sub>2</sub></em>
+                </div>
+                <Slider class="w-full" v-model="robotStore.r1.a2" :min="-5" :max="5" :step="0.1" />
+                <InputText class="w-24" v-model.number="robotStore.r1.a2" />
+            </div>
+            <div class="flex flex-row gap-8 items-center">
+                <div class="text-xl">
+                    <em>r<sub>2</sub>a<sub>1</sub></em>
+                </div>
+                <Slider class="w-full" v-model="robotStore.r2.a1" :min="-5" :max="5" :step="0.1" />
+                <InputText class="w-24" v-model.number="robotStore.r2.a1" />
+            </div>
+            <div class="flex flex-row gap-8 items-center">
+                <div class="text-xl">
+                    <em>r<sub>2</sub>a<sub>2</sub></em>
+                </div>
+                <Slider class="w-full" v-model="robotStore.r2.a2" :min="-5" :max="5" :step="0.1" />
+                <InputText class="w-24" v-model.number="robotStore.r2.a2" />
+            </div>
+        </div>
     </div>
 </template>

@@ -1,14 +1,60 @@
 <script setup>
-import { useRobotStore } from '@/stores/robotStore';
-import { projectToWorkspace, centroid } from '@/utils/kinematics';
+import { useConfirm } from 'primevue/useconfirm';
 import { useToast } from 'primevue/usetoast';
 import { computed, onMounted, ref, watch } from 'vue';
+import { useRobotStore } from '@/stores/robotStore';
+import { projectToWorkspace, centroid } from '@/utils/kinematics';
+
 const toast = useToast();
-function showWarn() {
-    toast.add({ severity: 'warn', summary: 'Target out-of-bounds', detail: 'Target position is out of bounds, snapping to reachable workspace.', life: 1000 });
-}
+const confirmPopup = useConfirm();
 
 const robotStore = useRobotStore();
+
+// --- Homing logic copied from RobotControl.vue ---
+const postHomeToRobot = (robot, command) => {
+    fetch(`http://echo.local/api/v1/home`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'text/plain'
+        },
+        body: `${robot} == 'r1' ? 1 : 2`
+    })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then((data) => {
+            console.log('Success:', data);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+};
+
+const home = (robotKey) => {
+    if (robotStore[robotKey].homed) {
+        // Confirm un-home
+        confirmPopup.require({
+            message: 'Are you sure you want to disable motors?',
+            icon: 'pi pi-exclamation-triangle',
+            acceptLabel: 'Yes',
+            rejectLabel: 'No',
+            acceptClass: 'p-button-danger',
+            accept: () => {
+                postHomeToRobot(robotKey, false);
+                robotStore[robotKey].homed = false;
+                robotStore[robotKey].ee = { x: 0, y: 200 };
+            }
+        });
+    } else {
+        postHomeToRobot(robotKey, true);
+        robotStore[robotKey].homed = true;
+        robotStore[robotKey].ee = { x: 0, y: 200 };
+    }
+};
+// --- End homing logic ---
 
 const primaryRobotDropdownValues = ref([
     { name: 'Robot 1', code: 'r1' },
@@ -184,7 +230,8 @@ watch(primaryRobot, (newVal, oldVal) => {
                 <h1 class="select-none m-px">Robot 1</h1>
                 <div class="flex flex-row gap-4 h-10">
                     <Select v-model="r1DriveMode" @change="r1DriveModeChange" :options="driveModeOptions" />
-                    <SplitButton class="homeButton" icon="pi pi-home" :label="r1Homed ? `Homed` : `Home`" :model="r1HomeButtonOptions" :severity="r1Homed ? `` : `danger`" @click="r1Home"></SplitButton>
+                    <ConfirmPopup></ConfirmPopup>
+                    <Button :icon="robotStore.r1.homed ? `pi pi-trash` : `pi pi-home`" :label="robotStore.r1.homed ? `Disable Motors` : `Home?`" @click="home('r1')"></Button>
                 </div>
             </div>
             <RobotVis r="r1" />
@@ -208,7 +255,8 @@ watch(primaryRobot, (newVal, oldVal) => {
                 <h1 class="select-none m-px">Robot 2</h1>
                 <div class="flex flex-row gap-4 h-10">
                     <Select v-model="r2DriveMode" @change="r2DriveModeChange" :options="driveModeOptions" />
-                    <SplitButton class="homeButton" icon="pi pi-home" :label="r2Homed ? `Homed` : `Home`" :model="r2HomeButtonOptions" :severity="r2Homed ? `` : `danger`" @click="r2Home"></SplitButton>
+                    <ConfirmPopup></ConfirmPopup>
+                    <Button :icon="robotStore.r2.homed ? `pi pi-trash` : `pi pi-home`" :label="robotStore.r2.homed ? `Disable Motors` : `Home?`" @click="home('r2')"></Button>
                 </div>
             </div>
             <RobotVis r="r2" />

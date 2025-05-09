@@ -93,9 +93,10 @@ void twai_receive_task(void *pvParameter)
 {
     twai_message_t rx_message;
     while (1) {
-        if (twai_receive(&rx_message, pdMS_TO_TICKS(1000)) == ESP_OK) {
+        if (twai_receive(&rx_message, pdMS_TO_TICKS(40)) == ESP_OK) {
             // Send the received message to the queue
             if (can_msg_queue) {
+                // ESP_LOGI(TAG, "Received CAN message: ID:0x%lX", rx_message.identifier);
                 xQueueSend(can_msg_queue, &rx_message, 0);
             }
         } else {
@@ -110,16 +111,25 @@ void can_ws_forward_task(void *pvParameter)
     char msg[64];
     while (1) {
         if (can_msg_queue && xQueueReceive(can_msg_queue, &rx_message, portMAX_DELAY)) {
-            // Format CAN data as a string (customize as needed)
-            int len = snprintf(msg, sizeof(msg), "ID:0x%lX Data:", rx_message.identifier);
-            for (int i = 0; i < rx_message.data_length_code; i++) {
-                if (len < sizeof(msg)) {
-                    len += snprintf(msg + len, sizeof(msg) - len, " %02X", rx_message.data[i]);
-                } else {
-                    ESP_LOGW(TAG, "Message buffer overflow, truncating data");
-                    break;
-                }
-            }
+            // Cast the message data into a 32bit float
+            float *data = (float *)rx_message.data;
+            // Switch on the identifier to determine where the message came from
+            // switch (rx_message.identifier) {
+            //     case 0x018:
+            //         ESP_LOGI(TAG, "R1M1 Position: %f", (double)*data);
+            //         break;
+            //     case 0x118:
+            //         ESP_LOGI(TAG, "R1M2 Position: %f", (double)*data);
+            //         break;
+            //     case 0x218:
+            //         ESP_LOGI(TAG, "R2M1 Position: %f", (double)*data);
+            //         break;
+            //     case 0x318:
+            //         ESP_LOGI(TAG, "R2M2 Position: %f", (double)*data);
+            //         break;
+            // }
+            // Broadcast the message over WebSocket
+            snprintf(msg, sizeof(msg), "ID:0x%lX, Data: %f", rx_message.identifier, *data);
             ws_broadcast_text(msg);
         }
     }
@@ -130,9 +140,13 @@ void ws_to_can_task(void *pvParameter)
     twai_message_t tx_message;
     while (1) {
         if (ws_to_can_queue && xQueueReceive(ws_to_can_queue, &tx_message, portMAX_DELAY)) {
-            if (twai_transmit(&tx_message, pdMS_TO_TICKS(100)) != ESP_OK) {
-                ESP_LOGE(TAG, "Failed to transmit CAN message from WebSocket");
+            esp_err_t err_twwai_transmit = twai_transmit(&tx_message, pdMS_TO_TICKS(150));
+            if (err_twwai_transmit == ESP_OK) {
+                ESP_LOGI(TAG, "Message sent successfully: ID:0x%lX", tx_message.identifier);
+            } else {
+                ESP_LOGE(TAG, "Failed to send message: %s", esp_err_to_name(err_twwai_transmit));
             }
+            
         }
     }
 }
@@ -183,7 +197,7 @@ void app_main(void)
         return;
     }
 
-    ws_to_can_queue = xQueueCreate(20, sizeof(twai_message_t));
+    ws_to_can_queue = xQueueCreate(40, sizeof(twai_message_t));
     if (ws_to_can_queue == NULL) {
         ESP_LOGE(TAG, "Failed to create ws_to_can_queue");
         return;
