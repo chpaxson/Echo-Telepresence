@@ -1,4 +1,4 @@
-/* WiFi station Example
+/* HTTP Restful API Server Example
 
    This example code is in the Public Domain (or CC0 licensed, at your option.)
 
@@ -6,151 +6,207 @@
    software is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
    CONDITIONS OF ANY KIND, either express or implied.
 */
-#include <string.h>
-#include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
-#include "freertos/event_groups.h"
-#include "esp_system.h"
-#include "esp_wifi.h"
+#include "sdkconfig.h"
+#include "driver/gpio.h"
+#include "esp_vfs_semihost.h"
+#include "esp_vfs_fat.h"
+#include "esp_spiffs.h"
+#include "sdmmc_cmd.h"
+#include "nvs_flash.h"
+#include "esp_netif.h"
 #include "esp_event.h"
 #include "esp_log.h"
-#include "nvs_flash.h"
+#include "mdns.h"
+#include "lwip/apps/netbiosns.h"
+#include "esp_mac.h"
+#include "protocol_examples_common.h"
+#include "esp_now.h"
+#include "esp_wifi.h"
 #include "esp_http_server.h"
-#include "driver/twai.h" // CAN/TWAI driver
+#include "cJSON.h"
+#include "config_vars.h"
+#include "rest_server.h"
+#include "driver/adc.h"
+#include "esp_adc/adc_oneshot.h"
 
-#define WIFI_SSID      "EchoRobot"
-#define WIFI_PASS      "echopassword"
-#define MAX_STA_CONN   4
+// Store the WebSocket URI for sending
+#define WS_URI "/ws"
 
-static const char *TAG = "echo_station";
-static httpd_handle_t server = NULL;
+#define MDNS_INSTANCE "Web Server"
+#define GPIO_INPUT_PIN 19
+char host_name[16] = ""; // Allocate enough space for "echo1" or "echo2"
 
-// Motor feedback CAN frame (56 bits = 7 bytes)
-typedef struct {
-    uint64_t position   : 20; // Initial should be 0x7FFFF
-    uint16_t current    : 12;
-    uint16_t velocity   : 12;
-    uint8_t  wraparound : 1; // Within 3 frames if position is < 0x1FFFF, then wraparound
-    uint8_t  status     : 3; // 0: OK, 1: Error, 2: Overload, 3: Unknown
-    uint8_t  crc        : 8;
-} __attribute__((packed)) motor_feedback_t;
-
-// Motor command CAN frame (56 bits = 7 bytes)
-typedef struct {
-    uint8_t  command    : 4;
-    uint64_t data       : 44;
-    uint8_t  crc        : 8;
-} __attribute__((packed)) motor_command_t;
-
-uint8_t crc8(const uint8_t *data, size_t len) {
-    uint8_t crc = 0;
-    for (size_t i = 0; i < len; i++) {
-        crc ^= data[i];
-        for (int j = 0; j < 8; j++) {
-            if (crc & 0x80)
-                crc = (crc << 1) ^ 0x07;
-            else
-                crc <<= 1;
-        }
-    }
-    return crc;
-}
-
-// --- WiFi AP Mode Setup ---
-void wifi_init_softap(void) {
-    ESP_ERROR_CHECK(esp_netif_init());
-    ESP_ERROR_CHECK(esp_event_loop_create_default());
-    esp_netif_create_default_wifi_ap();
-
-    wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
-    ESP_ERROR_CHECK(esp_wifi_init(&cfg));
-
-    wifi_config_t wifi_config = {
-        .ap = {
-            .ssid = WIFI_SSID,
-            .ssid_len = strlen(WIFI_SSID),
-            .password = WIFI_PASS,
-            .max_connection = MAX_STA_CONN,
-            .authmode = WIFI_AUTH_WPA_WPA2_PSK
-        },
+static void configure_gpio(void)
+{
+    gpio_config_t io_conf = {
+        .pin_bit_mask = (1ULL << GPIO_INPUT_PIN),
+        .mode = GPIO_MODE_INPUT,
+        .pull_up_en = GPIO_PULLUP_DISABLE,
+        .pull_down_en = GPIO_PULLDOWN_ENABLE,
+        .intr_type = GPIO_INTR_DISABLE
     };
-    if (strlen(WIFI_PASS) == 0) {
-        wifi_config.ap.authmode = WIFI_AUTH_OPEN;
-    }
-
-    ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_AP));
-    ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_AP, &wifi_config));
-    ESP_ERROR_CHECK(esp_wifi_start());
-
-    ESP_LOGI(TAG, "WiFi AP started. SSID:%s password:%s", WIFI_SSID, WIFI_PASS);
+    gpio_config(&io_conf);
 }
 
-// --- CAN/TWAI Setup (stub) ---
-void can_init(void) {
-    // Configure and start CAN/TWAI driver here
-    // twai_general_config_t g_config = ...;
-    // twai_timing_config_t t_config = ...;
-    // twai_filter_config_t f_config = ...;
-    // ESP_ERROR_CHECK(twai_driver_install(&g_config, &t_config, &f_config));
-    // ESP_ERROR_CHECK(twai_start());
-    ESP_LOGI(TAG, "CAN/TWAI initialized (stub)");
+static adc_oneshot_unit_handle_t adc1_handle;
+
+static void init_adc(void)
+{
+    adc_oneshot_unit_init_cfg_t init_config1 = {
+        .unit_id = ADC_UNIT_1,
+        .ulp_mode = ADC_ULP_MODE_DISABLE,
+    };
+    adc_oneshot_new_unit(&init_config1, &adc1_handle);
+
+    adc_oneshot_chan_cfg_t config = {
+        .bitwidth = ADC_BITWIDTH_DEFAULT,
+        .atten = ADC_ATTEN_DB_12,
+    };
+    adc_oneshot_config_channel(adc1_handle, ADC_CHANNEL_6, &config); // GPIO7
+    adc_oneshot_config_channel(adc1_handle, ADC_CHANNEL_4, &config); // GPIO5
 }
 
-// --- WebSocket Handler ---
-esp_err_t ws_handler(httpd_req_t *req) {
-    if (req->method == HTTP_GET) {
-        // WebSocket handshake
-        return ESP_OK;
+static int read_adc_gpio7(void)
+{
+    int result = 0;
+    adc_oneshot_read(adc1_handle, ADC_CHANNEL_6, &result);
+    return result;
+}
+
+static int read_adc_gpio5(void)
+{
+    int result = 0;
+    adc_oneshot_read(adc1_handle, ADC_CHANNEL_4, &result);
+    return result;
+}
+
+static const char *TAG = "Web Server";
+
+esp_err_t start_rest_server(const char *base_path);
+
+static void initialise_mdns(void)
+{
+    mdns_init();
+    mdns_hostname_set(host_name);
+    mdns_instance_name_set(MDNS_INSTANCE);
+
+    mdns_txt_item_t serviceTxtData[] = {
+        {"board", "esp32"},
+        {"path", "/"}
+    };
+
+    ESP_ERROR_CHECK(mdns_service_add("ESP32-WebServer", "_http", "_tcp", 80, serviceTxtData,
+                                     sizeof(serviceTxtData) / sizeof(serviceTxtData[0])));
+}
+
+esp_err_t init_fs(void)
+{
+    esp_vfs_spiffs_conf_t conf = {
+        .base_path = "/www",
+        .partition_label = NULL,
+        .max_files = 16,
+        .format_if_mount_failed = false
+    };
+    esp_err_t ret = esp_vfs_spiffs_register(&conf);
+
+    if (ret != ESP_OK) {
+        if (ret == ESP_FAIL) {
+            ESP_LOGE(TAG, "Failed to mount or format filesystem");
+        } else if (ret == ESP_ERR_NOT_FOUND) {
+            ESP_LOGE(TAG, "Failed to find SPIFFS partition");
+        } else {
+            ESP_LOGE(TAG, "Failed to initialize SPIFFS (%s)", esp_err_to_name(ret));
+        }
+        return ESP_FAIL;
     }
-    // Here, you would handle incoming WebSocket frames if needed
+
+    size_t total = 0, used = 0;
+    ret = esp_spiffs_info(NULL, &total, &used);
+    if (ret != ESP_OK) {
+        ESP_LOGE(TAG, "Failed to get SPIFFS partition information (%s)", esp_err_to_name(ret));
+    } else {
+        ESP_LOGI(TAG, "Partition size: total: %d, used: %d", total, used);
+    }
     return ESP_OK;
 }
 
-// --- HTTP Server Setup ---
-void start_webserver(void) {
-    httpd_config_t config = HTTPD_DEFAULT_CONFIG();
-    if (httpd_start(&server, &config) == ESP_OK) {
-        httpd_uri_t ws_uri = {
-            .uri = "/ws",
-            .method = HTTP_GET,
-            .handler = ws_handler,
-            .user_ctx = NULL,
-            .is_websocket = true
-        };
-        httpd_register_uri_handler(server, &ws_uri);
-
-        // Serve files from /EchoWebGUI/dist/ directory
-        httpd_uri_t static_file_uri = {
-            .uri = "/*",
-            .method = HTTP_GET,
-            .handler = httpd_uri_handler_static,
-            .user_ctx = (void *)"/EchoWebGUI/dist/",
-            .is_websocket = false
-        };
-        httpd_register_uri_handler(server, &static_file_uri);
-    } else {
-        ESP_LOGI(TAG, "Failed to start HTTP server");
-        return;
-    }
+void setup_espnow_as_host(void)
+{
+    // Initialize WiFi in AP or STA mode as needed
+    // Initialize ESP-NOW
+    // Register send/receive callbacks
+    // Ready to accept connections from echo2
 }
 
-// --- CAN-to-WebSocket Streaming Task (stub) ---
-void can_stream_task(void *arg) {
+void setup_espnow_as_client(void)
+{
+    // Initialize WiFi in STA mode
+    // Initialize ESP-NOW
+    // Register send/receive callbacks
+    // Scan for echo1 and add its MAC as a peer
+    // Attempt to connect/send to echo1
+}
+
+void sendJointAngles_ws_task(void *pvParameter)
+{
     while (1) {
-        // 1. Read CAN/TWAI message
-        // 2. Format as JSON or binary
-        // 3. Send to all connected WebSocket clients
-        vTaskDelay(pdMS_TO_TICKS(50));
+        if (!global_httpd_server) {
+            vTaskDelay(pdMS_TO_TICKS(40));
+            continue;
+        }
+        int raw_a1 = read_adc_gpio7();
+        int raw_a2 = read_adc_gpio5();
+
+        // Scale raw_a1 (0-4095) to 0-270
+        float a1 = (raw_a1 / 4095.0f) * 270.0f;
+        // Scale raw_a2 (0-4095) to -90 to 180
+        float a2 = (raw_a2 / 4095.0f) * 270.0f - 90.0f;
+
+        cJSON *root = cJSON_CreateObject();
+        cJSON *r1 = cJSON_CreateObject();
+        cJSON_AddNumberToObject(r1, "a1", a1);
+        cJSON_AddNumberToObject(r1, "a2", a2);
+        cJSON_AddItemToObject(root, "r1", r1);
+
+        char *msg = cJSON_PrintUnformatted(root);
+        if (msg) {
+            ws_broadcast_text(msg);
+        }
+        cJSON_Delete(root);
+        if (msg) free(msg);
+
+        vTaskDelay(pdMS_TO_TICKS(40)); // 25 Hz
     }
 }
 
-// --- Main Entry Point ---
-void app_main(void) {
-    ESP_ERROR_CHECK(nvs_flash_init());
-    wifi_init_softap();
-    can_init();
-    start_webserver();
+void app_main(void)
+{
+    configure_gpio();
+    strcpy(host_name, gpio_get_level(GPIO_INPUT_PIN) == 0 ? "echo1" : "echo2");
+    ESP_LOGI(TAG, "Host name: %s", host_name);
 
-    // Start CAN-to-WebSocket streaming task
-    xTaskCreate(can_stream_task, "can_stream_task", 4096, NULL, 5, NULL);
+    if (gpio_get_level(GPIO_INPUT_PIN) == 0) {
+        ESP_ERROR_CHECK(nvs_flash_init());
+        ESP_ERROR_CHECK(esp_netif_init());
+        ESP_ERROR_CHECK(esp_event_loop_create_default());
+        initialise_mdns();
+        netbiosns_init();
+        netbiosns_set_name(host_name);
+
+        ESP_ERROR_CHECK(example_connect());
+        ESP_ERROR_CHECK(init_fs());
+        esp_err_t rest_ok = start_rest_server("/www");
+        if (rest_ok == ESP_OK) {
+            ESP_LOGI(TAG, "Starting WebSocket task");
+            init_adc(); // <-- Add this line
+            xTaskCreate(sendJointAngles_ws_task, "analog_ws_task", 6144, NULL, 5, NULL);
+        } else {
+            ESP_LOGE(TAG, "REST server failed to start, not starting WebSocket task");
+        }
+    } else {
+        ESP_ERROR_CHECK(nvs_flash_init());
+        ESP_ERROR_CHECK(esp_netif_init());
+        ESP_ERROR_CHECK(esp_event_loop_create_default());
+        // setup_espnow_as_client();
+    }
 }
