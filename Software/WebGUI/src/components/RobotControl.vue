@@ -19,22 +19,13 @@ const robotStore = useRobotStore();
 const a1 = ref(0);
 const a2 = ref(0);
 
-const postHomeToRobot = (r1m1, r1m2, r2m1, r2m2) => {
-    fetch(`http://echo1.local/api/v1/homing`, {
+const postHomeToRobot = (robot, command) => {
+    fetch(`http://echo.local/api/v1/home`, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'text/plain'
         },
-        body: JSON.stringify({
-            r1: {
-                m1: r1m1,
-                m2: r1m2
-            },
-            r2: {
-                m1: r2m1,
-                m2: r2m2
-            }
-        })
+        body: `${robot} == 'r1' ? 1 : 2`
     })
         .then((response) => {
             if (!response.ok) {
@@ -56,46 +47,27 @@ onMounted(() => {
     a2.value = (initialIK.a2 * 180) / Math.PI;
 });
 
-const homeButtonOptions = ref([
-    {
-        label: 'Home Joint 1',
-        command: () => {
-            robotStore[props.r].m1.homed = true;
-            postHomeToRobot(props.r === 'r1' ? 1 : 0, 0, props.r === 'r2' ? 1 : 0, 0);
-        }
-    },
-    {
-        label: 'Home Joint 2',
-        command: () => {
-            robotStore[props.r].m2.homed = true;
-            postHomeToRobot(0, props.r === 'r1' ? 1 : 0, 0, props.r === 'r2' ? 1 : 0);
-        }
-    },
-    {
-        label: 'Disable Motors',
-        command: () => {
-            robotStore[props.r].m1.homed = false;
-            robotStore[props.r].m2.homed = false;
-            if (props.r === 'r1') {
-                postHomeToRobot(2, 2, 0, 0);
-            } else {
-                postHomeToRobot(0, 0, 2, 2);
-            }
-        }
-    }
-]);
 const home = () => {
-    robotStore[props.r].m1.homed = true;
-    robotStore[props.r].m2.homed = true;
-    if (props.r === 'r1') {
-        postHomeToRobot(1, 1, 0, 0);
+    if (robotStore[props.r].homed) {
+        // Confirm un-home
+        confirmPopup.require({
+            message: 'Are you sure you want to disable motors?',
+            icon: 'pi pi-exclamation-triangle',
+            acceptLabel: 'Yes',
+            rejectLabel: 'No',
+            acceptClass: 'p-button-danger',
+            accept: () => {
+                postHomeToRobot(props.r, false);
+                robotStore[props.r].homed = false;
+                robotStore[props.r].ee = { x: 0, y: 200 };
+            }
+        });
     } else {
-        postHomeToRobot(0, 0, 1, 1);
+        postHomeToRobot(props.r, true);
+        robotStore[props.r].homed = true;
+        robotStore[props.r].ee = { x: 0, y: 200 };
     }
-    toast.add({ severity: 'success', summary: `Homed Robot!`, life: 3000 });
 };
-
-const homed = computed(() => robotStore[props.r].m1.homed && robotStore[props.r].m2.homed);
 
 watch(
     () => robotStore[props.r].ee,
@@ -104,7 +76,7 @@ watch(
         a1.value = (ik.a1 * 180) / Math.PI;
         a2.value = (ik.a2 * 180) / Math.PI;
     },
-    { immediate: true }
+    { deep: true }
 );
 
 const rc = () => {
@@ -348,7 +320,8 @@ const mc = () => {
                 <h1 class="select-none m-px">Robot {{ props.r === 'r1' ? '1' : '2' }}</h1>
                 <div class="flex flex-row gap-4 h-10">
                     <Select v-model="driveMode" @change="mc" :options="driveModeOptions" />
-                    <SplitButton class="homeButton" icon="pi pi-home" :label="homed ? `Homed` : `Home`" :model="homeButtonOptions" :severity="homed ? `` : `danger`" @click="home"></SplitButton>
+                    <ConfirmPopup></ConfirmPopup>
+                    <Button :icon="robotStore[props.r].homed ? `pi pi-trash` : `pi pi-home`" :label="robotStore[props.r].homed ? `Disable Motors` : `Home?`" @click="home"></Button>
                 </div>
             </div>
             <RobotVis :r="props.r" />
@@ -397,5 +370,36 @@ const mc = () => {
         </div>
         <RobotMotorParams :robotStore="robotStore" :r="props.r" motor="m1" :def="robotStore" label="Motor 1 Parameters" />
         <RobotMotorParams :robotStore="robotStore" :r="props.r" motor="m2" :def="robotStore" label="Motor 2 Parameters" />
+        <div class="card">
+            <h2 class="select-none">Large Parameters (testing)</h2>
+            <div class="flex flex-row gap-8 items-center">
+                <div class="text-xl">
+                    <em>r<sub>1</sub>a<sub>1</sub></em>
+                </div>
+                <Slider class="w-full" v-model="robotStore.r1.a1" :min="-5" :max="5" :step="0.1" />
+                <InputText class="w-24" v-model.number="robotStore.r1.a1" />
+            </div>
+            <div class="flex flex-row gap-8 items-center">
+                <div class="text-xl">
+                    <em>r<sub>1</sub>a<sub>2</sub></em>
+                </div>
+                <Slider class="w-full" v-model="robotStore.r1.a2" :min="-5" :max="5" :step="0.1" />
+                <InputText class="w-24" v-model.number="robotStore.r1.a2" />
+            </div>
+            <div class="flex flex-row gap-8 items-center">
+                <div class="text-xl">
+                    <em>r<sub>2</sub>a<sub>1</sub></em>
+                </div>
+                <Slider class="w-full" v-model="robotStore.r2.a1" :min="-5" :max="5" :step="0.1" />
+                <InputText class="w-24" v-model.number="robotStore.r2.a1" />
+            </div>
+            <div class="flex flex-row gap-8 items-center">
+                <div class="text-xl">
+                    <em>r<sub>2</sub>a<sub>2</sub></em>
+                </div>
+                <Slider class="w-full" v-model="robotStore.r2.a2" :min="-5" :max="5" :step="0.1" />
+                <InputText class="w-24" v-model.number="robotStore.r2.a2" />
+            </div>
+        </div>
     </div>
 </template>

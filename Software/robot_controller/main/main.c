@@ -26,69 +26,27 @@
 #include "cJSON.h"
 #include "config_vars.h"
 #include "rest_server.h"
-#include "driver/adc.h"
-#include "esp_adc/adc_oneshot.h"
 #include "driver/twai.h"  // Include the TWAI (CAN) driver library
+#include "freertos/queue.h"
+
+static QueueHandle_t can_msg_queue = NULL;
+QueueHandle_t ws_to_can_queue = NULL; // <-- Remove 'static' so it's global
 
 // Store the WebSocket URI for sending
 #define WS_URI "/ws"
 
 #define MDNS_INSTANCE "Web Server"
 #define GPIO_INPUT_PIN 19
-char host_name[16] = ""; // Allocate enough space for "echo1" or "echo2"
+#define HOST_NAME "echo"
 
-static void configure_gpio(void)
-{
-    gpio_config_t io_conf = {
-        .pin_bit_mask = (1ULL << GPIO_INPUT_PIN),
-        .mode = GPIO_MODE_INPUT,
-        .pull_up_en = GPIO_PULLUP_DISABLE,
-        .pull_down_en = GPIO_PULLDOWN_ENABLE,
-        .intr_type = GPIO_INTR_DISABLE
-    };
-    gpio_config(&io_conf);
-}
-
-static adc_oneshot_unit_handle_t adc1_handle;
-
-static void init_adc(void)
-{
-    adc_oneshot_unit_init_cfg_t init_config1 = {
-        .unit_id = ADC_UNIT_1,
-        .ulp_mode = ADC_ULP_MODE_DISABLE,
-    };
-    adc_oneshot_new_unit(&init_config1, &adc1_handle);
-
-    adc_oneshot_chan_cfg_t config = {
-        .bitwidth = ADC_BITWIDTH_DEFAULT,
-        .atten = ADC_ATTEN_DB_12,
-    };
-    adc_oneshot_config_channel(adc1_handle, ADC_CHANNEL_6, &config); // GPIO7
-    adc_oneshot_config_channel(adc1_handle, ADC_CHANNEL_4, &config); // GPIO5
-}
-
-static int read_adc_gpio7(void)
-{
-    int result = 0;
-    adc_oneshot_read(adc1_handle, ADC_CHANNEL_6, &result);
-    return result;
-}
-
-static int read_adc_gpio5(void)
-{
-    int result = 0;
-    adc_oneshot_read(adc1_handle, ADC_CHANNEL_4, &result);
-    return result;
-}
-
-static const char *TAG = "Web Server";
+static const char *TAG = "Robot Controller";
 
 esp_err_t start_rest_server(const char *base_path);
 
 static void initialise_mdns(void)
 {
     mdns_init();
-    mdns_hostname_set(host_name);
+    mdns_hostname_set(HOST_NAME);
     mdns_instance_name_set(MDNS_INSTANCE);
 
     mdns_txt_item_t serviceTxtData[] = {
@@ -131,73 +89,85 @@ esp_err_t init_fs(void)
     return ESP_OK;
 }
 
-void setup_espnow_as_host(void)
-{
-    // Initialize WiFi in AP or STA mode as needed
-    // Initialize ESP-NOW
-    // Register send/receive callbacks
-    // Ready to accept connections from echo2
-}
-
-void setup_espnow_as_client(void)
-{
-    // Initialize WiFi in STA mode
-    // Initialize ESP-NOW
-    // Register send/receive callbacks
-    // Scan for echo1 and add its MAC as a peer
-    // Attempt to connect/send to echo1
-}
-
-void sendJointAngles_ws_task(void *pvParameter)
-{
-    while (1) {
-        if (!global_httpd_server) {
-            vTaskDelay(pdMS_TO_TICKS(40));
-            continue;
-        }
-        int raw_a1 = read_adc_gpio7();
-        int raw_a2 = read_adc_gpio5();
-        // raaw_a1,raw_a2
-        // Just send strings
-        char *msg = malloc(32);
-        if (msg) {
-            snprintf(msg, 32, "%d,%d", raw_a1, raw_a2);
-        } else {
-            ESP_LOGE(TAG, "Failed to allocate memory for message");
-            vTaskDelay(pdMS_TO_TICKS(40));
-            continue;
-        }
-
-        if (msg) {
-            ws_broadcast_text(msg);
-        }
-        if (msg) free(msg);
-
-        vTaskDelay(pdMS_TO_TICKS(40)); // 25 Hz
-    }
-}
-
 void twai_receive_task(void *pvParameter)
 {
     twai_message_t rx_message;
     while (1) {
-        if (twai_receive(&rx_message, pdMS_TO_TICKS(1000)) == ESP_OK) {
-            ESP_LOGI(TAG, "Message received");
-            ESP_LOGI(TAG, "ID: 0x%x, DLC: %d, Data:", (unsigned int)rx_message.identifier, rx_message.data_length_code);
-            for (int i = 0; i < rx_message.data_length_code; i++) {
-                ESP_LOGI(TAG, "Data[%d]: 0x%x", i, rx_message.data[i]);
+        if (twai_receive(&rx_message, pdMS_TO_TICKS(40)) == ESP_OK) {
+            // Send the received message to the queue
+            if (can_msg_queue) {
+                // ESP_LOGI(TAG, "Received CAN message: ID:0x%lX", rx_message.identifier);
+                xQueueSend(can_msg_queue, &rx_message, 0);
             }
         } else {
-            ESP_LOGW(TAG, "No CAN message received in last second");
+            // ESP_LOGW(TAG, "No CAN message received in last second");
+        }
+    }
+}
+
+void can_ws_forward_task(void *pvParameter)
+{
+    twai_message_t rx_message;
+    char msg[64];
+    while (1) {
+        if (can_msg_queue && xQueueReceive(can_msg_queue, &rx_message, portMAX_DELAY)) {
+            // Cast the message data into a 32bit float
+            float *data = (float *)rx_message.data;
+            // Switch on the identifier to determine where the message came from
+            // switch (rx_message.identifier) {
+            //     case 0x018:
+            //         ESP_LOGI(TAG, "R1M1 Position: %f", (double)*data);
+            //         break;
+            //     case 0x118:
+            //         ESP_LOGI(TAG, "R1M2 Position: %f", (double)*data);
+            //         break;
+            //     case 0x218:
+            //         ESP_LOGI(TAG, "R2M1 Position: %f", (double)*data);
+            //         break;
+            //     case 0x318:
+            //         ESP_LOGI(TAG, "R2M2 Position: %f", (double)*data);
+            //         break;
+            // }
+            // Broadcast the message over WebSocket
+            snprintf(msg, sizeof(msg), "ID:0x%lX, Data: %f", rx_message.identifier, *data);
+            ws_broadcast_text(msg);
+        }
+    }
+}
+
+void ws_to_can_task(void *pvParameter)
+{
+    twai_message_t tx_message;
+    while (1) {
+        if (ws_to_can_queue && xQueueReceive(ws_to_can_queue, &tx_message, portMAX_DELAY)) {
+            esp_err_t err_twwai_transmit = twai_transmit(&tx_message, pdMS_TO_TICKS(150));
+            if (err_twwai_transmit == ESP_OK) {
+                ESP_LOGI(TAG, "Message sent successfully: ID:0x%lX", tx_message.identifier);
+            } else {
+                ESP_LOGE(TAG, "Failed to send message: %s", esp_err_to_name(err_twwai_transmit));
+            }
+            
         }
     }
 }
 
 void app_main(void)
 {
-    configure_gpio();
-    strcpy(host_name, gpio_get_level(GPIO_INPUT_PIN) == 0 ? "echo1" : "echo2");
-    ESP_LOGI(TAG, "Host name: %s", host_name);
+    ESP_ERROR_CHECK(nvs_flash_init());
+    ESP_ERROR_CHECK(esp_netif_init());
+    ESP_ERROR_CHECK(esp_event_loop_create_default());
+    initialise_mdns();
+    netbiosns_init();
+    netbiosns_set_name(HOST_NAME);
+
+    ESP_ERROR_CHECK(example_connect());
+    ESP_ERROR_CHECK(init_fs());
+    esp_err_t rest_ok = start_rest_server("/www");
+    if (rest_ok == ESP_OK) {
+        ESP_LOGI(TAG, "Starting WebSocket task");
+    } else {
+        ESP_LOGE(TAG, "REST server failed to start, not starting WebSocket task");
+    }
 
 
     twai_general_config_t g_config = TWAI_GENERAL_CONFIG_DEFAULT(GPIO_NUM_41, GPIO_NUM_42, TWAI_MODE_NORMAL);
@@ -208,57 +178,34 @@ void app_main(void)
         ESP_LOGI(TAG, "TWAI driver installed successfully");
     } else {
         ESP_LOGE(TAG, "Failed to install TWAI driver");
-        return; // Exit the function if driver installation fails
+        return;
     }
+
+
 
     // Start the CAN driver
     if (twai_start() == ESP_OK) {
         ESP_LOGI(TAG, "TWAI driver started successfully");
     } else {
         ESP_LOGE(TAG, "Failed to start TWAI driver");
-        return; // Exit the function if driver start fails
+        return;
     }
 
-    // Start TWAI receive task
+    can_msg_queue = xQueueCreate(20, sizeof(twai_message_t));
+    if (can_msg_queue == NULL) {
+        ESP_LOGE(TAG, "Failed to create CAN message queue");
+        return;
+    }
+
+    ws_to_can_queue = xQueueCreate(40, sizeof(twai_message_t));
+    if (ws_to_can_queue == NULL) {
+        ESP_LOGE(TAG, "Failed to create ws_to_can_queue");
+        return;
+    }
+
     xTaskCreate(twai_receive_task, "twai_receive_task", 4096, NULL, 5, NULL);
-
-
-    // twai_message_t rx_message;  // Declare a message structure for receiving
-    // if (twai_receive(&rx_message, pdMS_TO_TICKS(1000)) == ESP_OK) {
-    //     ESP_LOGI(TAG, "Message received");
-    //     ESP_LOGI(TAG, "ID: 0x%x, DLC: %d, Data:", (unsigned int)rx_message.identifier, rx_message.data_length_code);
-    //     for (int i = 0; i < rx_message.data_length_code; i++) {
-    //         ESP_LOGI(TAG, "Data[%d]: 0x%x", i, rx_message.data[i]);
-    //     }
-    // } else {
-    //     ESP_LOGE(TAG, "Failed to receive message");
-    // }
-
-
-    if (gpio_get_level(GPIO_INPUT_PIN) == 0) {
-        ESP_ERROR_CHECK(nvs_flash_init());
-        ESP_ERROR_CHECK(esp_netif_init());
-        ESP_ERROR_CHECK(esp_event_loop_create_default());
-        initialise_mdns();
-        netbiosns_init();
-        netbiosns_set_name(host_name);
-
-        ESP_ERROR_CHECK(example_connect());
-        ESP_ERROR_CHECK(init_fs());
-        esp_err_t rest_ok = start_rest_server("/www");
-        if (rest_ok == ESP_OK) {
-            ESP_LOGI(TAG, "Starting WebSocket task");
-            init_adc(); // <-- Add this line
-            xTaskCreate(sendJointAngles_ws_task, "analog_ws_task", 6144, NULL, 5, NULL);
-        } else {
-            ESP_LOGE(TAG, "REST server failed to start, not starting WebSocket task");
-        }
-    } else {
-        ESP_ERROR_CHECK(nvs_flash_init());
-        ESP_ERROR_CHECK(esp_netif_init());
-        ESP_ERROR_CHECK(esp_event_loop_create_default());
-        // setup_espnow_as_client();
-    }
+    xTaskCreate(can_ws_forward_task, "can_ws_forward_task", 4096, NULL, 5, NULL);
+    xTaskCreate(ws_to_can_task, "ws_to_can_task", 4096, NULL, 5, NULL);
 
     // twai_stop();                         
     // twai_driver_uninstall();             

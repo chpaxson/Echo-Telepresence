@@ -49,8 +49,17 @@ function shift(p: Point): Point {
 }
 
 const robotStore = useRobotStore();
-// Dynamically select the store
-// const robotStore[props.r] = props.r === 'robot1' ? useRobot1Store() : useRobot2Store();
+
+const robotDataWatch = watch(
+    () => robotStore[props.r].realConfig,
+    (newVal) => {
+        if (robotStore[props.r].driver === 'Robot Data') {
+            const end = calc_fk(newVal);
+            robotStore[props.r].ee = { x: end.x, y: end.y };
+        }
+    },
+    { deep: true }
+);
 
 function drawArmSegment(element: string, c1: Point, c2: Point, r1: number, r2: number): void {
     // Shift everything into the canvas

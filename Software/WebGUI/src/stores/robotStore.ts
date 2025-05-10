@@ -6,83 +6,116 @@ export const useRobotStore = defineStore('robot', {
     state: () => ({
         r1: {
             driver: 'GUI' as string,
-            ee: { x: 0, y: 200 } as Point,
+            homed: false as boolean,
+            ee: { x: 0, y: 0 } as Point,
             realConfig: { a1: 0 as number, a2: 0 as number },
             v: { j1: 0 as number, j2: 0 as number },
             maxSpeed: 20 as number,
             input_voltage: 0 as number,
             m1: {
-                homed: false as boolean,
-                v_lim: 24 as number, // Voltage chopping limit
-                R: 1.3 as number,
-                I: 29 as number, // mH
-                v_kP: 0.5 as number,
-                v_kI: 0.1 as number,
-                v_kD: 0.0 as number,
-                a_kP: 0.5 as number,
+                R: 1.5 as number,
+                I: 0.029 as number,
+                kV: 25 as number,
+                v_lim: 24 as number,
+                i_lim: 1 as number,
+                vel_lim: 10 as number,
+                sense_dir: 1 as number,
+                zea: 0 as number,
+                v_kP: 0.2 as number,
+                v_kI: 20 as number,
+                v_kD: 0.001 as number,
+                a_kP: 20 as number,
                 a_kI: 0.0 as number,
-                a_kD: 0.0 as number
+                a_kD: 0.0 as number,
+                controller: 'Position' as string
             },
             m2: {
-                homed: false as boolean,
-                v_lim: 24 as number, // Voltage chopping limit
-                R: 1.3 as number,
-                I: 29 as number, // mH
-                v_kP: 0.5 as number,
-                v_kI: 0.1 as number,
-                v_kD: 0.0 as number,
-                a_kP: 0.5 as number,
+                R: 1.5 as number,
+                I: 0.029 as number,
+                kV: 25 as number,
+                v_lim: 24 as number,
+                i_lim: 1 as number,
+                vel_lim: 10 as number,
+                sense_dir: 1 as number,
+                zea: 0 as number,
+                v_kP: 0.2 as number,
+                v_kI: 20 as number,
+                v_kD: 0.001 as number,
+                a_kP: 20 as number,
                 a_kI: 0.0 as number,
-                a_kD: 0.0 as number
-            }
+                a_kD: 0.0 as number,
+                controller: 'Position' as string
+            },
+            a1: 0 as number,
+            a2: 0 as number
         },
         r2: {
-            driven: false as boolean,
             driver: 'GUI' as string,
-            ee: { x: 0, y: 200 } as Point,
+            homed: false as boolean,
+            ee: { x: 0, y: 0 } as Point,
             realConfig: { a1: 0 as number, a2: 0 as number },
             v: { j1: 0 as number, j2: 0 as number },
             maxSpeed: 20 as number,
             input_voltage: 0 as number,
             m1: {
-                homed: false as boolean,
-                v_lim: 24 as number, // Voltage chopping limit
                 R: 1.3 as number,
-                I: 29 as number, // mH
+                I: 0.029 as number,
+                kV: 25 as number,
+                v_lim: 24 as number,
+                i_lim: 1 as number,
+                vel_lim: 10 as number,
+                sense_dir: 1 as number,
+                zea: 0 as number,
                 v_kP: 0.5 as number,
                 v_kI: 0.1 as number,
                 v_kD: 0.0 as number,
                 a_kP: 0.5 as number,
                 a_kI: 0.0 as number,
-                a_kD: 0.0 as number
+                a_kD: 0.0 as number,
+                controller: 'Position' as string
             },
             m2: {
-                homed: false as boolean,
-                v_lim: 24 as number, // Voltage chopping limit
                 R: 1.3 as number,
-                I: 29 as number, // mH
+                I: 0.029 as number,
+                kV: 25 as number,
+                v_lim: 24 as number,
+                i_lim: 1 as number,
+                vel_lim: 10 as number,
+                sense_dir: 1 as number,
+                zea: 0 as number,
                 v_kP: 0.5 as number,
                 v_kI: 0.1 as number,
                 v_kD: 0.0 as number,
                 a_kP: 0.5 as number,
                 a_kI: 0.0 as number,
-                a_kD: 0.0 as number
-            }
+                a_kD: 0.0 as number,
+                controller: 'Position' as string
+            },
+            a1: 0 as number,
+            a2: 0 as number
         },
         webSocketStatus: false as boolean,
         enableLink: false,
         linkRatio: 0.5,
         primaryRobot: 'robot1',
-        boundaryMode: 'slide',
-        def_v_lim: 24 as number,
-        def_R: 1.3 as number,
-        def_I: 29 as number,
-        def_v_kP: 0.5 as number,
-        def_v_kI: 0.1 as number,
-        def_v_kD: 0.0 as number,
-        def_a_kP: 0.5 as number,
-        def_a_kI: 0.0 as number,
-        def_a_kD: 0.0 as number
+
+        default_params: {
+            R: 1.3 as number,
+            I: 0.029 as number,
+            kV: 25 as number,
+            v_lim: 24 as number,
+            i_lim: 1 as number,
+            vel_lim: 10 as number,
+            sense_dir: 1 as number,
+            zea: 0 as number,
+            v_kP: 0.5 as number,
+            v_kI: 0.1 as number,
+            v_kD: 0.0 as number,
+            a_kP: 0.5 as number,
+            a_kI: 0.0 as number,
+            a_kD: 0.0 as number,
+            controller: 'Position' as string
+        }
     }),
     actions: {
         setEE(robot: 'r1' | 'f2', e: Point) {

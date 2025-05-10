@@ -10,10 +10,10 @@ import ConfirmationService from 'primevue/confirmationservice';
 import ToastService from 'primevue/toastservice';
 
 import { useRobotStore } from '@/stores/robotStore';
-import { calc_ik } from '@/utils/kinematics';
 import { watch } from 'vue';
 
 import '@/assets/styles.scss';
+import { calc_ik } from './utils/kinematics';
 
 const app = createApp(App);
 app.use(router);
@@ -86,7 +86,7 @@ app.mount('#app');
 const robotStore = useRobotStore();
 
 // Websocket connection and message handling
-var gateway = `ws://echo1.local/ws`;
+var gateway = `ws://echo.local/ws`;
 var websocket;
 window.addEventListener('load', onLoad);
 function initWebSocket() {
@@ -114,33 +114,53 @@ declare global {
 }
 window.initWebSocket = initWebSocket;
 function onMessage(event) {
-    // Split the message by commas
-    const data = event.data.split(',');
-    const r1a1 = (parseInt(data[0]) / 4095.0) * 1.5 * Math.PI;
-    const r1a2 = (parseInt(data[1]) / 4095.0) * 1.5 * Math.PI - Math.PI / 2;
-    robotStore.r1.realConfig = { a1: r1a1, a2: r1a2 };
+    const ID = event.data.split(',')[0].split(':')[1].trim();
+    const data = event.data.split(',')[1].split(':')[1].trim();
+    console.log('Message received:', event.data);
+    switch (ID) {
+        case '0x18':
+            robotStore.r1.realConfig.a1 = parseFloat(data) / 4.5 + Math.PI * 0.75;
+            break;
+        case '0x118':
+            robotStore.r1.realConfig.a2 = parseFloat(data) / 4.5 - Math.PI / 2;
+            break;
+        case '0x218':
+            robotStore.r2.realConfig.a1 = parseFloat(data) / 4.5 + Math.PI;
+            break;
+        case '0x318':
+            robotStore.r2.realConfig.a2 = parseFloat(data) / 4.5 - Math.PI / 4;
+            break;
+    }
 }
 function onLoad() {
     initWebSocket();
 }
 
 // Watch robotStore.r1.ee and robotStore.r2.ee for changes and calculate ik
+// let lastSentTime = 0;
+// watch(
+
+//     () => {
+//         if (lastSentTime + 20 < performance.now()) {
+//             if (websocket && websocket.readyState === WebSocket.OPEN) {
+//                 websocket.send(robotStore.r1.a1 + ',' + robotStore.r1.a2 + ',' + robotStore.r2.a1 + ',' + robotStore.r2.a2);
+//             }
+//             lastSentTime = performance.now();
+//         }
+//     },
+//     { deep: true }
+// );
+
 let lastSentTime = 0;
 watch(
-    () => [robotStore.r1.ee, robotStore.r2.ee],
-    ([r1, r2]) => {
+    () => [robotStore.r1.ee, robotStore.r2.ee], //     () => [robotStore.r1.a1, robotStore.r1.a2, robotStore.r2.a1, robotStore.r2.a2],
+    () => {
         if (lastSentTime + 20 < performance.now()) {
-            let r1angles, r2angles;
-            if (robotStore.r1.driver !== 'Robot Data') {
-                r1angles = calc_ik(r1);
-            }
-            if (robotStore.r2.driver !== 'Robot Data') {
-                r2angles = calc_ik(r2);
-            }
-
+            const r1ang = calc_ik(robotStore.r1.ee);
+            const r2ang = calc_ik(robotStore.r2.ee);
             if (websocket && websocket.readyState === WebSocket.OPEN) {
-                // r1a1, r1a2, r2a1, r2a2
-                websocket.send(Math.floor(r1angles.a1 * 16384) + ',' + Math.floor(r1angles.a2 * 16384) + ',' + Math.floor(r2angles.a1 * 16384) + ',' + Math.floor(r2angles.a2 * 16384));
+                websocket.send(r1ang.a1 * 4.5 + ',' + r1ang.a2 * 4.5 + ',' + r2ang.a1 * 4.5 + ',' + r2ang.a2 * 4.5);
+                // websocket.send(robotStore.r1.a1 + ',' + robotStore.r1.a2 + ',' + robotStore.r2.a1 + ',' + robotStore.r2.a2);
             }
             lastSentTime = performance.now();
         }

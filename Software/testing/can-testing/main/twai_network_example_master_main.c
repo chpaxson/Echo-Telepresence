@@ -55,5 +55,5 @@ void app_main() {
     // Stop and uninstall the CAN driver
     twai_stop();                         
     twai_driver_uninstall();             
-    ESP_LOGI(TAG, "TWAI driver uninstalled");
+    ESP_LOGI(TAG, "TWAI driver uninstalled");                                                                                                                                                                                                                                                       m
 }
