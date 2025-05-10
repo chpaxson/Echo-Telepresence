@@ -24,6 +24,16 @@ extern "C" {
 * Pin Definitions
 */
 
+// Enum for motor IDs
+enum MotorID {
+    MOTOR_0 = 0,
+    MOTOR_1 = 1,
+    MOTOR_2 = 2,
+    MOTOR_3 = 3
+};
+
+MotorID thisMotor = MOTOR_3; 
+
 // Analog Pins
 const uint8_t ADC_CURRENT_A_PIN = 26, ADC_CURRENT_A_IN = 0; // Integrated Current Sensor A 
 const uint8_t ADC_CURRENT_B_PIN = 27, ADC_CURRENT_B_IN = 1; // Integrated Current Sensor B 
@@ -47,15 +57,7 @@ uint8_t pio_num = 0;
 uint8_t gpio_rx = 1, gpio_tx = 0;
 struct can2040 cbus;
 
-// LEFT MOTOR
-uint32_t transmit_msg_id = 0x100; // ID for the message to be transmitted
-uint32_t receive_msg_id = 0x200; // ID for the message to be received
-
-// RIGHT MOTOR
-// uint32_t transmit_msg_id = 0x200; // ID for the message to be transmitted
-// uint32_t receive_msg_id = 0x100; // ID for the message to be received
-
-int can_downsample = 1; // downsample the can bus to 1s
+int can_downsample = 10; // downsample the can bus to 1s
 
 // Sensor constants
 #define I2C_PORT i2c1
@@ -63,39 +65,117 @@ const uint8_t I2C_SDA_PIN = 2;
 const uint8_t I2C_SCL_PIN = 3;
 MT6701_I2C sensor = MT6701_I2C(sensor_default); // Create an instance of the MT6701_I2C class
 
-//Current sense constants
-InlineCurrentSense current_sense = InlineCurrentSense(.523, ADC_CURRENT_A_PIN, ADC_CURRENT_B_PIN);
-// Comamander instance
-Commander command = Commander();
-
 //
-float received_angle;
+float linked_angle;
+
+bool received_can = 0;
+bool recieved_target = 0;
+
+// Global variables for storing received CAN data
+float R, L, kV, vel_Lim, V_lim, I_lim;
+int sensor_direction;
+float _zero_electric_angle;
+float vel_kp, vel_ki, vel_kd;
+float pos_kp, pos_ki, pos_kd;
+uint8_t controller;
+float target;
+float get_position, get_velocity;
 
 /*******************************************************************************
 * Main
 */
 
+// Helper function to process CAN data
+void process_can_data(uint32_t id, void *dest, size_t expected_size, const struct can2040_msg *msg) {
+    // Extract the motor-specific ID range
+    uint32_t motor_base_id = thisMotor << 8; // Shift motor ID to the upper byte (e.g., 0x100, 0x200)
+    uint32_t relative_id = id - motor_base_id;
+
+    if (msg->dlc == expected_size) {
+        memcpy(dest, msg->data, expected_size);
+    } else {
+        printf("Invalid data length for CAN ID: 0x%03X (Motor %d). Expected: %zu, Received: %d\n",
+               id, motor, expected_size, msg->dlc);
+    }
+}
+
+// Callback function for CAN messages
 static void can2040_cb(struct can2040 *cd, uint32_t notify, struct can2040_msg *msg) {
     if (notify & CAN2040_NOTIFY_RX) {
         // A message was received
-        // printf("Received CAN msg ID=0x%03X LEN=%d: ", msg->id, msg->dlc);
-        // for (int i = 0; i < msg->dlc; i++) {
-        //     printf("%u ", msg->data[i]);
-        // }
-        // printf("\n");
+        uint32_t motor_base_id = thisMotor << 8; // Shift motor ID to the upper byte (e.g., 0x100, 0x200)
+        uint32_t relative_id = msg->id - motor_base_id;
 
-        // // Example: Process received data
-        if (msg->id == receive_msg_id && msg->dlc == 4) { // Check message ID and data length
-            memcpy(&received_angle, msg->data, sizeof(float)); // Copy the bytes into a float
-            // printf("Received angle: %f\n", received_angle); // Print the received angle
+        switch (relative_id) {
+            case 0x00: // R
+                process_can_data(msg->id, &R, sizeof(float), msg);
+                break;
+            case 0x01: // L
+                process_can_data(msg->id, &L, sizeof(float), msg);
+                break;
+            case 0x02: // kV
+                process_can_data(msg->id, &kV, sizeof(float), msg);
+                break;
+            case 0x03: // vel_Lim
+                process_can_data(msg->id, &vel_Lim, sizeof(float), msg);
+                break;
+            case 0x04: // V_lim
+                process_can_data(msg->id, &V_lim, sizeof(float), msg);
+                break;
+            case 0x05: // I_lim
+                process_can_data(msg->id, &I_lim, sizeof(float), msg);
+                break;
+            case 0x06: // sensor_direction + zero_electric_angle
+                if (msg->dlc == sizeof(float) + 1) { // Boolean + float
+                    sensor_direction = msg->data[0]; // First byte is the boolean
+                    memcpy(&_zero_electric_angle, &msg->data[1], sizeof(float)); // Remaining bytes are the float
+                } else {
+                    printf("Invalid data length for CAN ID: 0x%03X (Motor %d). Expected: %zu, Received: %d\n",
+                           msg->id, thisMotor, sizeof(float) + 1, msg->dlc);
+                }
+                break;
+            case 0x07: // vel_kp
+                process_can_data(msg->id, &vel_kp, sizeof(float), msg);
+                break;
+            case 0x08: // vel_ki
+                process_can_data(msg->id, &vel_ki, sizeof(float), msg);
+                break;
+            case 0x09: // vel_kd
+                process_can_data(msg->id, &vel_kd, sizeof(float), msg);
+                break;
+            case 0x0A: // pos_kp
+                process_can_data(msg->id, &pos_kp, sizeof(float), msg);
+                break;
+            case 0x0B: // pos_ki
+                process_can_data(msg->id, &pos_ki, sizeof(float), msg);
+                break;
+            case 0x0C: // pos_kd
+                process_can_data(msg->id, &pos_kd, sizeof(float), msg);
+                break;
+            case 0x0D: // controller
+                process_can_data(msg->id, &controller, sizeof(uint8_t), msg);
+                printf("Received controller: %d\n", controller);
+                received_can = true;
+                break;
+            case 0x14: // target
+                process_can_data(msg->id, &target, sizeof(float), msg);
+                recieved_target = true;
+                break;
+            default:
+                // printf("Unknown CAN ID: 0x%03X (Motor %d)\n", msg->id, thisMotor);
+                break;
+        }
+
+        if(msg->id == ((((thisMotor + 2) % 4) << 8) + 0x018)) { 
+            // Process the received angle
+            memcpy(&linked_angle, msg->data, sizeof(float));
+            // printf("Received angle: %f\n", linked_angle);
         }
     }
 
-
-
     if (notify & CAN2040_NOTIFY_TX) {
         // A message was successfully transmitted
-        //printf("Message transmitted successfully.\n");
+        // printf("Message transmitted successfully.\n");
     }
 
     if (notify & CAN2040_NOTIFY_ERROR) {
@@ -112,7 +192,7 @@ PIOx_IRQHandler(void)
 
 void canbus_setup(void)
 {
-    uint32_t sys_clock = 125000000, bitrate = 750000;
+    uint32_t sys_clock = 125000000, bitrate = 500000; // 500 kbps
 
     // Setup canbus
     can2040_setup(&cbus, pio_num);
@@ -143,7 +223,7 @@ void core1_main() {
     
     // Send a CAN message
     struct can2040_msg tx_msg = {
-        .id = transmit_msg_id,
+        .id = (thisMotor << 8) + 0x018, // Set the ID for the message
         .dlc = sizeof(float),
     };
 
@@ -169,95 +249,164 @@ int main() {
     stdio_init_all();
     sleep_ms(10000);
 
-    printf("Start... \n");
-
     printf("Entered core0 (core=%d)\n", get_core_num());
     multicore_launch_core1(core1_main);
+
+    // Wait for the CAN RX notify flag
+    while (!( received_can)) {
+        printf("Waiting for CAN RX notify...\n");
+        tight_loop_contents(); // Wait in a tight loop
+    }
+    printf("Start... \n");
 
     sensor.init(I2C_PORT, I2C_SCL_PIN, I2C_SDA_PIN); // Initialize the MT6701_I2C instance   
     // link the motor to the sensor
     motor.linkSensor(&sensor);
 
     driver.voltage_power_supply = 24; // set the power supply voltage for the driver
+    driver.voltage_limit = 24; // set the voltage limit for the driver
     // driver config
     driver.init();
     motor.linkDriver(&driver);
 
+    motor.PID_velocity.P = 0.2;
+    motor.PID_velocity.I = 20;
+    motor.PID_velocity.D = 0.001;
+
+    motor.PID_velocity.output_ramp = 1000; // Set the output ramp for the velocity PID controller
+
+    motor.LPF_velocity.Tf = 0.005;
+
+    motor.P_angle.P = 20; 
+    motor.P_angle.I = 0;  // usually only P controller is enough 
+    motor.P_angle.D = 0;  // usually only P controller is enough 
+
+    motor.P_angle.output_ramp = 10000; // default 1e6 rad/s^2
+    motor.LPF_angle.Tf = 0; // default 0
+
+    motor.velocity_limit = vel_Lim; // Set the position limit
+
     // set motion control loop to be used
-    // motor.torque_controller = TorqueControlType::voltage;
-    motor.controller = MotionControlType::torque;
-
     // default voltage_power_supply
-<<<<<<< Updated upstream
-    motor.voltage_limit = 24; // Volts
-    motor.phase_resistance = 1.85; // Ohm
-    motor.current_limit = 2; // Amps
-=======
-    motor.voltage_limit = 9; // Volts
-    motor.phase_resistance = 1.3; // Ohm
-    motor.phase_inductance = 0.0029; // Henry
-    mmmotor.kV_rating = 0.1;
-    motor.current_limit = 4; // Amps
->>>>>>> Stashed changes
-    motor.voltage_sensor_align = 7; 
+    motor.voltage_limit = V_lim; // Volts
+    motor.phase_resistance = R; // Ohm
+    motor.phase_inductance = L; // Henry
+    motor.KV_rating = kV; // V/rad/s
+    motor.current_limit = I_lim; // Amps
 
-    motor.zero_electric_angle = 5.52; // Set the zero electric angle to 0
+    motor.voltage_sensor_align = 14;
+
+
+    // Determine the controller type
+    switch (controller) {
+        case 0: //Disabled
+            motor.controller = MotionControlType::torque;
+            motor.torque_controller = TorqueControlType::voltage;
+            motor.voltage_limit = 0; // Volts
+            motor.current_limit = 0; // Amps
+            break;
+        case 1: // Torque control
+            motor.torque_controller = TorqueControlType::voltage;
+            motor.controller = MotionControlType::torque;
+            break;
+        case 2: // Position control
+            motor.controller = MotionControlType::velocity_openloop;
+            break;
+        case 3: // Velocity control Open Loop
+            motor.controller = MotionControlType::angle_openloop;
+            break;
+        default:
+            printf("Unknown controller mode: %d\n", controller);
+            break;
+    }
+
+
+    // Print all values to serial
+    printf("Motor Configuration: %u | Motor Controller: %u\n", thisMotor, controller);
+    printf("Voltage Limit: %f V\n", V_lim);
+    printf("Phase Resistance: %f Ohm\n", R);
+    printf("Phase Inductance: %f Henry\n", L);
+    printf("KV Rating: %f V/rad/s\n", kV);
+    printf("Current Limit: %f Amps\n", I_lim);
+    printf("Voltage Sensor Align: %f\n", motor.voltage_sensor_align);
 
     // initialize motor
     motor.init();
     // align sensor and start FOC
     motor.initFOC();
 
-    //motor.motion_downsample = 100; // downsample the motion control loop to 15ms
+    // motor.motion_downsample = 1; // downsample the motion control loop to 15ms
     
     int can_downsample_cnt = 0;
     float angle;
     uint32_t raw_data;
 
-    float offset = 3.0f; // Offset for the target angle
-    float gain = 3.0f; // Gain for the error term
+    float offset = 0.0f; // Offset for the target angle
+    float deadband = offset; // Deadband for the target torque
+    float gain = 5.0f; // Gain for the error term
+    float velocity_noise = 0.1f; // Noise in the velocity measurement
     float error, targetTorque;
+
+    sleep_ms(3000);
 
     while (1) {
         // main FOC algorithm function
+        // sensor.update(); // update the sensor
         motor.loopFOC();
 
-        // Determine offset based on the direction of the difference
-<<<<<<< Updated upstream
-        // error = received_angle - motor.shaft_angle;
+        motor.voltage_limit = V_lim; // Volts
+        motor.current_limit = I_lim; // Amps
 
-        // motor.move( ((error > 0 ) ? offset : (-1 * offset)) + (gain * error)); // target torque
-        motor.move(8);
-=======
-        error = received_angle - motor.shaft_angle;
+        // Print the updated voltage and current limits to serial
+        // printf("Updated Voltage Limit: %f V\n", motor.voltage_limit);
+        // printf("Updated Current Limit: %f Amps\n", motor.current_limit);
+        motor.PID_velocity.P = vel_kp; // Set the velocity PID parameters
+        motor.PID_velocity.I = vel_ki;
+        motor.PID_velocity.D = vel_kd;
+
+        motor.P_angle.P = pos_kp; // Set the position PID parameters
+        motor.P_angle.I = pos_ki;
+        motor.P_angle.D = pos_kd;
+        motor.velocity_limit = vel_Lim; // Set the position limit
+
+        gain = vel_kp;
+        offset = vel_ki;
+        velocity_noise = vel_kd;
+
+
+        // Print all values to serial
+        // printf("Velocity PID: P=%f, I=%f, D=%f\n", vel_kp, vel_ki, vel_kd);
+        // printf("Position PID: P=%f, I=%f, D=%f\n", pos_kp, pos_ki, pos_kd);
+        // printf("Velocity Limit: %f\n", vel_Lim);
+
+
+        // // Determine offset based on the direction of the difference
+        error = linked_angle - motor.shaft_angle;
         targetTorque = ((error > 0 ) ? offset : (-1 * offset)) + (gain * error);
-        if (targetTorque < 7.0f && targetTorque > -7.0f) {
+
+        // // // Apply deadband to the target torque
+        if (abs(targetTorque) < deadband || abs(motor.shaft_velocity) < velocity_noise) {
             targetTorque = 0.0f; // Set to zero if within the deadband
         }
-        motor.move(targetTorque); // target torque
->>>>>>> Stashed changes
 
-        // if(can_downsample_cnt == can_downsample) {
-        //     // Send the sensor angle to core 1
-        //     // Convert the angle to a 32-bit integer representation
+        printf("target: %f| otherAngle: %f| Myangle: %f \n", target, linked_angle, sensor.getAngle());
 
-        //     angle = motor.shaft_angle;
-        //     memcpy(&raw_data, &angle, sizeof(float)); // Convert float to uint32_t
-        //     multicore_fifo_push_blocking(raw_data); // Send the data to core 1
+        if(controller == 1) {
+            target = targetTorque; // Set the target torque
+        }
 
-        //     can_downsample_cnt = 0; // Reset downsample counter
-
-<<<<<<< Updated upstream
-        //     // printf("MyAngle:%f,RecievedAngle:%f,error:%f,applied_torque:%f\n", angle, received_angle, error, ((error > 0 ) ? offset : (-1 * offset)) + (gain * error));
-        // }
-        // can_downsample_cnt++;
-        // sleep_ms(1); // Sleep for 1ms to avoid busy waiting
-=======
-            printf("MyAngle:%f,RecievedAngle:%f,error:%f,applied_torque:%f\n", angle, received_angle, error, ((error > 0 ) ? offset : (-1 * offset)) + (gain * error));
+        motor.move(target); // target torque
+        
+        if(can_downsample_cnt == can_downsample) {
+            // Send the sensor angle to core 1
+            // Convert the angle to a 32-bit integer representation
+            angle = sensor.getAngle(); // Get the angle from the motor
+            memcpy(&raw_data, &angle, sizeof(float)); // Convert float to uint32_t
+            multicore_fifo_push_blocking(raw_data); // Send the data to core 1
+        
+            can_downsample_cnt = 0; // Reset downsample counter
         }
         can_downsample_cnt++;
-        sleep_ms(1); // Sleep for 1ms to avoid busy waiting
->>>>>>> Stashed changes
     }
 
    return 0;
