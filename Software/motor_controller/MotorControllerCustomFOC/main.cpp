@@ -16,10 +16,6 @@ extern "C" {
 }
 
 #include "sensors/MT6701_I2C.h"
-#include "drivers/StepperDriver4PWM.h"
-#include "StepperMotor.h"
-#include "communication/Commander.h"
-#include "current_sense/InlineCurrentSense.h"
 /*******************************************************************************
 * Pin Definitions
 */
@@ -35,12 +31,6 @@ const uint8_t stepper_pin_1A = 6;
 const uint8_t stepper_pin_1B = 7;
 const uint8_t stepper_pin_2A = 8;
 const uint8_t stepper_pin_2B = 9;
-
-// StepperMotor(pole pair number, phase resistance (optional) );
-StepperMotor motor = StepperMotor(50);
-
-// StepperDriver4PWM(ph1A, ph1B, ph2A, ph2B, (en1, en2 optional))
-StepperDriver4PWM driver = StepperDriver4PWM(6, 7, 8, 9, NOT_SET, NOT_SET);
 
 // CAN constants
 uint8_t pio_num = 0;
@@ -63,10 +53,6 @@ const uint8_t I2C_SDA_PIN = 2;
 const uint8_t I2C_SCL_PIN = 3;
 MT6701_I2C sensor = MT6701_I2C(sensor_default); // Create an instance of the MT6701_I2C class
 
-//Current sense constants
-InlineCurrentSense current_sense = InlineCurrentSense(.523, ADC_CURRENT_A_PIN, ADC_CURRENT_B_PIN);
-// Comamander instance
-Commander command = Commander();
 
 //
 float received_angle;
@@ -74,21 +60,72 @@ float received_angle;
 /*******************************************************************************
 * Main
 */
+static void can2040_cb(struct can2040 *cd, uint32_t notify, struct can2040_msg *msg) {
+    if (notify & CAN2040_NOTIFY_RX) {
+        // A message was received
+        // printf("Received CAN msg ID=0x%03X LEN=%d: ", msg->id, msg->dlc);
+        // for (int i = 0; i < msg->dlc; i++) {
+        //     printf("%u ", msg->data[i]);
+        // }
+        // printf("\n");
 
+        // // Example: Process received data
+        if (msg->id == receive_msg_id && msg->dlc == 4) { // Check message ID and data length
+            memcpy(&received_angle, msg->data, sizeof(float)); // Copy the bytes into a float
+            // printf("Received angle: %f\n", received_angle); // Print the received angle
+        }
+    }
+
+
+
+    if (notify & CAN2040_NOTIFY_TX) {
+        // A message was successfully transmitted
+        //printf("Message transmitted successfully.\n");
+    }
+
+    if (notify & CAN2040_NOTIFY_ERROR) {
+        // An error occurred
+        printf("CAN error occurred!\n");
+    }
+}
+
+static void
+PIOx_IRQHandler(void)
+{
+    can2040_pio_irq_handler(&cbus);
+}
+
+void canbus_setup(void)
+{
+    uint32_t sys_clock = 125000000, bitrate = 125000;
+
+    // Setup canbus
+    can2040_setup(&cbus, pio_num);
+    can2040_callback_config(&cbus, can2040_cb);
+
+    // Enable irqs
+    irq_set_exclusive_handler(PIO0_IRQ_0_IRQn, PIOx_IRQHandler);
+    NVIC_SetPriority(PIO0_IRQ_0_IRQn, 1);
+    NVIC_EnableIRQ(PIO0_IRQ_0_IRQn);
+
+    // Start canbus
+    can2040_start(&cbus, sys_clock, bitrate, gpio_rx, gpio_tx);
+    printf("CAN bus initialized.\n");
+}
+
+void adc_setup(void) {
+    adc_init();
+
+    adc_gpio_init(ADC_CURRENT_A_PIN); // Current A input 0
+    adc_gpio_init(ADC_CURRENT_B_PIN); // Current B input 1
+    adc_gpio_init(ADC_MT6701_PIN); // MT6701 input 2
+    adc_gpio_init(ADC_VBUS_PIN); // VBUS input 3
+}
 
 
 int main()
 {
     stdio_init_all();
-
-    // I2C Initialisation. Using it at 400Khz.
-    i2c_init(I2C_PORT, 400*1000);
-    
-    gpio_set_function(I2C_SDA, GPIO_FUNC_I2C);
-    gpio_set_function(I2C_SCL, GPIO_FUNC_I2C);
-    gpio_pull_up(I2C_SDA);
-    gpio_pull_up(I2C_SCL);
-    // For more examples of I2C use see https://github.com/raspberrypi/pico-examples/tree/master/i2c
 
     while (true) {
         printf("Hello, world!\n");
