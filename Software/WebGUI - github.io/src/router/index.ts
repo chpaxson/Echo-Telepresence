@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHashHistory } from 'vue-router';
 
 import AppLayout from '@/layout/AppLayout.vue';
 import AboutView from '@/views/AboutView.vue';
@@ -14,7 +14,7 @@ import Robot2View from '@/views/Robot2View.vue';
 import StatisticsView from '@/views/StatisticsView.vue';
 
 const router = createRouter({
-    history: createWebHistory(),
+    history: createWebHashHistory(),
     routes: [
         {
             path: '/',

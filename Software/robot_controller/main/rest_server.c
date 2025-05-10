@@ -29,10 +29,7 @@ static void pack_32bits(uint8_t *dest, const void *src) {
 
 // Helper: pack sense_dir (1 bit, LSB) and controller (8 bits, bits 1-8) into 1st byte and 2nd byte
 static void pack_sense_dir_controller(uint8_t *dest, uint8_t sense_dir, int controller) {
-    dest[0] = sense_dir; // Use all 8 bits for sense_dir
-    dest[1] = (uint8_t)(controller & 0xFF);
-    dest[2] = 0;
-    dest[3] = 0;
+    dest[0] = (uint8_t) controller;
 }
 
 // Parameter IDs for each field
@@ -73,7 +70,7 @@ void send_motor_params_over_can(uint8_t motor_index, const MotorParams *params) 
     }
     // sense_dir (8 bits) + controller (8 bits), rest zero
     msg.identifier = (motor_index << 8) | 13;
-    msg.data_length_code = 4;
+    msg.data_length_code = 1;
     pack_sense_dir_controller(msg.data, params->sense_dir, params->controller);
     xQueueSend(ws_to_can_queue, &msg, 0);
     ESP_LOGI(REST_TAG, "Sent motor params over CAN for motor %d", motor_index);

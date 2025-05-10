@@ -113,22 +113,6 @@ void can_ws_forward_task(void *pvParameter)
         if (can_msg_queue && xQueueReceive(can_msg_queue, &rx_message, portMAX_DELAY)) {
             // Cast the message data into a 32bit float
             float *data = (float *)rx_message.data;
-            // Switch on the identifier to determine where the message came from
-            // switch (rx_message.identifier) {
-            //     case 0x018:
-            //         ESP_LOGI(TAG, "R1M1 Position: %f", (double)*data);
-            //         break;
-            //     case 0x118:
-            //         ESP_LOGI(TAG, "R1M2 Position: %f", (double)*data);
-            //         break;
-            //     case 0x218:
-            //         ESP_LOGI(TAG, "R2M1 Position: %f", (double)*data);
-            //         break;
-            //     case 0x318:
-            //         ESP_LOGI(TAG, "R2M2 Position: %f", (double)*data);
-            //         break;
-            // }
-            // Broadcast the message over WebSocket
             snprintf(msg, sizeof(msg), "ID:0x%lX, Data: %f", rx_message.identifier, *data);
             ws_broadcast_text(msg);
         }
@@ -171,7 +155,7 @@ void app_main(void)
 
 
     twai_general_config_t g_config = TWAI_GENERAL_CONFIG_DEFAULT(GPIO_NUM_41, GPIO_NUM_42, TWAI_MODE_NORMAL);
-    twai_timing_config_t t_config = TWAI_TIMING_CONFIG_125KBITS();
+    twai_timing_config_t t_config = TWAI_TIMING_CONFIG_500KBITS();
     twai_filter_config_t f_config = TWAI_FILTER_CONFIG_ACCEPT_ALL();
 
     if (twai_driver_install(&g_config, &t_config, &f_config) == ESP_OK) {
